@@ -200,6 +200,7 @@
       <p class="sec-label">🆕 更新情報</p>
       <p class="sec-sub">大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正までは
         すべて載せていません。</p>
+      <p class="sec-sub" style="padding-top:0;">日付は各リポジトリのgitコミット履歴に基づく実際の日付です。</p>
       <div class="card">
         <div class="log-entry">
           <div class="log-date">2026-08-06</div>
@@ -243,6 +244,14 @@
           </div>
         </div>
         <div class="log-entry">
+          <div class="log-date">2026-08-04</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">CHANGE</span>精霊ツリー表示の細部を調整</div>
+            <div class="log-desc">「ハート」報酬アイコンをスターからハートに修正。段階ツリー（恒常/長老精霊）の
+              表示順を反転して段1が一番下に来るようにし、段と段の間に区切り線を追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
           <div class="log-date">2026-08-03</div>
           <div class="log-body">
             <div class="log-title"><span class="log-tag">NEW</span>所持通貨(6種)の統一管理</div>
@@ -251,18 +260,116 @@
           </div>
         </div>
         <div class="log-entry">
-          <div class="log-date">2026-08-02〜08-05</div>
+          <div class="log-date">2026-08-03</div>
           <div class="log-body">
-            <div class="log-title"><span class="log-tag">NEW</span>精霊ツリー管理の大幅刷新</div>
-            <div class="log-desc">全精霊のツリーを本家のような枝分かれ図で表示。item(所持アイテム)・
-              wings(羽トラッカー)・emote(所持エモート)との自動同期にも対応しました。</div>
+            <div class="log-title"><span class="log-tag">NEW</span>精霊ツリーを本家のような枝分かれ図に刷新</div>
+            <div class="log-desc">恒常精霊をリアルム順に並べ替え。item(所持アイテム)・wings(羽トラッカー)・
+              emote(所持エモート)との自動同期にも対応しました。</div>
           </div>
         </div>
         <div class="log-entry">
-          <div class="log-date">〜2026-08-02</div>
+          <div class="log-date">2026-08-02</div>
           <div class="log-body">
-            <div class="log-title"><span class="log-tag">NEW</span>全サイトのPWA対応</div>
-            <div class="log-desc">ホーム画面への追加に対応しました。</div>
+            <div class="log-title"><span class="log-tag">NEW</span>精霊ツリー管理（spirit-catalog）を新設</div>
+            <div class="log-desc">全216精霊の精霊ツリーデータ（SkyGame-Data由来、日本語名つき）をもとに、
+              一覧・検索/絞り込み・ツリー表示・ノード解放を実装しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-02</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>ウィッシュリスト・アンロック計算機、交換アイテムの順番計算</div>
+            <div class="log-desc">アイテム所持管理にウィッシュリストと必要コスト計算機を追加。精霊同行ツールには
+              交換アイテムを取る順番の計算機能（旧称「交換オプティマイザー」）を追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-02</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>プロフィールにSky時間・闇の破片の自動計算を追加</div>
+            <div class="log-desc">ゲーム内時間・デイリー/原罪リセットまでの残り時間、開催中のシーズン/イベント表示、
+              闇の破片（シャード）の出現有無・色・場所の自動計算バッジを追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-01</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>ノーマルキャンドル計算機に手描き風マップ・精密アトラス表示</div>
+            <div class="log-desc">実際のゲーム内座標に基づく光源マーカー入りのアトラス表示を追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-31</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>エモート所持率管理（emote）を新設</div>
+            <div class="log-desc">この時点で item・wings・share・star-candle・companion・emote の全サイトが
+              ホーム画面への追加（PWA）に対応しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-30</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>複数プロフィール（サブ垢）対応を全サイトに追加</div>
+            <div class="log-desc">item・wings・share・star-candle・companionに、同じブラウザ内で複数のセーブ
+              データを切り替えられるプロフィール機能を追加。以降の全サイト共通基盤になりました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-28</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>アイテム所持管理にカスタマイズ共有・お気に入りシェア</div>
+            <div class="log-desc">背景テーマ・コメントを設定してから達成率画像を保存/共有できる機能と、
+              お気に入りアイテムを画像で共有する機能を追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-23</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>アイテム所持管理にコスト診断・カテゴリ別コストページ</div>
+            <div class="log-desc">シーズンパス・キャンドル消費の診断や、カテゴリごとの実際の入手コストを
+              確認できるページを整備しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-21</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>羽トラッカー（wings）を新設</div>
+            <div class="log-desc">翼の光（ウィングバフ）の取得状況を精霊ごとにチェックできるサイトを新設しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-20</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>星のキャンドル計算機（star-candle）を新設</div>
+            <div class="log-desc">同じ頃、精霊同行ツール（companion）にシーズンカウントダウン・予測表示機能が
+              本格的に実装されました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-07-16</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>プロフィールサイトを新設</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-06-24</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>アイテム所持管理（item）・精霊同行ツール（companion）を新設</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-06-25</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>創作物管理ツール（share）を新設</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-06-03</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>最初のツール（現ノーマルキャンドル計算機）を開始</div>
+            <div class="log-desc">taipak5000.github.io系ツール群で最初に作られたサイトです。当初はキャンドル計算機・
+              精霊同行・創作物管理のページが1つのリポジトリにまとまっていましたが、6月25日にそれぞれ
+              companion・shareとして独立したリポジトリに分割されました。</div>
           </div>
         </div>
       </div>
