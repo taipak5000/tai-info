@@ -202,12 +202,73 @@
       <p class="sec-sub" style="padding-top:0;">日付は各リポジトリのgitコミット履歴に基づく実際の日付です。</p>
       <div class="card">
         <div class="log-entry">
+          <div class="log-date">2026-08-11</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>ノマキャン計算機・星のキャンドル計算機の所持通貨を相互同期</div>
+            <div class="log-desc">両サイトで所持本数を入力すると、プロフィール共通の所持キャンドル/星のキャンドル数にも
+              自動で反映されるようにしました。ページを開いただけでは同期しないため、他サイトで先に更新した値を
+              誤って上書きすることはありません。プロフィールモーダルを開いたまま編集した場合も、その場で表示が
+              更新されます。反映が確認できない場合向けに「🔄 最新の状態に更新」ボタン（キャッシュを回避した
+              強制リロード）も両サイトに追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-11</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>ノマキャン計算機に「使用予定本数」「今日の分を集め終わった」を追加</div>
+            <div class="log-desc">目標本数とは別に、近々使う予定のある本数を入力できる欄を追加（必要本数の
+              計算に加算されます）。また、1日の集めペースのスライダー本数をワンタップで所持本数に加算できる
+              「今日の分を集め終わった」ボタンも追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-10</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>恒常精霊フルコンプをアイテム検索に統合</div>
+            <div class="log-desc">アイテム検索で「恒常精霊」「恒常究極」を選ぶと、エリア（孤島〜書庫）や
+              「大精霊のアイテムのみ」で絞り込めるようになりました。また、季節・イベントを選択している間は
+              「絞り込み結果をすべて所持済みにする」ボタンが表示され、恒常精霊に限らずどの季節でも一括登録
+              できます。従来の独立した「恒常精霊フルコンプ」ボタンはこちらに統合しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-10</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">CHANGE</span>所持済みアイテムをウィッシュリストから自動除外、再訪アイテムの表示修正</div>
+            <div class="log-desc">アイテムを所持済みにすると、ウィッシュリストに登録していた場合は自動で
+              外れるようにしました（item・精霊ツリーのどちらから所持登録した場合も対応）。また、季節開催中には
+              入手不可能だった再訪追加アイテム11件（リズムの旗/火鉢、楽園のビーチパラソル/デッキチェア等、
+              預言者の火鉢/壁の預言者シール）について、矛盾していた「季節中に入手」表示を修正しました。
+              ランダムコーデはモーダルを開くたびに再抽選せず、前回の結果を再表示するように変更しています
+              （「もう一度」ボタンでの再抽選は従来通りです）。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-10</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">CHANGE</span>「画像で保存」「Xでシェア」を「Xで画像を共有」に統合</div>
+            <div class="log-desc">達成率・お気に入り・マイコーデ・ランダムコーデのすべての共有機能で、
+              別々だった2つのボタンを1つに統合しました。画像はどちらのボタンでも同じ仕組みで生成されており、
+              保存専用ボタンは実質的に不要だったためです。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-10</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">CHANGE</span>精霊ツリーのワープ機能ノードをチェックリストの対象外に</div>
+            <div class="log-desc">案内人ツリーの「〇〇 Warp」ノード（案内人の広場へのワープ機能）はイベント
+              期間中にしか使えず所持管理と無関係なため、進捗集計・チェック操作の対象から除外しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
           <div class="log-date">2026-08-10</div>
           <div class="log-body">
             <div class="log-title"><span class="log-tag">NEW</span>ノマキャン計算機（ライト版）を新設</div>
             <div class="log-desc">通常キャンドルの目標本数まであと何日かを、所持本数・1日の目安獲得数から
               計算できるシンプルなサイトです。地図・効率最適化・ルート管理などの機能は含めず、
-              それらが不要なライトユーザー向けに、姉妹サイトのノマキャン計算機プロから分離しました。</div>
+              それらが不要なライトユーザー向けに、姉妹サイトのノマキャン計算機プロから分離しました。
+              新設と同日中に、獲得履歴・アンケート回答ボタン（+3本）・リクエストフォームリンクを追加し、
+              目標日を設定した場合は「1日何本必要か」を主結果として表示するように強化しています。</div>
           </div>
         </div>
         <div class="log-entry">
