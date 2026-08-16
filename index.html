@@ -245,6 +245,51 @@
       <p class="sec-sub" style="padding-top:0;">日付は各リポジトリのgitコミット履歴に基づく実際の日付です。</p>
       <div class="card">
         <div class="log-entry">
+          <div class="log-date">2026-08-16</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>再訪精霊データベースと精霊ツリー管理を連携、両サイトの精霊名検索をひらがな対応に</div>
+            <div class="log-desc">再訪精霊データベースの精霊名から、精霊ツリー管理の該当精霊の詳細（ツリー開放状況）へ新しいタブで
+              直接ジャンプできるようになりました。あわせて両サイトの精霊名検索を、アイテム所持管理と同じ方式で
+              ひらがな入力に対応させました（漢字表記の精霊名でも読みで検索できます）。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-16</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>再訪精霊データベースに「まだ再訪が来ていない精霊」一覧を追加</div>
+            <div class="log-desc">季節精霊のうち、来訪（Traveling Spirit）・特別来訪（Returning Spirits）が
+              一度も来ていない47精霊を、折り畳み形式でページ下部にまとめました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-16</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">CHANGE</span>再訪精霊データベースの検索・表示を強化</div>
+            <div class="log-desc">最終来訪からの経過日数順ソート、季節フィルターのシーズン実装順並び替え、
+              エリア（地名）バッジの日本語表記化、フッターの視認性改善を行いました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-16</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">CHANGE</span>データ引継ぎのコードを大幅短縮、ファイル転送にも対応</div>
+            <div class="log-desc">引き継ぎコードが長すぎて使いにくいという声を受け、gzip圧縮してからコード化する
+              ことで文字数を大幅に削減しました（実測で約9割減）。あわせて、コピー&amp;ペーストに加えて
+              ファイルとしてダウンロード/読み込みする方法も追加し、別端末への受け渡しをAirDropやメッセージ
+              アプリの添付でも行えるようにしました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
+          <div class="log-date">2026-08-15</div>
+          <div class="log-body">
+            <div class="log-title"><span class="log-tag">NEW</span>再訪精霊データベースを新設</div>
+            <div class="log-desc">過去に来訪（Traveling Spirit）・特別来訪（Returning Spirits）した精霊の履歴を
+              検索できる、閲覧専用の参考データベースサイトを新設しました。SkyGame-Dataプロジェクトを基にした
+              92精霊・230件の来訪履歴を収録し、精霊名・季節での検索/絞り込みができます。所持チェックなどの
+              記録機能はない、参照専用のツールです。全サイトのサイドバーにリンクを追加しました。</div>
+          </div>
+        </div>
+        <div class="log-entry">
           <div class="log-date">2026-08-15</div>
           <div class="log-body">
             <div class="log-title"><span class="log-tag">NEW</span>ホーム画面アイコンをカスタマイズできる機能を追加（全サイト対応）</div>
@@ -562,6 +607,7 @@
         <ul>
           <li>Sky: Children of the Light Wiki（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
           <li>9bit、ゲームエイト、wikiwiki.jp（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>
+          <li><a href="https://github.com/Silverfeelin/SkyGame-Data" target="_blank" rel="noopener noreferrer">SkyGame-Data</a>（Silverfeelin氏、MIT License）— 再訪精霊データベースの来訪履歴データの出典</li>
         </ul>
         <p style="margin-top:8px;">詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。</p>
       </div>
@@ -979,6 +1025,14 @@ const referenceSources = [
       { title: 'Pieces of Light | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Pieces_of_Light', note: '光の欠片データ' },
       { title: 'Additional Light Sources | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Additional_Light_Sources', note: '追加の光源データ' },
       { title: 'Special:AllMaps | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Special:AllMaps', note: '光源マーカーの座標データ算出に利用（マップ画像自体は使用せず、座標データのみ参照）' },
+    ]
+  },
+  {
+    group: '🕊️ 再訪精霊データベース',
+    items: [
+      { title: 'Silverfeelin/SkyGame-Data (GitHub)', url: 'https://github.com/Silverfeelin/SkyGame-Data', note: '来訪（Traveling Spirit）・特別来訪（Returning Spirits）の全履歴データの出典（MIT License）' },
+      { title: 'Sky 星を紡ぐ子どもたち Wiki*（wikiwiki.jp/sky-jp）用語集', url: 'https://wikiwiki.jp/sky-jp/%E7%94%A8%E8%AA%9E%E9%9B%86/%E8%8B%B1%E5%90%8D', note: 'エリア（地名）の日本語表記の確認' },
+      { title: 'Sky: Children of the Light Wiki 日本語版（Fandom）各地方ページ', url: 'https://sky-children-of-the-light.fandom.com/ja/wiki/%E5%AD%A4%E5%B3%B6', note: 'エリア（地名）の日本語表記の確認（孤島・草原・雨林・峡谷・捨てられた地・書庫の各ページ）' },
     ]
   },
 ];
