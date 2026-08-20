@@ -204,6 +204,11 @@
       background: var(--bg); border: 1px solid var(--sep); border-radius: var(--r-sm);
       padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap;
     }
+    .settings-lang-btn {
+      flex: 1; background: var(--bg); border: 1px solid var(--sep); border-radius: var(--r-sm);
+      padding: 7px 12px; font-size: 13.5px; font-weight: 600; color: var(--text); white-space: nowrap;
+    }
+    .settings-lang-btn.active { background: var(--indigo); color: #fff; border-color: var(--indigo); font-weight: 700; }
 
     /* ── サイトドック（画面下部クイックアクセスバー） ─────────
        既存のハンバーガーサイドバーを置き換えるものではなく、並存する
@@ -537,6 +542,14 @@
         <span class="settings-row-text" data-i18n="dispSettings.shortcutEscape">開いているウィンドウを閉じる</span>
       </div>
     </div>
+
+    <div class="settings-section">
+      <p class="settings-section-label" data-i18n="dispSettings.langLabel">🌐 言語 / Language</p>
+      <div class="settings-row">
+        <button type="button" class="settings-lang-btn" id="settingsLangJaBtn" onclick="setLang('ja')">日本語</button>
+        <button type="button" class="settings-lang-btn" id="settingsLangEnBtn" onclick="setLang('en')">English</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -737,6 +750,7 @@ const I18N = {
   'dispSettings.shortcutOpen': { ja: `この設定を開く`, en: `Open this settings panel` },
   'dispSettings.shortcutTheme': { ja: `ダークモード切替`, en: `Toggle dark mode` },
   'dispSettings.shortcutEscape': { ja: `開いているウィンドウを閉じる`, en: `Close the open window` },
+  'dispSettings.langLabel': { ja: `🌐 言語 / Language`, en: `🌐 Language` },
 
   'footer.text': { ja: `このサイトはSky 星を紡ぐ子どもたちの非公式ファンサイトです。thatgamecompanyは一切関与していません。<br>作成・ご意見: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a>`, en: `This is an unofficial fan site for Sky: Children of the Light. thatgamecompany is not involved in any way.<br>Created by / feedback: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">Request form</a>` },
 
@@ -772,11 +786,30 @@ function applyI18n() {
 }
 
 function toggleLang() {
-  LANG = LANG === 'ja' ? 'en' : 'ja';
+  setLang(LANG === 'ja' ? 'en' : 'ja');
+}
+
+// ⚙️ 表示設定モーダル内の言語セレクター用。toggleLang() と異なり2状態を
+// 交互に切り替えるのではなく、指定した言語へ直接ジャンプする。既に選択中の
+// 言語が指定された場合は何もしない（無意味な再描画・localStorage書き込みを防ぐ）。
+function setLang(lang) {
+  if (LANG === lang) return;
+  LANG = lang;
   try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
   applyI18n();
   renderChangelog();
   renderReferences();
+  settingsSyncLangUI();
+}
+
+// 設定モーダル内の言語ボタンのハイライトを、現在のLANGの状態に同期させる。
+function settingsSyncLangUI() {
+  const jaBtn = document.getElementById('settingsLangJaBtn');
+  const enBtn = document.getElementById('settingsLangEnBtn');
+  if (jaBtn && enBtn) {
+    jaBtn.classList.toggle('active', LANG === 'ja');
+    enBtn.classList.toggle('active', LANG === 'en');
+  }
 }
 
 /* ================================================================
@@ -827,6 +860,7 @@ function settingsOpen() {
   updateThemeToggleLabel();
   const cb = document.getElementById('shortcutsEnabledCheckbox');
   if (cb) cb.checked = skyShortcutsEnabled();
+  settingsSyncLangUI();
   openModal('settingsModal');
 }
 
