@@ -64,7 +64,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
-      background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px;
+      background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: calc(76px + env(safe-area-inset-bottom));
     }
 
     nav {
@@ -204,6 +204,27 @@
       background: var(--bg); border: 1px solid var(--sep); border-radius: var(--r-sm);
       padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap;
     }
+
+    /* ── サイトドック（画面下部クイックアクセスバー） ─────────
+       既存のハンバーガーサイドバーを置き換えるものではなく、並存する
+       ショートカット行。既存のデザイントークン（--card/--sep/--text-2等）を
+       流用し、選択状態は持たない（:active の押下フィードバックのみ）。 */
+    nav.site-dock {
+      display: flex; position: fixed; top: auto; left: 0; right: 0; bottom: 0; z-index: 90;
+      padding: 6px 10px calc(8px + env(safe-area-inset-bottom));
+      background: var(--card);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-top: 0.5px solid var(--sep); border-bottom: none;
+      justify-content: space-around; align-items: stretch; gap: 4px;
+    }
+    .site-dock button {
+      flex: 1 1 0; max-width: 110px; border: 0; background: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      padding: 6px 0; min-height: 52px; border-radius: 12px; font-family: inherit;
+    }
+    .site-dock button:active { background: var(--sep); }
+    .site-dock .site-dock-icon { font-size: 20px; line-height: 1; }
+    .site-dock .site-dock-label { font-size: 10px; font-weight: 700; color: var(--text-2); }
   </style>
 </head>
 <body>
@@ -525,6 +546,26 @@
   <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a>
 </footer>
 
+<!-- ▸ サイトドック（クイックアクセスバー。ハンバーガーサイドバーとは並存し、置き換えない） -->
+<nav class="site-dock" data-i18n-aria="dock.ariaLabel" aria-label="クイックメニュー">
+  <button type="button" onclick="showTab('changelog')">
+    <span class="site-dock-icon">🆕</span>
+    <span class="site-dock-label" data-i18n="dock.changelog">更新情報</span>
+  </button>
+  <button type="button" onclick="showTab('credits')">
+    <span class="site-dock-icon">🙏</span>
+    <span class="site-dock-label" data-i18n="dock.credits">クレジット</span>
+  </button>
+  <button type="button" onclick="toggleSidebar()">
+    <span class="site-dock-icon">☰</span>
+    <span class="site-dock-label" data-i18n="dock.otherTools">他のツール</span>
+  </button>
+  <button type="button" onclick="settingsOpen()">
+    <span class="site-dock-icon">⚙️</span>
+    <span class="site-dock-label" data-i18n="dock.displaySettings">表示設定</span>
+  </button>
+</nav>
+
 <script>
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('sidebar-open');
@@ -698,6 +739,12 @@ const I18N = {
   'dispSettings.shortcutEscape': { ja: `開いているウィンドウを閉じる`, en: `Close the open window` },
 
   'footer.text': { ja: `このサイトはSky 星を紡ぐ子どもたちの非公式ファンサイトです。thatgamecompanyは一切関与していません。<br>作成・ご意見: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a>`, en: `This is an unofficial fan site for Sky: Children of the Light. thatgamecompany is not involved in any way.<br>Created by / feedback: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">Request form</a>` },
+
+  'dock.ariaLabel': { ja: `クイックメニュー`, en: `Quick Menu` },
+  'dock.changelog': { ja: `更新情報`, en: `Updates` },
+  'dock.credits': { ja: `クレジット`, en: `Credits` },
+  'dock.otherTools': { ja: `他のツール`, en: `Other Tools` },
+  'dock.displaySettings': { ja: `表示設定`, en: `Display Settings` },
 };
 
 function t(key, vars) {
@@ -718,6 +765,7 @@ function applyI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.getAttribute('data-i18n')); });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder'))); });
   document.querySelectorAll('[data-i18n-title]').forEach(el => { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
   const langBtn = document.getElementById('langToggleBtn');
   if (langBtn) langBtn.textContent = LANG === 'ja' ? 'EN' : '日本語';
   updateThemeToggleLabel();
