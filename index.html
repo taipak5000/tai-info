@@ -95,7 +95,11 @@
     .sidebar-overlay.show { display: block; }
 
     .app-layout { max-width: 720px; margin: 0 auto; padding: 0 16px; }
-    @media (min-width: 850px) { .app-layout { max-width: 960px; display: flex; gap: 20px; align-items: flex-start; } }
+    /* デスクトップ幅（850px以上）でのmax-width。960pxだと、サイドバー200px+gap20pxを
+       差し引いた残り幅がページ内タブ5個の合計幅（約731px）に対して足りず、1280pxの
+       ウィンドウ幅でも最後の1タブが見切れて横スクロールが必要になっていたため、
+       1040pxに拡張（余裕を持って全タブがスクロールなしで収まる）。 */
+    @media (min-width: 850px) { .app-layout { max-width: 1040px; display: flex; gap: 20px; align-items: flex-start; } }
     .wrap { flex: 1; min-width: 0; }
 
     .sidebar {
@@ -451,9 +455,9 @@
 
 <!-- ▸ ホーム画面アイコンカスタマイズモーダル -->
 <div class="modal-overlay" id="iconCustomModal" onclick="if(event.target===this)closeModal('iconCustomModal')">
-  <div class="modal-card">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="iconCustomModalTitle" tabindex="-1">
     <div class="modal-header">
-      <span class="modal-title" data-i18n="iconCustom.title">🎨 ホーム画面アイコンをカスタマイズ</span>
+      <span class="modal-title" id="iconCustomModalTitle" data-i18n="iconCustom.title">🎨 ホーム画面アイコンをカスタマイズ</span>
       <button class="modal-close" onclick="closeModal('iconCustomModal')">✕</button>
     </div>
 
@@ -476,18 +480,18 @@
         style="font-size:28px; text-align:center; width:100%; padding:10px; border-radius:var(--r-sm); border:1px solid var(--sep); background:var(--bg); color:var(--text); box-sizing:border-box;">
       <p class="sec-label" style="padding:10px 0 6px; font-size:12px;" data-i18n="iconCustom.bgColorLabel">背景色</p>
       <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-        <button type="button" onclick="pfIconPickSwatch('#5E5CE6')" style="width:32px; height:32px; border-radius:50%; background:#5E5CE6; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#007AFF')" style="width:32px; height:32px; border-radius:50%; background:#007AFF; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#34C759')" style="width:32px; height:32px; border-radius:50%; background:#34C759; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#FF3B30')" style="width:32px; height:32px; border-radius:50%; background:#FF3B30; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#FF9500')" style="width:32px; height:32px; border-radius:50%; background:#FF9500; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#8E8E93')" style="width:32px; height:32px; border-radius:50%; background:#8E8E93; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#FFCC00')" style="width:32px; height:32px; border-radius:50%; background:#FFCC00; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#00C7BE')" style="width:32px; height:32px; border-radius:50%; background:#00C7BE; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#AF52DE')" style="width:32px; height:32px; border-radius:50%; background:#AF52DE; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#A2845E')" style="width:32px; height:32px; border-radius:50%; background:#A2845E; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#32ADE6')" style="width:32px; height:32px; border-radius:50%; background:#32ADE6; border:2px solid transparent;"></button>
-        <button type="button" onclick="pfIconPickSwatch('#48484A')" style="width:32px; height:32px; border-radius:50%; background:#48484A; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#5E5CE6')" data-i18n-aria="iconCustom.swatch.indigo" style="width:32px; height:32px; border-radius:50%; background:#5E5CE6; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#007AFF')" data-i18n-aria="iconCustom.swatch.blue" style="width:32px; height:32px; border-radius:50%; background:#007AFF; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#34C759')" data-i18n-aria="iconCustom.swatch.green" style="width:32px; height:32px; border-radius:50%; background:#34C759; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#FF3B30')" data-i18n-aria="iconCustom.swatch.red" style="width:32px; height:32px; border-radius:50%; background:#FF3B30; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#FF9500')" data-i18n-aria="iconCustom.swatch.orange" style="width:32px; height:32px; border-radius:50%; background:#FF9500; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#8E8E93')" data-i18n-aria="iconCustom.swatch.gray" style="width:32px; height:32px; border-radius:50%; background:#8E8E93; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#FFCC00')" data-i18n-aria="iconCustom.swatch.yellow" style="width:32px; height:32px; border-radius:50%; background:#FFCC00; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#00C7BE')" data-i18n-aria="iconCustom.swatch.teal" style="width:32px; height:32px; border-radius:50%; background:#00C7BE; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#AF52DE')" data-i18n-aria="iconCustom.swatch.purple" style="width:32px; height:32px; border-radius:50%; background:#AF52DE; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#A2845E')" data-i18n-aria="iconCustom.swatch.brown" style="width:32px; height:32px; border-radius:50%; background:#A2845E; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#32ADE6')" data-i18n-aria="iconCustom.swatch.lightBlue" style="width:32px; height:32px; border-radius:50%; background:#32ADE6; border:2px solid transparent;"></button>
+        <button type="button" onclick="pfIconPickSwatch('#48484A')" data-i18n-aria="iconCustom.swatch.darkGray" style="width:32px; height:32px; border-radius:50%; background:#48484A; border:2px solid transparent;"></button>
       </div>
       <p style="font-size:11.5px; color:var(--text-2); margin:0 0 6px;" data-i18n="iconCustom.colorPickHint">🎨 タップして好きな色を自由に選ぶこともできます</p>
       <input type="color" id="iconBgColorInput" value="#5E5CE6" oninput="pfIconUpdatePreview()" style="width:100%; height:40px; border:none; border-radius:var(--r-sm); background:none;">
@@ -513,9 +517,9 @@
 
 <!-- ▸ ⚙️ 表示設定モーダル -->
 <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this)closeModal('settingsModal')">
-  <div class="modal-card">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" tabindex="-1">
     <div class="modal-header">
-      <span class="modal-title" data-i18n="dispSettings.title">⚙️ 表示設定</span>
+      <span class="modal-title" id="settingsModalTitle" data-i18n="dispSettings.title">⚙️ 表示設定</span>
       <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
     </div>
 
@@ -612,21 +616,93 @@ function closeSidebarDrawer() {
   document.getElementById('sidebarOverlay').classList.remove('show');
 }
 
+// 📱→🖥️ モバイル幅で開いたドロワー（sidebar-open）を開いたままにした状態で、
+// ウィンドウのリサイズやタブレットの回転により、ビューポートが850px以上
+// （サイドバー常時表示のデスクトップレイアウト）をまたいでしまった場合の保険。
+// その瞬間からtoggleSidebar()はisMobileSidebarLayout()ガードで早期returnするようになり、
+// 閉じるボタン・オーバーレイクリックのどちらも効かなくなる（Escは閉じるが、キーボードを
+// 使わないユーザーはリロードしか脱出手段がなくなってしまう）。matchMediaで850px境界を
+// またいだ瞬間を直接検知し、ドロワー状態を強制的に後片付けする。
+const desktopSidebarMQ = window.matchMedia('(min-width: 850px)');
+function handleSidebarViewportChange(e) {
+  if (e.matches) closeSidebarDrawer();
+}
+if (desktopSidebarMQ.addEventListener) {
+  desktopSidebarMQ.addEventListener('change', handleSidebarViewportChange);
+} else if (desktopSidebarMQ.addListener) {
+  // Safari 13以前など、addEventListenerを持たない古いMediaQueryList向けのフォールバック
+  desktopSidebarMQ.addListener(handleSidebarViewportChange);
+}
+
 // 開いているモーダルを「開かれた順」で管理するスタック（Escキーで
 // 一番手前のものだけを閉じるために使用。詳細は closeTopmostOpenModal 参照）。
 let openModalStack = [];
 
+// ♿ モーダルのフォーカス管理。
+// - 開く時: モーダル内の最初のフォーカス可能要素（DOM順で常に✕閉じるボタンが先頭）へ
+//   フォーカスを移す。背景のページ要素はオーバーレイがマウス操作を塞いでいるが、
+//   キーボード操作にはこのガードがないと素通りしてしまう。
+// - 開いている間: Tab/Shift+Tabをモーダル内だけに閉じ込める（下のkeydownリスナー）。
+// - 閉じる時: 開く直前にフォーカスがあった要素（トリガー）に戻す。複数モーダルが
+//   重なっている場合（例: iconCustomModalを開いたまま?キーでsettingsModalも開く）は、
+//   閉じた後もまだ開いているモーダルがあればそちらへフォーカスを渡す。
+const modalTriggerEls = {};
+
+function getFocusableEls(container) {
+  const nodes = container.querySelectorAll(
+    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+  return Array.from(nodes).filter(el => el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement);
+}
+
+function focusFirstInModal(id) {
+  const modalEl = document.getElementById(id);
+  const focusables = getFocusableEls(modalEl);
+  if (focusables.length) focusables[0].focus();
+  else modalEl.querySelector('.modal-card').focus();
+}
+
 function openModal(id) {
+  modalTriggerEls[id] = document.activeElement;
   document.getElementById(id).classList.add('open');
   openModalStack = openModalStack.filter(x => x !== id);
   openModalStack.push(id);
+  focusFirstInModal(id);
 }
 
 function closeModal(id) {
   document.getElementById(id).classList.remove('open');
   openModalStack = openModalStack.filter(x => x !== id);
   closeSidebarDrawer();
+  if (openModalStack.length) {
+    focusFirstInModal(openModalStack[openModalStack.length - 1]);
+  } else {
+    const trigger = modalTriggerEls[id];
+    if (trigger && typeof trigger.focus === 'function' && document.contains(trigger)) trigger.focus();
+  }
+  delete modalTriggerEls[id];
 }
+
+// Tab/Shift+Tabを、開いている一番手前（最後に開かれた）モーダルの中だけに閉じ込める。
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Tab' || openModalStack.length === 0) return;
+  const modalEl = document.getElementById(openModalStack[openModalStack.length - 1]);
+  const focusables = getFocusableEls(modalEl);
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === first || !modalEl.contains(document.activeElement)) {
+      e.preventDefault();
+      last.focus();
+    }
+  } else {
+    if (document.activeElement === last || !modalEl.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
 
 /* ================================================================
    i18n（日本語 / 英語 表示切替）
@@ -771,6 +847,18 @@ const I18N = {
   'iconCustom.emojiLabel': { ja: `絵文字`, en: `Emoji` },
   'iconCustom.bgColorLabel': { ja: `背景色`, en: `Background Color` },
   'iconCustom.colorPickHint': { ja: `🎨 タップして好きな色を自由に選ぶこともできます`, en: `🎨 Or tap below to pick any color freely` },
+  'iconCustom.swatch.indigo': { ja: `インディゴ`, en: `Indigo` },
+  'iconCustom.swatch.blue': { ja: `青`, en: `Blue` },
+  'iconCustom.swatch.green': { ja: `緑`, en: `Green` },
+  'iconCustom.swatch.red': { ja: `赤`, en: `Red` },
+  'iconCustom.swatch.orange': { ja: `オレンジ`, en: `Orange` },
+  'iconCustom.swatch.gray': { ja: `グレー`, en: `Gray` },
+  'iconCustom.swatch.yellow': { ja: `イエロー`, en: `Yellow` },
+  'iconCustom.swatch.teal': { ja: `ティール`, en: `Teal` },
+  'iconCustom.swatch.purple': { ja: `パープル`, en: `Purple` },
+  'iconCustom.swatch.brown': { ja: `ブラウン`, en: `Brown` },
+  'iconCustom.swatch.lightBlue': { ja: `ライトブルー`, en: `Light Blue` },
+  'iconCustom.swatch.darkGray': { ja: `ダークグレー`, en: `Dark Gray` },
   'iconCustom.uploadLabel': { ja: `画像をアップロード`, en: `Upload Image` },
   'iconCustom.previewLabel': { ja: `プレビュー`, en: `Preview` },
   'iconCustom.resetBtn': { ja: `デフォルトに戻す`, en: `Reset to Default` },
@@ -942,7 +1030,17 @@ document.addEventListener('keydown', function (e) {
 // 「ホーム画面に追加」時に使われるアイコン（apple-touch-icon / manifest.json）を、
 // ユーザーが選んだ絵文字＋背景色、またはアップロード画像に差し替える。
 // プロフィール（保存枠）に関わらずこの端末・ブラウザ共通の設定のため、nsKeyは使わない。
-const PF_ICON_STORAGE_KEY = 'pfCustomHomeIcon_v1';
+// 🔑 保存キーをサイトごとに名前空間化する（プロフィール単位のnsKey()とは別軸）。
+// taipak5000.github.io系サイトは全サイトが同一オリジンでlocalStorageを共有するため、
+// 固定文字列のままだと、あるサイトで設定したホーム画面アイコンが他サイトの設定まで
+// 上書きしてしまう（実際にwingsと衝突することを確認済み）。location.pathnameの
+// 先頭セグメント（例: '/tai-info/' → 'tai-info'）は各サイトの実際の公開URLパスと
+// 一致し、リポジトリ名の変更にも自動追従するため、これをサイト識別子として使う。
+function pfSiteId() {
+  const seg = location.pathname.split('/').filter(Boolean)[0];
+  return seg || 'root';
+}
+const PF_ICON_STORAGE_KEY = 'pfCustomHomeIcon_v1__site_' + pfSiteId();
 const PF_ICON_ORIGINAL_APPLE_HREF = document.querySelector('link[rel="apple-touch-icon"]')?.href || 'icons/app-icon-192.png';
 const PF_ICON_ORIGINAL_MANIFEST_HREF = document.querySelector('link[rel="manifest"]')?.href || 'manifest.json';
 let pfIconMode = 'emoji';
