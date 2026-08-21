@@ -277,12 +277,12 @@
   </aside>
 
   <div class="wrap">
-    <div class="page-tabs" id="pageTabs">
-      <button class="page-tab" data-tab="settings" data-i18n="tabs.settings">⚙️ 設定について</button>
-      <button class="page-tab" data-tab="changelog" data-i18n="tabs.changelog">🆕 更新情報</button>
-      <button class="page-tab" data-tab="credits" data-i18n="tabs.credits">🙏 クレジット</button>
-      <button class="page-tab" data-tab="privacy" data-i18n="tabs.privacy">🔒 プライバシーポリシー</button>
-      <button class="page-tab" data-tab="references" data-i18n="tabs.references">📚 参考文献・画像引用元</button>
+    <div class="page-tabs" id="pageTabs" role="tablist">
+      <button class="page-tab" data-tab="settings" role="tab" aria-selected="false" data-i18n="tabs.settings">⚙️ 設定について</button>
+      <button class="page-tab" data-tab="changelog" role="tab" aria-selected="false" data-i18n="tabs.changelog">🆕 更新情報</button>
+      <button class="page-tab" data-tab="credits" role="tab" aria-selected="false" data-i18n="tabs.credits">🙏 クレジット</button>
+      <button class="page-tab" data-tab="privacy" role="tab" aria-selected="false" data-i18n="tabs.privacy">🔒 プライバシーポリシー</button>
+      <button class="page-tab" data-tab="references" role="tab" aria-selected="false" data-i18n="tabs.references">📚 参考文献・画像引用元</button>
     </div>
 
     <!-- ▸ 設定について -->
@@ -475,10 +475,10 @@
     </div>
 
     <div id="iconEmojiPanel">
-      <p class="sec-label" style="padding:0 0 6px; font-size:12px;" data-i18n="iconCustom.emojiLabel">絵文字</p>
+      <label class="sec-label" for="iconEmojiInput" style="padding:0 0 6px; font-size:12px;" data-i18n="iconCustom.emojiLabel">絵文字</label>
       <input type="text" id="iconEmojiInput" maxlength="8" value="⚙️" oninput="pfIconUpdatePreview()"
         style="font-size:28px; text-align:center; width:100%; padding:10px; border-radius:var(--r-sm); border:1px solid var(--sep); background:var(--bg); color:var(--text); box-sizing:border-box;">
-      <p class="sec-label" style="padding:10px 0 6px; font-size:12px;" data-i18n="iconCustom.bgColorLabel">背景色</p>
+      <label class="sec-label" for="iconBgColorInput" style="padding:10px 0 6px; font-size:12px;" data-i18n="iconCustom.bgColorLabel">背景色</label>
       <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
         <button type="button" onclick="pfIconPickSwatch('#5E5CE6')" data-i18n-aria="iconCustom.swatch.indigo" style="width:32px; height:32px; border-radius:50%; background:#5E5CE6; border:2px solid transparent;"></button>
         <button type="button" onclick="pfIconPickSwatch('#007AFF')" data-i18n-aria="iconCustom.swatch.blue" style="width:32px; height:32px; border-radius:50%; background:#007AFF; border:2px solid transparent;"></button>
@@ -498,7 +498,7 @@
     </div>
 
     <div id="iconImagePanel" style="display:none;">
-      <p class="sec-label" style="padding:0 0 6px; font-size:12px;" data-i18n="iconCustom.uploadLabel">画像をアップロード</p>
+      <label class="sec-label" for="iconImageInput" style="padding:0 0 6px; font-size:12px;" data-i18n="iconCustom.uploadLabel">画像をアップロード</label>
       <input type="file" id="iconImageInput" accept="image/*" onchange="pfIconHandleFile(event)">
     </div>
 
@@ -678,7 +678,37 @@ function closeModal(id) {
     focusFirstInModal(openModalStack[openModalStack.length - 1]);
   } else {
     const trigger = modalTriggerEls[id];
-    if (trigger && typeof trigger.focus === 'function' && document.contains(trigger)) trigger.focus();
+    // ♿ trigger がモバイル幅のサイドバードロワー内のリンク/ボタンだった場合、
+    // 直前の closeSidebarDrawer() で .sidebar が display:none に戻り、trigger自体も
+    // フォーカス不可能になっている（display:noneの要素へのfocus()は無視され、
+    // フォーカスは<body>に取り残されてしまう）。trigger.focus()を呼ぶ前に
+    // 実際にフォーカス可能（表示中）かをoffsetWidth/Heightで確認する。
+    // ただしこのチェックだけでは不十分: trigger が <body>（例: 「?」ショートカットを
+    // 何もフォーカスしていない状態で押した直後にモーダルを開いた場合）だと
+    // offsetWidth/Heightは常に非0でここを通ってしまうが、tabindexの無い<body>への
+    // .focus()呼び出しはブラウザ仕様上no-opで実際には何も起きず、直前に閉じたモーダル内の
+    // （display:noneになった）要素にフォーカスが取り残されたままになる。そのため
+    // focus()を呼んだ後に実際にフォーカスが移ったかをdocument.activeElementで検証し、
+    // 移っていなければ（＝triggerが実質フォーカス不可能だった場合と同様に）常に
+    // モバイル幅で表示されているハンバーガーメニューのトグルボタンへフォールバックする。
+    const triggerFocusable = trigger && typeof trigger.focus === 'function' && document.contains(trigger)
+      && (trigger.offsetWidth > 0 || trigger.offsetHeight > 0);
+    if (triggerFocusable) trigger.focus();
+    if (!triggerFocusable || document.activeElement !== trigger) {
+      const fallback = document.querySelector('.sidebar-toggle-btn');
+      if (fallback) fallback.focus();
+      // 🛟 最終防衛線: デスクトップ幅（.sidebar-toggle-btnがvisibility:hiddenで
+      // フォーカス不可）かつtrigger自体が最初から<body>だった場合など、上記の
+      // フォールバックも効かないケースが残る。その場合でも、直前まで閉じた
+      // モーダル内の非表示（display:none）要素にフォーカスが取り残されたままには
+      // しない。blur()は対象のフォーカス可否を問わず必ずフォーカスを<body>へ
+      // 戻せるので、最後の保険として明示的に外す。
+      if (document.activeElement && document.activeElement !== document.body
+        && document.activeElement.offsetWidth === 0 && document.activeElement.offsetHeight === 0
+        && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
+    }
   }
   delete modalTriggerEls[id];
 }
@@ -1040,7 +1070,20 @@ function pfSiteId() {
   const seg = location.pathname.split('/').filter(Boolean)[0];
   return seg || 'root';
 }
+const PF_ICON_STORAGE_KEY_LEGACY = 'pfCustomHomeIcon_v1';
 const PF_ICON_STORAGE_KEY = 'pfCustomHomeIcon_v1__site_' + pfSiteId();
+// 旧: 名前空間化前は全サイト共通の固定キー（PF_ICON_STORAGE_KEY_LEGACY）で保存されて
+// いたため、既存ユーザーの設定がそちらに残っている場合がある。新（サイト名前空間化）
+// キーにまだ何も保存されていない場合に限り、旧キーの値を一度だけ新キーへコピーして
+// 引き継ぐ（既にカスタマイズ済みのユーザーの設定が新キー導入によって消えてしまわない
+// ようにするため。旧キー自体は他の未対応サイトがまだ参照している可能性があるため
+// 削除はしない＝実害なし。emote/item/spirit-catalog等の同一移行と同じ考え方）。
+try {
+  if (!localStorage.getItem(PF_ICON_STORAGE_KEY)) {
+    const legacyIcon = localStorage.getItem(PF_ICON_STORAGE_KEY_LEGACY);
+    if (legacyIcon) localStorage.setItem(PF_ICON_STORAGE_KEY, legacyIcon);
+  }
+} catch (e) { /* プライベートブラウジング等でlocalStorageが使えない場合は何もしない */ }
 const PF_ICON_ORIGINAL_APPLE_HREF = document.querySelector('link[rel="apple-touch-icon"]')?.href || 'icons/app-icon-192.png';
 const PF_ICON_ORIGINAL_MANIFEST_HREF = document.querySelector('link[rel="manifest"]')?.href || 'manifest.json';
 let pfIconMode = 'emoji';
@@ -1191,7 +1234,15 @@ const TABS = ['settings', 'changelog', 'credits', 'privacy', 'references'];
 function showTab(tab) {
   if (!TABS.includes(tab)) tab = TABS[0];
   document.querySelectorAll('section[data-tab]').forEach(s => s.classList.toggle('show', s.dataset.tab === tab));
-  document.querySelectorAll('.page-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.page-tab').forEach(b => {
+    const isActive = b.dataset.tab === tab;
+    b.classList.toggle('active', isActive);
+    // ♿ 見た目の.activeクラスだけでは支援技術に選択状態が伝わらないため、
+    // aria-selected / aria-current を切り替えのたびに同期する。
+    b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    if (isActive) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
   history.replaceState(null, '', '#' + tab);
 }
 
