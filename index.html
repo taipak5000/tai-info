@@ -133,10 +133,22 @@
       display: flex; gap: 6px; overflow-x: auto; padding: 18px 2px 4px; -webkit-overflow-scrolling: touch;
     }
     .page-tab {
-      flex-shrink: 0; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+      position: relative; flex-shrink: 0; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
       background: var(--card); color: var(--text-2); border: 1px solid var(--sep); white-space: nowrap;
     }
     .page-tab.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+    /* 🆕 更新情報タブの未読ドット（最終閲覧日より新しいエントリがある場合のみ表示） */
+    .page-tab.has-unread::after {
+      content: ''; position: absolute; top: 5px; right: 7px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--red);
+    }
+
+    /* 🔗 ディープリンクで飛んできたカード/参考文献グループを一時的に強調表示する */
+    .anchor-highlight { animation: anchorPulse 1.6s ease-out; border-radius: var(--r); }
+    @keyframes anchorPulse {
+      0% { box-shadow: 0 0 0 3px var(--indigo-bg); }
+      100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+    }
 
     .sec-label { font-size: 15px; font-weight: 700; color: var(--text); padding: 24px 4px 10px; display: flex; align-items: center; gap: 6px; }
     .sec-sub { font-size: 12px; color: var(--text-2); padding: 0 4px 12px; line-height: 1.7; }
@@ -236,8 +248,13 @@
       padding: 6px 0; min-height: 52px; border-radius: 12px; font-family: inherit;
     }
     .site-dock button:active { background: var(--sep); }
-    .site-dock .site-dock-icon { font-size: 20px; line-height: 1; }
+    .site-dock .site-dock-icon { position: relative; font-size: 20px; line-height: 1; }
     .site-dock .site-dock-label { font-size: 10px; font-weight: 700; color: var(--text-2); }
+    /* 🆕 更新情報の未読ドット（.page-tab.has-unreadと同じ考え方） */
+    .site-dock button.has-unread .site-dock-icon::after {
+      content: ''; position: absolute; top: -2px; right: -6px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--red);
+    }
   </style>
 </head>
 <body>
@@ -278,20 +295,20 @@
 
   <div class="wrap">
     <div class="page-tabs" id="pageTabs" role="tablist">
-      <button class="page-tab" data-tab="settings" role="tab" aria-selected="false" data-i18n="tabs.settings">⚙️ 設定について</button>
-      <button class="page-tab" data-tab="changelog" role="tab" aria-selected="false" data-i18n="tabs.changelog">🆕 更新情報</button>
-      <button class="page-tab" data-tab="credits" role="tab" aria-selected="false" data-i18n="tabs.credits">🙏 クレジット</button>
-      <button class="page-tab" data-tab="privacy" role="tab" aria-selected="false" data-i18n="tabs.privacy">🔒 プライバシーポリシー</button>
-      <button class="page-tab" data-tab="references" role="tab" aria-selected="false" data-i18n="tabs.references">📚 参考文献・画像引用元</button>
+      <button class="page-tab" id="tab-settings" data-tab="settings" role="tab" aria-selected="false" aria-controls="panel-settings" data-i18n="tabs.settings">⚙️ 設定について</button>
+      <button class="page-tab" id="tab-changelog" data-tab="changelog" role="tab" aria-selected="false" aria-controls="panel-changelog" data-i18n="tabs.changelog">🆕 更新情報</button>
+      <button class="page-tab" id="tab-credits" data-tab="credits" role="tab" aria-selected="false" aria-controls="panel-credits" data-i18n="tabs.credits">🙏 クレジット</button>
+      <button class="page-tab" id="tab-privacy" data-tab="privacy" role="tab" aria-selected="false" aria-controls="panel-privacy" data-i18n="tabs.privacy">🔒 プライバシーポリシー</button>
+      <button class="page-tab" id="tab-references" data-tab="references" role="tab" aria-selected="false" aria-controls="panel-references" data-i18n="tabs.references">📚 参考文献・画像引用元</button>
     </div>
 
     <!-- ▸ 設定について -->
-    <section data-tab="settings">
+    <section data-tab="settings" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" tabindex="0">
       <p class="sec-label" data-i18n="settings.label">⚙️ 設定について</p>
       <p class="sec-sub" data-i18n="settings.sub">taipak5000.github.io系のSkyツール群に共通する設定・機能の説明です。実際の操作は
         各サイト側の画面で行ってください。</p>
 
-      <div class="card">
+      <div class="card" id="settings-profile" tabindex="-1">
         <h3 data-i18n="settings.profile.title">👤 プロフィール（保存枠）切替</h3>
         <p data-i18n="settings.profile.body">ほとんどのサイトのヘッダー・サイドバーから開ける「プロフィール切替」メニューで、複数のセーブデータ
           （サブ垢など）を切り替えられます。プロフィールを切り替えると、所持アイテム・マイコーデ・お気に入り・
@@ -299,14 +316,14 @@
           ブラウザ内に保存されます。</p>
       </div>
 
-      <div class="card">
+      <div class="card" id="settings-currency" tabindex="-1">
         <h3 data-i18n="settings.currency.title">💰 所持通貨（6種統一管理）</h3>
         <p data-i18n="settings.currency.body">プロフィール切替メニュー内の「所持通貨」セクションで、キャンドル・ハート・昇華キャンドル・
           シーズンキャンドル・シーズンハート・イベント通貨をどのサイトからでも編集できます。編集した内容は
           全サイトで共通して反映されます。</p>
       </div>
 
-      <div class="card">
+      <div class="card" id="settings-backup" tabindex="-1">
         <h3 data-i18n="settings.backup.title">💾 データのバックアップ・復元・削除</h3>
         <p data-i18n="settings.backup.body">プロフィール切替メニュー内の「データのバックアップ・復元・削除」から、このブラウザに保存されている
           データ全体をファイルに書き出し・読み込み・削除できます。別の端末へ引き継ぎたい場合は
@@ -314,12 +331,12 @@
           形で引き継ぐこともできます。</p>
       </div>
 
-      <div class="card">
+      <div class="card" id="settings-lang" tabindex="-1">
         <h3 data-i18n="settings.lang.title">🌐 言語切替（EN/JA）</h3>
         <p data-i18n="settings.lang.body">多くのサイトでは、ヘッダーの「EN」ボタンから日本語・英語の表示を切り替えられます。対応は順次拡大中で、一部のサイトはまだ非対応です。</p>
       </div>
 
-      <div class="card">
+      <div class="card" id="settings-icon" tabindex="-1">
         <h3 data-i18n="settings.icon.title">📱 ホーム画面アイコンのカスタマイズ</h3>
         <p data-i18n="settings.icon.body">各サイトのサイドバー下部「📱 ホーム画面アイコン」から、「ホーム画面に追加」時のアイコンを
           絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、
@@ -329,7 +346,7 @@
     </section>
 
     <!-- ▸ 更新情報 -->
-    <section data-tab="changelog">
+    <section data-tab="changelog" id="panel-changelog" role="tabpanel" aria-labelledby="tab-changelog" tabindex="0">
       <p class="sec-label" data-i18n="changelog.label">🆕 更新情報</p>
       <p class="sec-sub" data-i18n="changelog.sub1">大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正までは
         すべて載せていません。</p>
@@ -338,14 +355,14 @@
     </section>
 
     <!-- ▸ クレジット -->
-    <section data-tab="credits">
+    <section data-tab="credits" id="panel-credits" role="tabpanel" aria-labelledby="tab-credits" tabindex="0">
       <p class="sec-label" data-i18n="credits.label">🙏 クレジット</p>
-      <div class="card">
+      <div class="card" id="credits-made" tabindex="-1">
         <h3 data-i18n="credits.made.title">制作</h3>
         <p data-i18n="credits.made.body"><a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／
           <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a></p>
       </div>
-      <div class="card">
+      <div class="card" id="credits-dataSource" tabindex="-1">
         <h3 data-i18n="credits.dataSource.title">データ・画像の参照元</h3>
         <ul data-i18n="credits.dataSource.list">
           <li>Sky: Children of the Light Wiki（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
@@ -354,7 +371,7 @@
         </ul>
         <p style="margin-top:8px;" data-i18n="credits.dataSource.note">詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。</p>
       </div>
-      <div class="card">
+      <div class="card" id="credits-libs" tabindex="-1">
         <h3 data-i18n="credits.libs.title">使用ライブラリ</h3>
         <ul data-i18n="credits.libs.list">
           <li>Vue 3 — 精霊同行ツール・創作物管理ツール・ノマキャン計算機プロで使用</li>
@@ -362,12 +379,12 @@
           <li>Google Fonts（Noto Sans JP）</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="card" id="credits-disclaimer" tabindex="-1">
         <h3 data-i18n="credits.disclaimer.title">免責事項</h3>
         <p data-i18n="credits.disclaimer.body">これらのサイトはすべて「Sky 星を紡ぐ子どもたち」の非公式ファンサイトです。thatgamecompanyは
           制作・運営に一切関与していません。</p>
       </div>
-      <div class="card">
+      <div class="card" id="credits-policy" tabindex="-1">
         <h3 data-i18n="credits.policy.title">🛡️ 制作方針について</h3>
         <p data-i18n="credits.policy.intro">このサイト群は、thatgamecompanyが公開しているファンコンテンツ向けのガイドライン
           （<a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/697-can-i-create-a-supplemental-app-or-service-for-sky/" target="_blank" rel="noopener noreferrer">補助アプリ・サービスについて</a>／
@@ -388,15 +405,15 @@
     </section>
 
     <!-- ▸ プライバシーポリシー -->
-    <section data-tab="privacy">
+    <section data-tab="privacy" id="panel-privacy" role="tabpanel" aria-labelledby="tab-privacy" tabindex="0">
       <p class="sec-label" data-i18n="privacy.label">🔒 プライバシーポリシー</p>
-      <div class="card" style="background:var(--indigo-bg); box-shadow:none;">
+      <div class="card" id="privacy-summary" tabindex="-1" style="background:var(--indigo-bg); box-shadow:none;">
         <h3 data-i18n="privacy.summary.title">🔑 ひとことで言うと</h3>
         <p data-i18n="privacy.summary.body">あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、<b>今お使いのスマホ・
           パソコンの中だけ</b>に保存されます。インターネットのどこか（サーバーなど）に送られることはなく、
           運営者を含めて<b>誰にも見られません</b>。会員登録も不要です。</p>
       </div>
-      <div class="card">
+      <div class="card" id="privacy-storage" tabindex="-1">
         <h3 data-i18n="privacy.storage.title">💾 データはどこに保存されているの？</h3>
         <p data-i18n="privacy.storage.p1">スマホやパソコンの「ブラウザ」（Safari・Chromeなどのアプリ）には、それぞれのブラウザだけが使える
           専用の保存スペースがあります（専門用語では「ローカルストレージ」と呼びます）。所持アイテムのチェックや
@@ -407,18 +424,18 @@
           パソコン」に切り替えると、データは引き継がれません。機種変更などでデータを移したいときは、下の
           「データ引継ぎ機能について」をご覧ください。</p>
       </div>
-      <div class="card">
+      <div class="card" id="privacy-account" tabindex="-1">
         <h3 data-i18n="privacy.account.title">👤 会員登録・ログインは必要？</h3>
         <p data-i18n="privacy.account.body">不要です。名前やメールアドレスの入力、パスワードの設定なども一切ありません。「プロフィール」という
           機能がありますが、これは同じブラウザの中で複数のセーブデータ（例: サブ垢用）を切り替えるための
           ものだけで、外部のアカウントとは関係ありません。</p>
       </div>
-      <div class="card">
+      <div class="card" id="privacy-analytics" tabindex="-1">
         <h3 data-i18n="privacy.analytics.title">👀 行動を記録・分析する仕組みは使っている？</h3>
         <p data-i18n="privacy.analytics.body">使っていません。「どのページが何回見られたか」のような、訪問者の行動を計測する仕組み（アクセス
           解析・Cookieなど）は入れていません。</p>
       </div>
-      <div class="card">
+      <div class="card" id="privacy-network" tabindex="-1">
         <h3 data-i18n="privacy.network.title">🌐 インターネットへの通信は発生する？</h3>
         <p data-i18n="privacy.network.intro">基本的にはありませんが、以下の2つの場面でだけ、外部への通信が発生します。どちらも「画像やアイテム名を
           表示するために取ってくる」だけの通信で、あなたの個人情報が送られることはありません。</p>
@@ -428,7 +445,7 @@
             アイテム名や画像を取ってきます</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="card" id="privacy-transfer" tabindex="-1">
         <h3 data-i18n="privacy.transfer.title">🔄 データ引継ぎ機能について</h3>
         <p data-i18n="privacy.transfer.p1">機種変更などで、データを別のスマホ・パソコンに移したいときのための機能です。仕組みはシンプルで、
           あなたのデータを一旦「コード」という文字の羅列に変換し、それをあなた自身がコピー&amp;ペーストで
@@ -436,7 +453,7 @@
         <p style="margin-top:8px;" data-i18n="privacy.transfer.p2">このコードが自動でどこかに送られることはありません。あなたがコピー&amp;ペースト
           という操作をしない限り、データが動くことは一切ありません。</p>
       </div>
-      <div class="card">
+      <div class="card" id="privacy-contact" tabindex="-1">
         <h3 data-i18n="privacy.contact.title">✉️ お問い合わせ</h3>
         <p data-i18n="privacy.contact.body">データの扱いについて不安な点や質問があれば、<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>
           （X）までお気軽にご連絡ください。</p>
@@ -444,7 +461,7 @@
     </section>
 
     <!-- ▸ 参考文献・画像引用元 -->
-    <section data-tab="references">
+    <section data-tab="references" id="panel-references" role="tabpanel" aria-labelledby="tab-references" tabindex="0">
       <p class="sec-label" data-i18n="references.label">📚 参考文献・画像引用元</p>
       <p class="sec-sub" data-i18n="references.sub">このサイト群を作る際に参考にした文献・引用元の一覧です。以前はプロフィールサイトに
         載せていましたが、このページに統合しました。</p>
@@ -470,8 +487,8 @@
     </div>
 
     <div style="display:flex; gap:8px; margin:16px 0 14px;">
-      <button type="button" class="action-btn" id="iconModeEmojiBtn" onclick="pfIconSetMode('emoji')" data-i18n="iconCustom.modeEmoji">😀 絵文字</button>
-      <button type="button" class="action-btn" id="iconModeImageBtn" onclick="pfIconSetMode('image')" data-i18n="iconCustom.modeImage">🖼️ 画像</button>
+      <button type="button" class="action-btn" id="iconModeEmojiBtn" onclick="pfIconSetMode('emoji')" aria-pressed="true" data-i18n="iconCustom.modeEmoji">😀 絵文字</button>
+      <button type="button" class="action-btn" id="iconModeImageBtn" onclick="pfIconSetMode('image')" aria-pressed="false" data-i18n="iconCustom.modeImage">🖼️ 画像</button>
     </div>
 
     <div id="iconEmojiPanel">
@@ -527,7 +544,7 @@
       <p class="settings-section-label" data-i18n="dispSettings.displayLabel">🌙 表示</p>
       <div class="settings-row">
         <span class="settings-row-text" data-i18n="dispSettings.darkModeLabel">ダークモード</span>
-        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()"></button>
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-pressed="false"></button>
       </div>
     </div>
 
@@ -554,8 +571,8 @@
     <div class="settings-section">
       <p class="settings-section-label" data-i18n="dispSettings.langLabel">🌐 言語 / Language</p>
       <div class="settings-row">
-        <button type="button" class="settings-lang-btn" id="settingsLangJaBtn" onclick="setLang('ja')">日本語</button>
-        <button type="button" class="settings-lang-btn" id="settingsLangEnBtn" onclick="setLang('en')">English</button>
+        <button type="button" class="settings-lang-btn" id="settingsLangJaBtn" onclick="setLang('ja')" aria-pressed="false">日本語</button>
+        <button type="button" class="settings-lang-btn" id="settingsLangEnBtn" onclick="setLang('en')" aria-pressed="false">English</button>
       </div>
     </div>
 
@@ -573,7 +590,7 @@
 
 <!-- ▸ サイトドック（クイックアクセスバー。ハンバーガーサイドバーとは並存し、置き換えない） -->
 <nav class="site-dock" data-i18n-aria="dock.ariaLabel" aria-label="クイックメニュー">
-  <button type="button" onclick="showTab('changelog')">
+  <button type="button" id="dockChangelogBtn" onclick="showTab('changelog')">
     <span class="site-dock-icon">🆕</span>
     <span class="site-dock-label" data-i18n="dock.changelog">更新情報</span>
   </button>
@@ -769,6 +786,11 @@ const I18N = {
   'tabs.credits': { ja: `🙏 クレジット`, en: `🙏 Credits` },
   'tabs.privacy': { ja: `🔒 プライバシーポリシー`, en: `🔒 Privacy Policy` },
   'tabs.references': { ja: `📚 参考文献・画像引用元`, en: `📚 References & Image Credits` },
+  // ♿ 更新情報タブに未読の更新がある場合、ページタブ/ドックのボタンに一時的にaria-labelとして
+  // 設定する（未読のときだけ絵文字入りの通常ラベルを上書きし、既読になったらaria-label自体を除去して
+  // 通常のテキストコンテンツ読み上げに戻す。updateChangelogUnreadUI()参照）。
+  'tabs.changelogUnreadAria': { ja: `🆕 更新情報（未読の更新あり）`, en: `🆕 Updates (unread updates available)` },
+  'dock.changelogUnreadAria': { ja: `更新情報（未読の更新あり）`, en: `Updates (unread updates available)` },
 
   'settings.label': { ja: `⚙️ 設定について`, en: `⚙️ About Settings` },
   'settings.sub': { ja: `taipak5000.github.io系のSkyツール群に共通する設定・機能の説明です。実際の操作は各サイト側の画面で行ってください。`, en: `This explains settings and features shared across the taipak5000.github.io family of Sky tools. Please perform the actual operations on each site's own screen.` },
@@ -901,8 +923,11 @@ const I18N = {
   'dispSettings.title': { ja: `⚙️ 表示設定`, en: `⚙️ Display Settings` },
   'dispSettings.displayLabel': { ja: `🌙 表示`, en: `🌙 Display` },
   'dispSettings.darkModeLabel': { ja: `ダークモード`, en: `Dark Mode` },
-  'dispSettings.themeDark': { ja: `🌙 ダーク`, en: `🌙 Dark` },
-  'dispSettings.themeLight': { ja: `☀️ ライト`, en: `☀️ Light` },
+  // ♿ ボタンのラベルは「今の状態」ではなく「押すと何が起きるか（次の動作）」を表す文言にし、
+  // aria-pressedで現在の状態（ダークモードがオンかどうか）を別途伝える構成にしている
+  // （updateThemeToggleLabel参照）。
+  'dispSettings.themeToggleToDark': { ja: `🌙 ダークにする`, en: `🌙 Switch to Dark` },
+  'dispSettings.themeToggleToLight': { ja: `☀️ ライトにする`, en: `☀️ Switch to Light` },
   'dispSettings.shortcutsLabel': { ja: `⌨️ キーボードショートカット`, en: `⌨️ Keyboard Shortcuts` },
   'dispSettings.shortcutsEnable': { ja: `ショートカットを有効にする`, en: `Enable keyboard shortcuts` },
   'dispSettings.shortcutOpen': { ja: `この設定を開く`, en: `Open this settings panel` },
@@ -959,6 +984,7 @@ function setLang(lang) {
   renderChangelog();
   renderReferences();
   settingsSyncLangUI();
+  updateChangelogUnreadUI();
 }
 
 // 設定モーダル内の言語ボタンのハイライトを、現在のLANGの状態に同期させる。
@@ -968,6 +994,10 @@ function settingsSyncLangUI() {
   if (jaBtn && enBtn) {
     jaBtn.classList.toggle('active', LANG === 'ja');
     enBtn.classList.toggle('active', LANG === 'en');
+    // ♿ 見た目の.activeクラスだけでは支援技術に選択状態が伝わらないため、
+    // aria-pressedも同期する。
+    jaBtn.setAttribute('aria-pressed', LANG === 'ja' ? 'true' : 'false');
+    enBtn.setAttribute('aria-pressed', LANG === 'en' ? 'true' : 'false');
   }
 }
 
@@ -993,7 +1023,12 @@ function applyThemeToDOM(isDark) {
 
 function updateThemeToggleLabel() {
   const btn = document.getElementById('themeToggleBtn');
-  if (btn) btn.textContent = t(isDarkMode() ? 'dispSettings.themeDark' : 'dispSettings.themeLight');
+  if (!btn) return;
+  const dark = isDarkMode();
+  // ♿ 表示文言は「次に押すと何が起きるか」（動作）を伝え、現在の状態（オン/オフ）は
+  // aria-pressedで支援技術に伝える。見た目の状態表現は文言だけに依存させない。
+  btn.textContent = t(dark ? 'dispSettings.themeToggleToLight' : 'dispSettings.themeToggleToDark');
+  btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
 }
 
 function toggleTheme() {
@@ -1093,8 +1128,14 @@ function pfIconSetMode(mode) {
   pfIconMode = mode;
   document.getElementById('iconEmojiPanel').style.display = mode === 'emoji' ? '' : 'none';
   document.getElementById('iconImagePanel').style.display = mode === 'image' ? '' : 'none';
-  document.getElementById('iconModeEmojiBtn').classList.toggle('primary', mode === 'emoji');
-  document.getElementById('iconModeImageBtn').classList.toggle('primary', mode === 'image');
+  const emojiBtn = document.getElementById('iconModeEmojiBtn');
+  const imageBtn = document.getElementById('iconModeImageBtn');
+  emojiBtn.classList.toggle('primary', mode === 'emoji');
+  imageBtn.classList.toggle('primary', mode === 'image');
+  // ♿ 見た目の.primaryクラスだけでは支援技術に選択状態が伝わらないため、
+  // aria-pressedも同期する。
+  emojiBtn.setAttribute('aria-pressed', mode === 'emoji' ? 'true' : 'false');
+  imageBtn.setAttribute('aria-pressed', mode === 'image' ? 'true' : 'false');
   pfIconUpdatePreview();
 }
 
@@ -1231,7 +1272,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const TABS = ['settings', 'changelog', 'credits', 'privacy', 'references'];
 
-function showTab(tab) {
+// 🔗 ディープリンク時（例: #references:revisit）に、タブ切替後カード/参考文献グループの
+// 位置までスクロールし、一時的にハイライトする。要素idは「タブ名-アンカー名」の形式
+// （例: references-revisit, settings-icon）で、HTML側の各.card / renderReferences()が
+// 出力する各.ref-groupに実際に振られているidと一致させている。
+function scrollToCardAnchor(tab, anchor) {
+  const el = document.getElementById(tab + '-' + anchor);
+  if (!el) return;
+  requestAnimationFrame(() => {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.classList.remove('anchor-highlight');
+    void el.offsetWidth; // 同じアンカーに連続で飛んだ場合もアニメーションを再スタートさせる
+    el.classList.add('anchor-highlight');
+    setTimeout(() => el.classList.remove('anchor-highlight'), 1700);
+    // ♿ tabindex="-1"の対象要素へフォーカスも移し、スクリーンリーダー利用者にも
+    // ジャンプ先のカード内容が読み上げられるようにする。
+    if (typeof el.focus === 'function') el.focus({ preventScroll: true });
+  });
+}
+
+// anchor: 省略可。指定時はタブ切替後、該当カード/参考文献グループへスクロール＋ハイライトする
+// （タスク「Deep-linkable reference groups / per-card anchors」用）。
+function showTab(tab, anchor) {
   if (!TABS.includes(tab)) tab = TABS[0];
   document.querySelectorAll('section[data-tab]').forEach(s => s.classList.toggle('show', s.dataset.tab === tab));
   document.querySelectorAll('.page-tab').forEach(b => {
@@ -1240,10 +1302,16 @@ function showTab(tab) {
     // ♿ 見た目の.activeクラスだけでは支援技術に選択状態が伝わらないため、
     // aria-selected / aria-current を切り替えのたびに同期する。
     b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    // ♿ ARIAタブパターンのroving tabindex: Tabキーでは選択中のタブにしか止まらないようにし、
+    // 他のタブへの移動は矢印キー（下のkeydownリスナー）に任せる。
+    b.tabIndex = isActive ? 0 : -1;
     if (isActive) b.setAttribute('aria-current', 'page');
     else b.removeAttribute('aria-current');
   });
-  history.replaceState(null, '', '#' + tab);
+  // 🆕 更新情報タブを開いた時点で「見た」ことにする（未読ドットの判定に使用）。
+  if (tab === 'changelog') markChangelogSeen();
+  history.replaceState(null, '', '#' + tab + (anchor ? ':' + anchor : ''));
+  if (anchor) scrollToCardAnchor(tab, anchor);
 }
 
 document.getElementById('pageTabs').addEventListener('click', e => {
@@ -1251,16 +1319,42 @@ document.getElementById('pageTabs').addEventListener('click', e => {
   if (btn) showTab(btn.dataset.tab);
 });
 
-showTab(location.hash.replace('#', ''));
+// ♿ ARIAタブパターンの矢印キー操作: フォーカスがタブにある間、←/→で隣のタブに
+// フォーカス移動＋即座に切替（automatic activation）。Home/Endで先頭/末尾のタブへ。
+document.getElementById('pageTabs').addEventListener('keydown', e => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+  const btn = e.target.closest('.page-tab');
+  if (!btn) return;
+  e.preventDefault();
+  const idx = TABS.indexOf(btn.dataset.tab);
+  let nextIdx = idx;
+  if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + TABS.length) % TABS.length;
+  else if (e.key === 'ArrowRight') nextIdx = (idx + 1) % TABS.length;
+  else if (e.key === 'Home') nextIdx = 0;
+  else if (e.key === 'End') nextIdx = TABS.length - 1;
+  const nextTab = TABS[nextIdx];
+  showTab(nextTab);
+  const nextBtn = document.querySelector('.page-tab[data-tab="' + nextTab + '"]');
+  if (nextBtn) nextBtn.focus();
+});
+
+// URLハッシュ（#tab または #tab:anchor）をパースしてタブ表示に反映する。
+function applyHashRoute() {
+  const raw = location.hash.replace('#', '');
+  const [tab, anchor] = raw.split(':');
+  showTab(tab, anchor);
+}
 
 // ページ内リンク等でURLのハッシュだけが書き換わった場合（フルリロードを
 // 伴わない同一ドキュメント内でのフラグメントナビゲーション）にも、表示中の
 // タブとアドレスバーがズレないよう再同期する。showTab() 内の
 // history.replaceState() は hashchange を発火させないため、ここでの
 // 無限ループは発生しない。
-window.addEventListener('hashchange', () => {
-  showTab(location.hash.replace('#', ''));
-});
+window.addEventListener('hashchange', applyHashRoute);
+// 初回表示分の呼び出しは、更新情報・参考文献のレンダリング（renderChangelog /
+// renderReferences）が完了してからでないと、ディープリンク先の要素がまだ
+// DOMに存在せずスクロール/ハイライトできない。そのため実際の初回呼び出しは
+// このスクリプトの末尾（renderChangelog(); renderReferences(); の後）で行う。
 
 /* ================================================================
    更新情報（changelog）
@@ -1469,6 +1563,51 @@ const CHANGELOG = [
     descEn: `This was the first site built in the taipak5000.github.io tool family. It originally bundled the candle calculator, spirit companion, and creation manager pages into a single repository, which was split into independent sites on June 25.` },
 ];
 
+/* ================================================================
+   🆕 更新情報の未読インジケーター
+   「最後に更新情報タブを開いた時点でのCHANGELOG最新日付」をlocalStorageに
+   記録し、それより新しい日付のエントリが増えていれば「未読」とみなして
+   ページタブ・ドックのボタンに小さな未読ドットを表示する（静的な「NEW」
+   タグ（各エントリの種別ラベル）とは別軸で、実際の閲覧履歴に基づく指標）。
+   PF_ICON_STORAGE_KEYと同じ理由でサイト単位（pfSiteId()）に名前空間化する。
+   ================================================================ */
+const CHANGELOG_LAST_SEEN_KEY = 'sky_changelog_last_seen__site_' + pfSiteId();
+
+function changelogLatestDate() {
+  return CHANGELOG.reduce((max, e) => (e.date > max ? e.date : max), CHANGELOG[0].date);
+}
+
+function getChangelogLastSeen() {
+  try { return localStorage.getItem(CHANGELOG_LAST_SEEN_KEY) || ''; } catch (e) { return ''; }
+}
+
+function hasUnreadChangelog() {
+  return changelogLatestDate() > getChangelogLastSeen();
+}
+
+function markChangelogSeen() {
+  try { localStorage.setItem(CHANGELOG_LAST_SEEN_KEY, changelogLatestDate()); } catch (e) {}
+  updateChangelogUnreadUI();
+}
+
+function updateChangelogUnreadUI() {
+  const unread = hasUnreadChangelog();
+  const tabBtn = document.getElementById('tab-changelog');
+  const dockBtn = document.getElementById('dockChangelogBtn');
+  if (tabBtn) {
+    tabBtn.classList.toggle('has-unread', unread);
+    // ♿ 未読ドットは装飾的な::afterのみで視覚的にしか伝わらないため、未読の間だけ
+    // aria-labelで補足する（既読時はaria-labelを外し、通常のテキスト読み上げに戻す）。
+    if (unread) tabBtn.setAttribute('aria-label', t('tabs.changelogUnreadAria'));
+    else tabBtn.removeAttribute('aria-label');
+  }
+  if (dockBtn) {
+    dockBtn.classList.toggle('has-unread', unread);
+    if (unread) dockBtn.setAttribute('aria-label', t('dock.changelogUnreadAria'));
+    else dockBtn.removeAttribute('aria-label');
+  }
+}
+
 function escRefHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
@@ -1498,6 +1637,9 @@ function renderChangelog() {
    ================================================================ */
 const referenceSources = [
   {
+    // 🔗 idはディープリンク用の安定したスラッグ（#references:idの形式でこのグループへ
+    // 直接ジャンプできる。実際のDOM要素idは "references-" + id。renderReferences参照）。
+    id: 'profile',
     group: 'プロフィールページ（Sky Status / 闇の破片）',
     groupEn: 'Profile Page (Sky Status / Shard Eruptions)',
     items: [
@@ -1515,6 +1657,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'item',
     group: '🗂️ アイテム所持管理',
     groupEn: '🗂️ Item Tracker',
     items: [
@@ -1534,6 +1677,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'wings',
     group: '🪽 羽トラッカー',
     groupEn: '🪽 Wing Tracker',
     items: [
@@ -1543,6 +1687,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'companion',
     group: '✨ 精霊同行ツール',
     groupEn: '✨ Spirit Companion Tool',
     items: [
@@ -1551,6 +1696,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'starCandle',
     group: '🕯️ 星のキャンドル計算機',
     groupEn: '🕯️ Star Candle Calculator',
     items: [
@@ -1558,6 +1704,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'emote',
     group: '🎭 エモート所持率管理',
     groupEn: '🎭 Emote Tracker',
     items: [
@@ -1565,6 +1712,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'nomacanPro',
     group: '🕯️ ノマキャン計算機プロ',
     groupEn: '🕯️ Nomacan Calculator Pro',
     items: [
@@ -1574,6 +1722,7 @@ const referenceSources = [
     ]
   },
   {
+    id: 'revisit',
     group: '🕊️ 再訪精霊データベース',
     groupEn: '🕊️ Revisit Spirit Database',
     items: [
@@ -1588,7 +1737,7 @@ function renderReferences() {
   const el = document.getElementById('refCard');
   if (!el) return;
   el.innerHTML = referenceSources.map(g => `
-  <div class="ref-group">
+  <div class="ref-group" id="references-${g.id}" tabindex="-1">
     <div class="ref-group-label">${escRefHtml(LANG === 'en' ? (g.groupEn || g.group) : g.group)}</div>
     <ul class="ref-list">
       ${g.items.map(it => `
@@ -1603,6 +1752,11 @@ function renderReferences() {
 renderChangelog();
 renderReferences();
 applyI18n();
+updateChangelogUnreadUI();
+// 🔗 タブ表示・ディープリンクの初回反映は、上のrenderChangelog() / renderReferences()で
+// #changelogCard・#refCard・各参考文献グループのDOMが用意された後に行う必要がある
+// （scrollToCardAnchor()が要素を探す時点でまだ存在しないと失敗するため）。
+applyHashRoute();
 </script>
 </body>
 </html>
