@@ -13,11 +13,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script>
     // 🌓 描画前にテーマを確定させ、ダークモード時に一瞬でも明るい背景が
-    // 表示されてしまう「ちらつき」を防止する（CSS読み込み前に同期実行）
+    // 表示されてしまう「ちらつき」を防止する（CSS読み込み前に同期実行）。
+    // sky_app_theme は 'light' | 'dark' | 'system' の3値を取り得る（未設定は
+    // 'system'と同じ扱い）。ここでの判定ロジックは、本文後方の共有ヘルパー
+    // resolveIsDarkTheme() とバイト単位で同じ内容を保つこと（このスクリプトは
+    // 他のJSより先に同期実行する必要があるため、共有関数を呼び出せず、
+    // やむを得ずロジックを複製している。片方を直したらもう片方も直すこと）。
     (function () {
       try {
         var saved = localStorage.getItem('sky_app_theme');
-        var isDark = saved ? (saved === 'dark') : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = (saved === 'light' || saved === 'dark')
+          ? (saved === 'dark')
+          : window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -544,7 +551,7 @@
       <p class="settings-section-label" data-i18n="dispSettings.displayLabel">🌙 表示</p>
       <div class="settings-row">
         <span class="settings-row-text" data-i18n="dispSettings.darkModeLabel">ダークモード</span>
-        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-pressed="false"></button>
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()"></button>
       </div>
     </div>
 
@@ -560,7 +567,7 @@
       </div>
       <div class="settings-row">
         <span class="settings-key">D</span>
-        <span class="settings-row-text" data-i18n="dispSettings.shortcutTheme">ダークモード切替</span>
+        <span class="settings-row-text" data-i18n="dispSettings.shortcutTheme">テーマ切替（ライト/ダーク/システム）</span>
       </div>
       <div class="settings-row">
         <span class="settings-key">Esc</span>
@@ -923,15 +930,20 @@ const I18N = {
   'dispSettings.title': { ja: `⚙️ 表示設定`, en: `⚙️ Display Settings` },
   'dispSettings.displayLabel': { ja: `🌙 表示`, en: `🌙 Display` },
   'dispSettings.darkModeLabel': { ja: `ダークモード`, en: `Dark Mode` },
-  // ♿ ボタンのラベルは「今の状態」ではなく「押すと何が起きるか（次の動作）」を表す文言にし、
-  // aria-pressedで現在の状態（ダークモードがオンかどうか）を別途伝える構成にしている
-  // （updateThemeToggleLabel参照）。
+  // ♿ ボタンのラベルは「今の状態」ではなく「押すと何が起きるか（次の動作）」を表す文言にする
+  // （light→dark→system→light…の3状態循環）。aria-pressedは二値の属性のため3状態を
+  // 表現できず、代わりにaria-label（dispSettings.themeAria.*）で「現在の状態＋次に
+  // 切り替わる先」の両方を伝える構成にしている（updateThemeToggleLabel参照）。
   'dispSettings.themeToggleToDark': { ja: `🌙 ダークにする`, en: `🌙 Switch to Dark` },
+  'dispSettings.themeToggleToSystem': { ja: `🖥️ システムに合わせる`, en: `🖥️ Switch to System` },
   'dispSettings.themeToggleToLight': { ja: `☀️ ライトにする`, en: `☀️ Switch to Light` },
+  'dispSettings.themeAria.light': { ja: `テーマ: ライト（次はダークに切り替わります）`, en: `Theme: Light (switches to Dark next)` },
+  'dispSettings.themeAria.dark': { ja: `テーマ: ダーク（次はシステムに合わせるに切り替わります）`, en: `Theme: Dark (switches to System next)` },
+  'dispSettings.themeAria.system': { ja: `テーマ: システムに合わせる（次はライトに切り替わります）`, en: `Theme: System (switches to Light next)` },
   'dispSettings.shortcutsLabel': { ja: `⌨️ キーボードショートカット`, en: `⌨️ Keyboard Shortcuts` },
   'dispSettings.shortcutsEnable': { ja: `ショートカットを有効にする`, en: `Enable keyboard shortcuts` },
   'dispSettings.shortcutOpen': { ja: `この設定を開く`, en: `Open this settings panel` },
-  'dispSettings.shortcutTheme': { ja: `ダークモード切替`, en: `Toggle dark mode` },
+  'dispSettings.shortcutTheme': { ja: `テーマ切替（ライト/ダーク/システム）`, en: `Cycle theme (Light/Dark/System)` },
   'dispSettings.shortcutEscape': { ja: `開いているウィンドウを閉じる`, en: `Close the open window` },
   'dispSettings.langLabel': { ja: `🌐 言語 / Language`, en: `🌐 Language` },
   'dispSettings.closeBtn': { ja: `閉じる`, en: `Close` },
@@ -1002,16 +1014,37 @@ function settingsSyncLangUI() {
 }
 
 /* ================================================================
-   ⚙️ 表示設定（ダークモード切替・キーボードショートカット）
-   'sky_app_theme'（'dark'|'light'）と 'sky_shortcuts_enabled'（'1'|'0'）は、
-   上の LANG_KEY と同じ理由で、taipak5000.github.io 系サイト共通の
-   プレーンなグローバルキーとして扱う（プロフィール非依存のデバイス設定）。
+   ⚙️ 表示設定（テーマ切替・キーボードショートカット）
+   'sky_app_theme' は 'light' | 'dark' | 'system' の3値を取り得る
+   （未設定・不正値は 'system' と同じ扱い = OSの設定に自動追従）。
+   'sky_shortcuts_enabled'（'1'|'0'）と合わせ、上の LANG_KEY と同じ理由で、
+   taipak5000.github.io 系サイト共通のプレーンなグローバルキーとして
+   扱う（プロフィール非依存のデバイス設定）。
    実際のdata-theme属性の初期反映は、ちらつき防止のため<head>内の
-   同期スクリプトで既に完了している。ここではその状態を土台に
-   切替・永続化・UIとの同期のみを行う。
+   同期スクリプトで既に完了している（判定ロジックは下のresolveIsDarkTheme()と
+   バイト単位で同一に保つこと）。ここではその状態を土台に、切替・永続化・
+   OS設定変更やクロスタブでのライブ追従・UIとの同期を行う。
    ================================================================ */
 const THEME_KEY = 'sky_app_theme';
 const SHORTCUTS_KEY = 'sky_shortcuts_enabled';
+
+// sky_app_theme の生の保存値を返す。'light'/'dark' 以外（未設定・不正値含む）は
+// すべて 'system' として扱う。
+function getThemePref() {
+  let v = null;
+  try { v = localStorage.getItem(THEME_KEY); } catch (e) {}
+  return (v === 'light' || v === 'dark') ? v : 'system';
+}
+
+// 保存値（'light'|'dark'|'system'）から実際に描画すべき実効テーマ（ダークかどうか）を
+// 解決する唯一の共有ロジック。<head>内のちらつき防止スクリプト・toggleTheme()・
+// storageイベントリスナー・OSのprefers-color-scheme変更リスナーは全てこれを経由する
+// （<head>内のスクリプトだけは他JS読み込み前に同期実行する必要があるため、
+// このロジックをバイト単位で複製している。変更する場合は両方を同時に直すこと）。
+function resolveIsDarkTheme(pref) {
+  if (pref === 'light' || pref === 'dark') return pref === 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
 
 function isDarkMode() {
   return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -1021,22 +1054,63 @@ function applyThemeToDOM(isDark) {
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 }
 
+// 現在保存されているsky_app_themeの値を、実際のDOM（data-theme属性）に反映する。
+function applyStoredTheme() {
+  applyThemeToDOM(resolveIsDarkTheme(getThemePref()));
+}
+
+// ♿ ボタンの表示文言は「今の状態」ではなく「押すと次にどうなるか（次の動作）」を
+// 伝える文言にする（light→dark→system→light…の3状態循環）。aria-pressedは二値の
+// 属性のため3状態を表現できないので使わず、代わりにaria-labelで「現在の状態＋
+// 次に切り替わる先」の両方を支援技術に伝える。
 function updateThemeToggleLabel() {
   const btn = document.getElementById('themeToggleBtn');
   if (!btn) return;
-  const dark = isDarkMode();
-  // ♿ 表示文言は「次に押すと何が起きるか」（動作）を伝え、現在の状態（オン/オフ）は
-  // aria-pressedで支援技術に伝える。見た目の状態表現は文言だけに依存させない。
-  btn.textContent = t(dark ? 'dispSettings.themeToggleToLight' : 'dispSettings.themeToggleToDark');
-  btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  const pref = getThemePref();
+  const labelKey = pref === 'light' ? 'dispSettings.themeToggleToDark'
+    : pref === 'dark' ? 'dispSettings.themeToggleToSystem'
+    : 'dispSettings.themeToggleToLight';
+  const ariaKey = pref === 'light' ? 'dispSettings.themeAria.light'
+    : pref === 'dark' ? 'dispSettings.themeAria.dark'
+    : 'dispSettings.themeAria.system';
+  btn.textContent = t(labelKey);
+  btn.setAttribute('aria-label', t(ariaKey));
 }
 
+// light → dark → system → light … の順で循環させ、sky_app_themeへ永続化する。
 function toggleTheme() {
-  const next = !isDarkMode();
-  applyThemeToDOM(next);
-  try { localStorage.setItem(THEME_KEY, next ? 'dark' : 'light'); } catch (e) {}
+  const pref = getThemePref();
+  const next = pref === 'light' ? 'dark' : pref === 'dark' ? 'system' : 'light';
+  try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+  applyThemeToDOM(resolveIsDarkTheme(next));
   updateThemeToggleLabel();
 }
+
+// 🖥️→🌓 保存値が'system'（未設定含む）のとき、OS側のダーク/ライト設定がタブを
+// 開いたまま切り替わった場合（例: 日没時の自動切替）に、リロードなしでその場で
+// 追従させる。保存値が'light'/'dark'に固定されている間はここでは何もしない。
+const themeOSMQ = window.matchMedia('(prefers-color-scheme: dark)');
+function handleOSThemeChange() {
+  if (getThemePref() !== 'system') return;
+  applyStoredTheme();
+  updateThemeToggleLabel();
+}
+if (themeOSMQ.addEventListener) {
+  themeOSMQ.addEventListener('change', handleOSThemeChange);
+} else if (themeOSMQ.addListener) {
+  // Safari 13以前など、addEventListenerを持たない古いMediaQueryList向けのフォールバック
+  themeOSMQ.addListener(handleOSThemeChange);
+}
+
+// 🔗 taipak5000.github.io系サイトは同一オリジンでlocalStorageを共有するため、別タブや
+// 別サイトでsky_app_themeが変更されると、開いたままのこのタブにも即座に反映する
+// （リロード不要）。'dark'かどうかの単純な二値判定ではなく、resolveIsDarkTheme()を
+// 経由して'light'/'dark'/'system'いずれの新しい値も正しく解決する。
+window.addEventListener('storage', function (e) {
+  if (e.key !== THEME_KEY) return;
+  applyStoredTheme();
+  updateThemeToggleLabel();
+});
 
 function skyShortcutsEnabled() {
   let v = null;
