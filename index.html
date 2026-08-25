@@ -102,19 +102,11 @@
     .sidebar-overlay.show { display: block; }
 
     .app-layout { max-width: 720px; margin: 0 auto; padding: 0 16px; }
-    /* デスクトップ幅（850px以上）でのmax-width。960pxだと、サイドバー200px+gap20pxを
-       差し引いた残り幅がページ内タブ5個の合計幅（約731px）に対して足りず、1280pxの
-       ウィンドウ幅でも最後の1タブが見切れて横スクロールが必要になっていたため、
-       1040pxに拡張（余裕を持って全タブがスクロールなしで収まる）。 */
-    @media (min-width: 850px) { .app-layout { max-width: 1040px; display: flex; gap: 20px; align-items: flex-start; } }
-    .wrap { flex: 1; min-width: 0; }
 
     .sidebar {
-      width: 200px; flex-shrink: 0; position: sticky; top: 58px;
       background: var(--card); border-radius: var(--r); padding: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07); display: none; margin-top: 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07); display: none;
     }
-    @media (min-width: 850px) { .sidebar { display: block; } }
     .sidebar.sidebar-open {
       display: flex !important; flex-direction: column; position: fixed; top: 0; left: 0;
       height: 100%; width: 240px; z-index: 500; overflow-y: auto; margin-top: 0;
@@ -290,14 +282,7 @@
     <a href="https://taipak5000.github.io/companion/" class="sidebar-nav-link" data-i18n="tools.companion">✨ 精霊同行ツール</a>
     <a href="https://taipak5000.github.io/wings/" class="sidebar-nav-link" data-i18n="tools.wings">🪽 羽トラッカー</a>
     <a href="https://taipak5000.github.io/tai-transfer/" class="sidebar-nav-link" data-i18n="tools.transfer">🔄 データ引継ぎ</a>
-    <div style="margin-top:18px; padding-top:14px; border-top:0.5px solid var(--sep);">
-      <div class="sidebar-section-label" style="margin-bottom:8px;" data-i18n="sidebar.homeIcon">📱 ホーム画面アイコン</div>
-      <button type="button" class="sidebar-nav-link" style="width:100%; box-sizing:border-box; border:1px solid var(--sep); background:var(--bg); cursor:pointer; justify-content:center;" onclick="openModal('iconCustomModal'); toggleSidebar();" data-i18n="sidebar.customizeIcon">🎨 アイコンを<br>カスタマイズ</button>
-    </div>
-    <div style="margin-top:18px; padding-top:14px; border-top:0.5px solid var(--sep);">
-      <div class="sidebar-section-label" style="margin-bottom:8px;" data-i18n="sidebar.settingsLabel">⚙️ 表示設定</div>
-      <button type="button" class="sidebar-nav-link" style="width:100%; box-sizing:border-box; border:1px solid var(--sep); background:var(--bg); cursor:pointer; justify-content:center;" onclick="settingsOpen(); toggleSidebar();" data-i18n="sidebar.openSettings">⚙️ 表示設定を開く</button>
-    </div>
+    <a href="https://taipak5000.github.io/tai-info/" class="sidebar-nav-link current-tool" data-i18n="tools.info">⚙️ 設定・更新情報</a>
   </aside>
 
   <div class="wrap">
@@ -575,6 +560,14 @@
     </div>
 
     <div class="settings-section">
+      <p class="settings-section-label" data-i18n="dispSettings.customizeLabel">🎨 表示のカスタマイズ</p>
+      <div class="settings-row">
+        <span class="settings-row-text" data-i18n="dispSettings.customizeIconLabel">アイコンをカスタマイズ</span>
+        <button type="button" class="theme-toggle-btn" onclick="closeModal('settingsModal'); openModal('iconCustomModal');" data-i18n="dispSettings.customizeOpenBtn">開く</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
       <p class="settings-section-label" data-i18n="dispSettings.langLabel">🌐 言語 / Language</p>
       <div class="settings-row">
         <button type="button" class="settings-lang-btn" id="settingsLangJaBtn" onclick="setLang('ja')" aria-pressed="false">日本語</button>
@@ -615,17 +608,7 @@
 </nav>
 
 <script>
-// .sidebar は850px以上の幅では常時表示（CSSの `@media (min-width:850px) { .sidebar { display:block } }`）。
-// sidebar-open クラスはそれより狭い「ハンバーガーメニュー」幅でのみ意味を持つ
-// フルスクリーンドロワー用の状態なので、デスクトップ幅ではこの関数を呼んでも
-// 何もしない（常時表示のサイドバーに誤ってドロワー用スタイルが適用されたまま
-// 残ってしまう不具合を防ぐ）。
-function isMobileSidebarLayout() {
-  return window.matchMedia('(max-width: 849.98px)').matches;
-}
-
 function toggleSidebar() {
-  if (!isMobileSidebarLayout()) return;
   document.getElementById('sidebar').classList.toggle('sidebar-open');
   document.getElementById('sidebarOverlay').classList.toggle('show');
 }
@@ -637,24 +620,6 @@ function toggleSidebar() {
 function closeSidebarDrawer() {
   document.getElementById('sidebar').classList.remove('sidebar-open');
   document.getElementById('sidebarOverlay').classList.remove('show');
-}
-
-// 📱→🖥️ モバイル幅で開いたドロワー（sidebar-open）を開いたままにした状態で、
-// ウィンドウのリサイズやタブレットの回転により、ビューポートが850px以上
-// （サイドバー常時表示のデスクトップレイアウト）をまたいでしまった場合の保険。
-// その瞬間からtoggleSidebar()はisMobileSidebarLayout()ガードで早期returnするようになり、
-// 閉じるボタン・オーバーレイクリックのどちらも効かなくなる（Escは閉じるが、キーボードを
-// 使わないユーザーはリロードしか脱出手段がなくなってしまう）。matchMediaで850px境界を
-// またいだ瞬間を直接検知し、ドロワー状態を強制的に後片付けする。
-const desktopSidebarMQ = window.matchMedia('(min-width: 850px)');
-function handleSidebarViewportChange(e) {
-  if (e.matches) closeSidebarDrawer();
-}
-if (desktopSidebarMQ.addEventListener) {
-  desktopSidebarMQ.addEventListener('change', handleSidebarViewportChange);
-} else if (desktopSidebarMQ.addListener) {
-  // Safari 13以前など、addEventListenerを持たない古いMediaQueryList向けのフォールバック
-  desktopSidebarMQ.addListener(handleSidebarViewportChange);
 }
 
 // 開いているモーダルを「開かれた順」で管理するスタック（Escキーで
@@ -782,10 +747,7 @@ const I18N = {
   'tools.companion': { ja: `✨ 精霊同行ツール`, en: `✨ Spirit Companion Tool` },
   'tools.wings': { ja: `🪽 羽トラッカー`, en: `🪽 Wing Tracker` },
   'tools.transfer': { ja: `🔄 データ引継ぎ`, en: `🔄 Data Transfer` },
-  'sidebar.homeIcon': { ja: `📱 ホーム画面アイコン`, en: `📱 Home Screen Icon` },
-  'sidebar.customizeIcon': { ja: `🎨 アイコンを<br>カスタマイズ`, en: `🎨 Customize Icon` },
-  'sidebar.settingsLabel': { ja: `⚙️ 表示設定`, en: `⚙️ Display Settings` },
-  'sidebar.openSettings': { ja: `⚙️ 表示設定を開く`, en: `⚙️ Open Display Settings` },
+  'tools.info': { ja: `⚙️ 設定・更新情報`, en: `⚙️ Settings & Updates` },
 
   'tabs.settings': { ja: `⚙️ 設定について`, en: `⚙️ About Settings` },
   'tabs.changelog': { ja: `🆕 更新情報`, en: `🆕 Updates` },
@@ -942,6 +904,9 @@ const I18N = {
   'dispSettings.shortcutOpen': { ja: `この設定を開く`, en: `Open this settings panel` },
   'dispSettings.shortcutTheme': { ja: `テーマ切替（ライト/ダーク/システム）`, en: `Cycle theme (Light/Dark/System)` },
   'dispSettings.shortcutEscape': { ja: `開いているウィンドウを閉じる`, en: `Close the open window` },
+  'dispSettings.customizeLabel': { ja: `🎨 表示のカスタマイズ`, en: `🎨 Display Customization` },
+  'dispSettings.customizeIconLabel': { ja: `アイコンをカスタマイズ`, en: `Customize Icon` },
+  'dispSettings.customizeOpenBtn': { ja: `開く`, en: `Open` },
   'dispSettings.langLabel': { ja: `🌐 言語 / Language`, en: `🌐 Language` },
   'dispSettings.closeBtn': { ja: `閉じる`, en: `Close` },
 
