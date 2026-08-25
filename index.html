@@ -102,6 +102,11 @@
     .sidebar-overlay.show { display: block; }
 
     .app-layout { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+    /* デスクトップ幅（850px以上）でのmax-width。960pxだと、ページ内タブ5個の合計幅
+       （約731px）に対して余裕が足りず、1280pxのウィンドウ幅でも最後の1タブが見切れて
+       横スクロールが必要になるため、1040pxに拡張している（このサイトのみの意図的な
+       例外。2カラムサイドバーレイアウトは撤去済みのため、display:flexは付与しない）。 */
+    @media (min-width: 850px) { .app-layout { max-width: 1040px; } }
 
     .sidebar {
       background: var(--card); border-radius: var(--r); padding: 16px;
@@ -330,7 +335,7 @@
 
       <div class="card" id="settings-icon" tabindex="-1">
         <h3 data-i18n="settings.icon.title">📱 ホーム画面アイコンのカスタマイズ</h3>
-        <p data-i18n="settings.icon.body">各サイトのサイドバー下部「📱 ホーム画面アイコン」から、「ホーム画面に追加」時のアイコンを
+        <p data-i18n="settings.icon.body">各サイトの「⚙️ 表示設定」内の「🎨 表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを
           絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、
           プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>
           （追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。</p>
@@ -454,7 +459,7 @@
     <!-- ▸ 参考文献・画像引用元 -->
     <section data-tab="references" id="panel-references" role="tabpanel" aria-labelledby="tab-references" tabindex="0">
       <p class="sec-label" data-i18n="references.label">📚 参考文献・画像引用元</p>
-      <p class="sec-sub" data-i18n="references.sub">このサイト群を作る際に参考にした文献・引用元の一覧です。以前はプロフィールサイトに
+      <p class="sec-sub" data-i18n="references.sub">このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに
         載せていましたが、このページに統合しました。</p>
       <div class="card" id="refCard"></div>
     </section>
@@ -776,7 +781,7 @@ const I18N = {
   'settings.lang.body': { ja: `多くのサイトでは、ヘッダーの「EN」ボタンから日本語・英語の表示を切り替えられます。対応は順次拡大中で、一部のサイトはまだ非対応です。`, en: `Most sites let you switch the display between Japanese and English using the "EN" button in the header. Support is being rolled out across the tool family, so a few sites may not have it yet.` },
 
   'settings.icon.title': { ja: `📱 ホーム画面アイコンのカスタマイズ`, en: `📱 Customizing the Home Screen Icon` },
-  'settings.icon.body': { ja: `各サイトのサイドバー下部「📱 ホーム画面アイコン」から、「ホーム画面に追加」時のアイコンを絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>（追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。`, en: `From "📱 Home Screen Icon" at the bottom of each site's sidebar, you can change the icon used for "Add to Home Screen" — either an emoji plus background color, or an image of your choice. This is a per-device, per-browser setting and is not affected by switching profiles (save slots). <b>Please set this up before adding to your home screen</b> (changing it afterward won't update an icon you've already added).` },
+  'settings.icon.body': { ja: `各サイトの「⚙️ 表示設定」内の「🎨 表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>（追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。`, en: `From "🎨 Display Customization" inside "⚙️ Display Settings" on each site, you can change the icon used for "Add to Home Screen" — either an emoji plus background color, or an image of your choice. This is a per-device, per-browser setting and is not affected by switching profiles (save slots). <b>Please set this up before adding to your home screen</b> (changing it afterward won't update an icon you've already added).` },
 
   'changelog.label': { ja: `🆕 更新情報`, en: `🆕 Updates` },
   'changelog.sub1': { ja: `大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正まではすべて載せていません。`, en: `Major feature additions and changes are logged here by hand as they happen. Minor bug fixes are not all listed.` },
@@ -856,7 +861,7 @@ const I18N = {
   'privacy.contact.body': { ja: `データの扱いについて不安な点や質問があれば、<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>（X）までお気軽にご連絡ください。`, en: `If you have any concerns or questions about how your data is handled, feel free to reach out via <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a> (X).` },
 
   'references.label': { ja: `📚 参考文献・画像引用元`, en: `📚 References & Image Credits` },
-  'references.sub': { ja: `このサイト群を作る際に参考にした文献・引用元の一覧です。以前はプロフィールサイトに載せていましたが、このページに統合しました。`, en: `A list of references and sources consulted while building this family of sites. This used to be listed on the Profile site, but has been consolidated onto this page.` },
+  'references.sub': { ja: `このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに載せていましたが、このページに統合しました。`, en: `A list of references and sources consulted while building this family of sites. This used to be listed elsewhere, but has been consolidated onto this page.` },
 
   'iconCustom.title': { ja: `🎨 ホーム画面アイコンをカスタマイズ`, en: `🎨 Customize Home Screen Icon` },
   'iconCustom.hint': { ja: `スマホの「ホーム画面に追加」をしたときのアイコンを、好きな絵文字や画像に変更できます。<br><b>追加する前に</b>設定してください。追加した後に変更しても、既に追加済みのアイコンは自動更新されません（変更したい場合は一度削除して追加し直してください）。`, en: `You can change the icon used when adding this site to your phone's home screen. Set this up before adding it — changing it afterward won't update an icon that's already been added (remove and re-add it if you want to change it later).` },
@@ -1148,7 +1153,7 @@ const PF_ICON_STORAGE_KEY = 'pfCustomHomeIcon_v1__site_' + pfSiteId();
 // キーにまだ何も保存されていない場合に限り、旧キーの値を一度だけ新キーへコピーして
 // 引き継ぐ（既にカスタマイズ済みのユーザーの設定が新キー導入によって消えてしまわない
 // ようにするため。旧キー自体は他の未対応サイトがまだ参照している可能性があるため
-// 削除はしない＝実害なし。emote/item/spirit-catalog等の同一移行と同じ考え方）。
+// 削除はしない＝実害なし。他サイトでの同一移行と同じ考え方）。
 try {
   if (!localStorage.getItem(PF_ICON_STORAGE_KEY)) {
     const legacyIcon = localStorage.getItem(PF_ICON_STORAGE_KEY_LEGACY);
@@ -1471,8 +1476,8 @@ const CHANGELOG = [
   { date: '2026-08-06', tag: 'NEW',
     titleJa: `設定・更新情報・クレジットページを新設`,
     titleEn: `Launched the Settings, Updates & Credits page`,
-    descJa: `このページ（tai-info）を新設。各サイトのフッターから移動できます。プロフィールサイトの参考文献リストはここに統合しました。`,
-    descEn: `Launched this page (tai-info). You can reach it from every site's footer. The reference list that used to live on the Profile site has been merged into this page.` },
+    descJa: `このページ（tai-info）を新設。各サイトのフッターから移動できます。以前は別のページにあった参考文献リストはここに統合しました。`,
+    descEn: `Launched this page (tai-info). You can reach it from every site's footer. The reference list that used to live elsewhere has been merged into this page.` },
   { date: '2026-08-06', tag: 'CHANGE',
     titleJa: `6サイトのリポジトリ名を変更`,
     titleEn: `Renamed the repositories of 6 sites`,
@@ -1488,11 +1493,6 @@ const CHANGELOG = [
     titleEn: `Launched Data Transfer`,
     descJa: `Dropbox等の外部サービスを使わず、コピー&ペーストできる「コード」でサイトを選んでデータを引き継げるツールを新設しました。`,
     descEn: `Launched a tool that lets you choose which sites' data to transfer using a copy-and-paste "code," with no external service like Dropbox required.` },
-  { date: '2026-08-05', tag: 'CHANGE',
-    titleJa: `プロフィールサイトのスマホ対応`,
-    titleEn: `Improved mobile support on the Profile site`,
-    descJa: `開催中のシーズン・イベント名がタップで詳細表示されるようにし、スマートフォンでもマウスホバーなしで情報を見られるようにしました。`,
-    descEn: `Tapping the name of an ongoing season/event now shows its details, so you can see the information on a smartphone without needing mouse hover.` },
   { date: '2026-08-04', tag: 'CHANGE',
     titleJa: `精霊ツリー表示の細部を調整`,
     titleEn: `Adjusted details of the spirit tree display`,
@@ -1518,11 +1518,6 @@ const CHANGELOG = [
     titleEn: `Added a wishlist/unlock cost calculator, and a trade-item order calculator`,
     descJa: `アイテム所持管理にウィッシュリストと必要コスト計算機を追加。精霊同行ツールには交換アイテムを取る順番の計算機能（旧称「交換オプティマイザー」）を追加しました。`,
     descEn: `Added a wishlist and required-cost calculator to Item Tracker. Added a feature to Spirit Companion Tool for calculating the optimal order to collect trade items (formerly called the "Trade Optimizer").` },
-  { date: '2026-08-02', tag: 'NEW',
-    titleJa: `プロフィールにSky時間・闇の破片の自動計算を追加`,
-    titleEn: `Added automatic Sky time & Shard calculations to Profile`,
-    descJa: `ゲーム内時間・デイリー/原罪リセットまでの残り時間、開催中のシーズン/イベント表示、闇の破片（シャード）の出現有無・色・場所の自動計算バッジを追加しました。`,
-    descEn: `Added in-game time, time remaining until the daily/Eye of Eden reset, current season/event display, and an automatically-calculated badge for shard eruption occurrence, color, and location.` },
   { date: '2026-08-01', tag: 'NEW',
     titleJa: `ノーマルキャンドル計算機に手描き風マップ・精密アトラス表示`,
     titleEn: `Added a hand-drawn-style map and precise atlas view to Normal Candle Calculator`,
@@ -1558,9 +1553,6 @@ const CHANGELOG = [
     titleEn: `Launched Star Candle Calculator`,
     descJa: `同じ頃、精霊同行ツールにシーズンカウントダウン・予測表示機能が本格的に実装されました。`,
     descEn: `Around the same time, full season countdown and forecast display features were implemented in Spirit Companion Tool.` },
-  { date: '2026-07-16', tag: 'NEW',
-    titleJa: `プロフィールサイトを新設`,
-    titleEn: `Launched the Profile site` },
   { date: '2026-06-25', tag: 'NEW',
     titleJa: `創作物管理ツールを新設`,
     titleEn: `Launched Creation Manager` },
@@ -1650,24 +1642,6 @@ const referenceSources = [
   {
     // 🔗 idはディープリンク用の安定したスラッグ（#references:idの形式でこのグループへ
     // 直接ジャンプできる。実際のDOM要素idは "references-" + id。renderReferences参照）。
-    id: 'profile',
-    group: 'プロフィールページ（Sky Status / 闇の破片）',
-    groupEn: 'Profile Page (Sky Status / Shard Eruptions)',
-    items: [
-      { title: 'Days of Sunlight | Sky: Children of the Light Wiki (Fandom)', url: 'https://sky-children-of-the-light.fandom.com/wiki/Days_of_Sunlight', note: '「陽光の日々」イベントの開催期間の確認', noteEn: `Confirming the run dates of the "Days of Sunlight" event` },
-      { title: 'Shard Eruptions | Sky: Children of the Light Wiki (Fandom)', url: 'https://sky-children-of-the-light.fandom.com/wiki/Shard_Eruptions', note: '闇の破片（シャード）の仕組みの確認', noteEn: `Confirming how Shard Eruptions work` },
-      { title: 'PlutoyDev/sky-shards (GitHub)', url: 'https://github.com/PlutoyDev/sky-shards', note: '闇の破片の色・時刻・場所を予測するコミュニティ検証済みロジック（Shard Prediction Rule）の実装元', noteEn: `Source implementation of the community-verified logic (Shard Prediction Rule) for predicting shard color, time, and location` },
-      { title: '【Sky】闇の破片まとめ｜今日落ちる場所と時間 | 9bit', url: 'https://9-bit.jp/skygold/23767/', note: '闇の破片の全体像・王国名の日本語表記の確認', noteEn: `Confirming the overview of Shard Eruptions and the Japanese names of the realms` },
-      { title: '草原の闇の破片 | 9bit', url: 'https://9-bit.jp/skygold/24486/', note: '草原エリアの落下場所名（日本語）の確認', noteEn: `Confirming Japanese location names for shard drops in the Prairie` },
-      { title: '雨林の闇の破片 | 9bit', url: 'https://9-bit.jp/skygold/23881/', note: '雨林エリアの落下場所名（日本語）の確認', noteEn: `Confirming Japanese location names for shard drops in the Forest` },
-      { title: '峡谷の闇の破片 | 9bit', url: 'https://9-bit.jp/skygold/23856/', note: '峡谷エリアの落下場所名（日本語）の確認', noteEn: `Confirming Japanese location names for shard drops in the Valley` },
-      { title: '捨て地の闇の破片 | 9bit', url: 'https://9-bit.jp/skygold/23740/', note: '捨てられた地エリアの落下場所名（日本語）の確認', noteEn: `Confirming Japanese location names for shard drops in the Wasteland` },
-      { title: '書庫の闇の破片 | 9bit', url: 'https://9-bit.jp/skygold/23794/', note: '書庫エリアの落下場所名（日本語）の確認', noteEn: `Confirming Japanese location names for shard drops in the Vault` },
-      { title: '捨てられた地の闇の破片の場所一覧 | ゲームエイト', url: 'https://game8.jp/sky/541524', note: '捨てられた地エリアの落下場所名の補足確認', noteEn: `Supplementary confirmation of location names for shard drops in the Wasteland` },
-      { title: 'エリアマップ | Sky 星を紡ぐ子どもたち Wiki*', url: 'https://wikiwiki.jp/sky-jp/%E3%82%A8%E3%83%AA%E3%82%A2%E3%83%9E%E3%83%83%E3%83%97', note: '各王国のエリア名（日本語表記）の確認', noteEn: `Confirming the Japanese names of areas within each realm` },
-    ]
-  },
-  {
     id: 'item',
     group: '🗂️ アイテム所持管理',
     groupEn: '🗂️ Item Tracker',
