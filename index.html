@@ -374,14 +374,13 @@
         <ul data-i18n="credits.dataSource.list">
           <li>Sky: Children of the Light Wiki（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
           <li>9bit、ゲームエイト、wikiwiki.jp（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>
-          <li><a href="https://github.com/Silverfeelin/SkyGame-Data" target="_blank" rel="noopener noreferrer">SkyGame-Data</a>（Silverfeelin氏、MIT License）— 再訪精霊データベースの来訪履歴データの出典</li>
         </ul>
         <p style="margin-top:8px;" data-i18n="credits.dataSource.note">詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。</p>
       </div>
       <div class="card" id="credits-libs" tabindex="-1">
         <h3 data-i18n="credits.libs.title">使用ライブラリ</h3>
         <ul data-i18n="credits.libs.list">
-          <li>Vue 3 — 精霊同行ツール・創作物管理ツール・ノマキャン計算機プロで使用</li>
+          <li>Vue 3 — 精霊同行ツール・創作物管理ツールで使用</li>
           <li>html2canvas — 達成率・コーデの画像保存/シェア機能で使用</li>
           <li>Google Fonts（Noto Sans JP）</li>
         </ul>
@@ -828,20 +827,18 @@ const I18N = {
   'credits.dataSource.title': { ja: `データ・画像の参照元`, en: `Data & Image Sources` },
   'credits.dataSource.list': {
     ja: `<li>Sky: Children of the Light Wiki（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
-      <li>9bit、ゲームエイト、wikiwiki.jp（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>
-      <li><a href="https://github.com/Silverfeelin/SkyGame-Data" target="_blank" rel="noopener noreferrer">SkyGame-Data</a>（Silverfeelin氏、MIT License）— 再訪精霊データベースの来訪履歴データの出典</li>`,
+      <li>9bit、ゲームエイト、wikiwiki.jp（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>`,
     en: `<li>Sky: Children of the Light Wiki (Fandom, Japanese &amp; English editions) — data and images for items, spirits, events, etc.</li>
-      <li>9bit, Game8, wikiwiki.jp (Sky: Children of the Light Wiki*) — supplementary sources for verifying Japanese-language data</li>
-      <li><a href="https://github.com/Silverfeelin/SkyGame-Data" target="_blank" rel="noopener noreferrer">SkyGame-Data</a> (by Silverfeelin, MIT License) — source of the visit history data used in the Revisit Spirit Database</li>`
+      <li>9bit, Game8, wikiwiki.jp (Sky: Children of the Light Wiki*) — supplementary sources for verifying Japanese-language data</li>`
   },
   'credits.dataSource.note': { ja: `詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。`, en: `See the "📚 References &amp; Image Credits" tab for the full list of sources.` },
 
   'credits.libs.title': { ja: `使用ライブラリ`, en: `Libraries Used` },
   'credits.libs.list': {
-    ja: `<li>Vue 3 — 精霊同行ツール・創作物管理ツール・ノマキャン計算機プロで使用</li>
+    ja: `<li>Vue 3 — 精霊同行ツール・創作物管理ツールで使用</li>
       <li>html2canvas — 達成率・コーデの画像保存/シェア機能で使用</li>
       <li>Google Fonts（Noto Sans JP）</li>`,
-    en: `<li>Vue 3 — used in Spirit Companion Tool, Creation Manager, and Nomacan Calculator Pro</li>
+    en: `<li>Vue 3 — used in Spirit Companion Tool and Creation Manager</li>
       <li>html2canvas — used for the completion-rate and outfit image save/share features</li>
       <li>Google Fonts (Noto Sans JP)</li>`
   },
@@ -1436,31 +1433,11 @@ window.addEventListener('hashchange', applyHashRoute);
    訳が用意でき次第追加（未訳の場合はJAへフォールバック表示）。
    ================================================================ */
 const CHANGELOG = [
-  { date: '2026-08-16', tag: 'NEW',
-    titleJa: `再訪精霊データベースと精霊ツリー管理を連携、両サイトの精霊名検索をひらがな対応に`,
-    titleEn: `Linked the Revisit Spirit Database with Spirit Tree Manager; hiragana search added to both sites`,
-    descJa: `再訪精霊データベースの精霊名から、精霊ツリー管理の該当精霊の詳細（ツリー開放状況）へ新しいタブで直接ジャンプできるようになりました。あわせて両サイトの精霊名検索を、アイテム所持管理と同じ方式でひらがな入力に対応させました（漢字表記の精霊名でも読みで検索できます）。`,
-    descEn: `You can now jump directly from a spirit's name in the Revisit Spirit Database to that spirit's details (tree unlock status) in Spirit Tree Manager, opening in a new tab. Spirit name search on both sites now also supports hiragana input, using the same method as Item Tracker (so you can search by reading, even for spirit names written in kanji).` },
-  { date: '2026-08-16', tag: 'NEW',
-    titleJa: `再訪精霊データベースに「まだ再訪が来ていない精霊」一覧を追加`,
-    titleEn: `Added a list of "spirits that haven't revisited yet" to the Revisit Spirit Database`,
-    descJa: `季節精霊のうち、来訪（Traveling Spirit）・特別来訪（Returning Spirits）が一度も来ていない47精霊を、折り畳み形式でページ下部にまとめました。`,
-    descEn: `Added a collapsible section at the bottom of the page listing the 47 seasonal spirits that have never had a Traveling Spirit or Returning Spirits visit.` },
-  { date: '2026-08-16', tag: 'CHANGE',
-    titleJa: `再訪精霊データベースの検索・表示を強化`,
-    titleEn: `Enhanced search and display in the Revisit Spirit Database`,
-    descJa: `最終来訪からの経過日数順ソート、季節フィルターのシーズン実装順並び替え、エリア（地名）バッジの日本語表記化、フッターの視認性改善を行いました。`,
-    descEn: `Added sorting by days since last visit, reordered the season filter to match implementation order, translated area (location) badges into Japanese, and improved footer readability.` },
   { date: '2026-08-16', tag: 'CHANGE',
     titleJa: `データ引継ぎのコードを大幅短縮、ファイル転送にも対応`,
     titleEn: `Greatly shortened Data Transfer codes and added file transfer support`,
     descJa: `引き継ぎコードが長すぎて使いにくいという声を受け、gzip圧縮してからコード化することで文字数を大幅に削減しました（実測で約9割減）。あわせて、コピー&ペーストに加えてファイルとしてダウンロード/読み込みする方法も追加し、別端末への受け渡しをAirDropやメッセージアプリの添付でも行えるようにしました。`,
     descEn: `In response to feedback that transfer codes were too long to be practical, we now gzip-compress the data before encoding it, cutting the character count by roughly 90% in testing. We also added the option to download/load the code as a file in addition to copy & paste, so it can be handed off to another device via AirDrop or a messaging-app attachment.` },
-  { date: '2026-08-15', tag: 'NEW',
-    titleJa: `再訪精霊データベースを新設`,
-    titleEn: `Launched the Revisit Spirit Database`,
-    descJa: `過去に来訪（Traveling Spirit）・特別来訪（Returning Spirits）した精霊の履歴を検索できる、閲覧専用の参考データベースサイトを新設しました。SkyGame-Dataプロジェクトを基にした92精霊・230件の来訪履歴を収録し、精霊名・季節での検索/絞り込みができます。所持チェックなどの記録機能はない、参照専用のツールです。全サイトのサイドバーにリンクを追加しました。`,
-    descEn: `Launched a new, view-only reference database where you can search the visit history of spirits that have had a Traveling Spirit or Returning Spirits event. It covers 230 visit records across 92 spirits, based on the SkyGame-Data project, and can be searched/filtered by spirit name or season. It's a reference-only tool with no ownership-tracking features. A link was added to the sidebar of every site.` },
   { date: '2026-08-15', tag: 'NEW',
     titleJa: `ホーム画面アイコンをカスタマイズできる機能を追加（全サイト対応）`,
     titleEn: `Added the ability to customize your home screen icon (all sites)`,
@@ -1509,13 +1486,8 @@ const CHANGELOG = [
   { date: '2026-08-10', tag: 'NEW',
     titleJa: `ノマキャン計算機（ライト版）を新設`,
     titleEn: `Launched Nomacan Calculator Lite`,
-    descJa: `通常キャンドルの目標本数まであと何日かを、所持本数・1日の目安獲得数から計算できるシンプルなサイトです。地図・効率最適化・ルート管理などの機能は含めず、それらが不要なライトユーザー向けに、姉妹サイトのノマキャン計算機プロから分離しました。新設と同日中に、獲得履歴・アンケート回答ボタン（+3本）・リクエストフォームリンクを追加し、目標日を設定した場合は「1日何本必要か」を主結果として表示するように強化しています。`,
-    descEn: `A simple site that calculates how many days remain until you reach your regular-candle target, based on your owned amount and rough daily collection rate. It omits map, efficiency-optimization, and route-management features, split off from its sister site Nomacan Calculator Pro for light users who don't need them. On the same day it launched, we added a collection history log, a survey-response button (+3 candles), and a request-form link, and — when a target date is set — enhanced it to show "how many per day you need" as the headline result.` },
-  { date: '2026-08-10', tag: 'CHANGE',
-    titleJa: `ノーマルキャンドル計算機を「ノマキャン計算機プロ」に改称`,
-    titleEn: `Renamed Normal Candle Calculator to "Nomacan Calculator Pro"`,
-    descJa: `効率自動最適化・マイルート管理・手描き風マップなどガチ勢向け機能が中心のサイトであることがわかりやすいよう改称しました。`,
-    descEn: `Renamed to make it clear this site is centered on hardcore-player features like automatic efficiency optimization, custom route management, and a hand-drawn-style map.` },
+    descJa: `通常キャンドルの目標本数まであと何日かを、所持本数・1日の目安獲得数から計算できるシンプルなサイトです。地図・効率最適化・ルート管理などの機能は含めず、それらが不要なライトユーザー向けに、姉妹サイトから分離しました。新設と同日中に、獲得履歴・アンケート回答ボタン（+3本）・リクエストフォームリンクを追加し、目標日を設定した場合は「1日何本必要か」を主結果として表示するように強化しています。`,
+    descEn: `A simple site that calculates how many days remain until you reach your regular-candle target, based on your owned amount and rough daily collection rate. It omits map, efficiency-optimization, and route-management features, split off from a sister site for light users who don't need them. On the same day it launched, we added a collection history log, a survey-response button (+3 candles), and a request-form link, and — when a target date is set — enhanced it to show "how many per day you need" as the headline result.` },
   { date: '2026-08-09', tag: 'NEW',
     titleJa: `課金アイテムプレゼント履歴、コスト集計のX共有`,
     titleEn: `Added gifted-purchase history and X sharing for cost totals`,
@@ -1783,26 +1755,6 @@ const referenceSources = [
     groupEn: '🎭 Emote Tracker',
     items: [
       { title: 'Expressions | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Expressions', note: 'エモート一覧・入手元データ', noteEn: `Emote list and acquisition-source data` },
-    ]
-  },
-  {
-    id: 'nomacanPro',
-    group: '🕯️ ノマキャン計算機プロ',
-    groupEn: '🕯️ Nomacan Calculator Pro',
-    items: [
-      { title: 'Pieces of Light | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Pieces_of_Light', note: '光の欠片データ', noteEn: `Pieces of Light data` },
-      { title: 'Additional Light Sources | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Additional_Light_Sources', note: '追加の光源データ', noteEn: `Additional light source data` },
-      { title: 'Special:AllMaps | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Special:AllMaps', note: '光源マーカーの座標データ算出に利用（マップ画像自体は使用せず、座標データのみ参照）', noteEn: `Used to calculate coordinates for light-source markers (only coordinate data is referenced — the map images themselves are not used)` },
-    ]
-  },
-  {
-    id: 'revisit',
-    group: '🕊️ 再訪精霊データベース',
-    groupEn: '🕊️ Revisit Spirit Database',
-    items: [
-      { title: 'Silverfeelin/SkyGame-Data (GitHub)', url: 'https://github.com/Silverfeelin/SkyGame-Data', note: '来訪（Traveling Spirit）・特別来訪（Returning Spirits）の全履歴データの出典（MIT License）', noteEn: `Source of the complete visit history data for Traveling Spirit and Returning Spirits events (MIT License)` },
-      { title: 'Sky 星を紡ぐ子どもたち Wiki*（wikiwiki.jp/sky-jp）用語集', url: 'https://wikiwiki.jp/sky-jp/%E7%94%A8%E8%AA%9E%E9%9B%86/%E8%8B%B1%E5%90%8D', note: 'エリア（地名）の日本語表記の確認', noteEn: `Confirming Japanese location names for areas` },
-      { title: 'Sky: Children of the Light Wiki 日本語版（Fandom）各地方ページ', url: 'https://sky-children-of-the-light.fandom.com/ja/wiki/%E5%AD%A4%E5%B3%B6', note: 'エリア（地名）の日本語表記の確認（孤島・草原・雨林・峡谷・捨てられた地・書庫の各ページ）', noteEn: `Confirming Japanese location names for areas (pages for Isle, Prairie, Forest, Valley, Wasteland, and Vault)` },
     ]
   },
 ];
