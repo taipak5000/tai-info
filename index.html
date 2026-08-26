@@ -172,6 +172,23 @@
     .log-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
     .log-tag { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--indigo-d); background: var(--indigo-bg); border-radius: 5px; padding: 1px 6px; margin-right: 6px; }
 
+    /* 🏷️ 更新情報タブの種類別フィルタチップ（.page-tabと似た見た目のピル型ボタン。
+       既存の各エントリのtag（NEW/CHANGE/FIX）をそのまま絞り込みに使う） */
+    .changelog-filters { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 4px 14px; }
+    .filter-chip {
+      flex-shrink: 0; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      background: var(--card); color: var(--text-2); border: 1px solid var(--sep); white-space: nowrap;
+    }
+    .filter-chip.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+
+    /* 🆕 「前回訪問以降の新着」区切り線（changelogCard内、renderChangelog()が
+       CHANGELOG_SESSION_LAST_SEENより新しいエントリの直後にだけ差し込む） */
+    .changelog-divider {
+      display: flex; align-items: center; gap: 10px;
+      padding: 4px 0 10px; font-size: 11px; font-weight: 700; color: var(--text-3);
+    }
+    .changelog-divider::before, .changelog-divider::after { content: ''; flex: 1; height: 0.5px; background: var(--sep); }
+
     /* 参考文献グループ */
     .ref-group { margin: 0 0 14px; }
     .ref-group:last-child { margin-bottom: 0; }
@@ -180,6 +197,14 @@
     .ref-item { font-size: 12.5px; line-height: 1.6; }
     .ref-item a { word-break: break-all; }
     .ref-item .ref-note { display: block; color: var(--text-2); font-size: 11.5px; }
+
+    /* 🔖 参考文献タブ上部のクイックジャンプピル（referenceSourcesの各グループへ
+       スクロール+ハイライトする。既存のディープリンク用anchor-highlightの仕組みを流用） */
+    .ref-quickjump { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 4px 14px; }
+    .ref-jump-pill {
+      flex-shrink: 0; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      background: var(--card); color: var(--indigo-d); border: 1px solid var(--sep); white-space: nowrap;
+    }
 
     footer { text-align: center; font-size: 11.5px; color: var(--text-3); padding: 34px 16px 12px; line-height: 1.9; }
     footer a { color: var(--indigo-d); text-decoration: none; }
@@ -339,6 +364,7 @@
           絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、
           プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>
           （追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。</p>
+        <button type="button" class="action-btn primary" style="margin-top:10px;" onclick="openModal('iconCustomModal')" data-i18n="settings.icon.customizeBtn">🎨 今すぐカスタマイズ</button>
       </div>
     </section>
 
@@ -348,6 +374,12 @@
       <p class="sec-sub" data-i18n="changelog.sub1">大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正までは
         すべて載せていません。</p>
       <p class="sec-sub" style="padding-top:0;" data-i18n="changelog.sub2">日付は各リポジトリのgitコミット履歴に基づく実際の日付です。</p>
+      <div class="changelog-filters" id="changelogFilters" role="group" data-i18n-aria="changelog.filterAriaLabel" aria-label="更新の種類で絞り込み">
+        <button type="button" class="filter-chip active" data-filter="all" aria-pressed="true" onclick="setChangelogFilter('all')" data-i18n="changelog.filterAll">すべて</button>
+        <button type="button" class="filter-chip" data-filter="NEW" aria-pressed="false" onclick="setChangelogFilter('NEW')">NEW</button>
+        <button type="button" class="filter-chip" data-filter="CHANGE" aria-pressed="false" onclick="setChangelogFilter('CHANGE')">CHANGE</button>
+        <button type="button" class="filter-chip" data-filter="FIX" aria-pressed="false" onclick="setChangelogFilter('FIX')">FIX</button>
+      </div>
       <div class="card" id="changelogCard"></div>
     </section>
 
@@ -461,6 +493,7 @@
       <p class="sec-label" data-i18n="references.label">📚 参考文献・画像引用元</p>
       <p class="sec-sub" data-i18n="references.sub">このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに
         載せていましたが、このページに統合しました。</p>
+      <div class="ref-quickjump" id="refQuickJump" data-i18n-aria="references.quickJumpAriaLabel" aria-label="参考文献グループへジャンプ"></div>
       <div class="card" id="refCard"></div>
     </section>
   </div>
@@ -782,10 +815,17 @@ const I18N = {
 
   'settings.icon.title': { ja: `📱 ホーム画面アイコンのカスタマイズ`, en: `📱 Customizing the Home Screen Icon` },
   'settings.icon.body': { ja: `各サイトの「⚙️ 表示設定」内の「🎨 表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>（追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。`, en: `From "🎨 Display Customization" inside "⚙️ Display Settings" on each site, you can change the icon used for "Add to Home Screen" — either an emoji plus background color, or an image of your choice. This is a per-device, per-browser setting and is not affected by switching profiles (save slots). <b>Please set this up before adding to your home screen</b> (changing it afterward won't update an icon you've already added).` },
+  'settings.icon.customizeBtn': { ja: `🎨 今すぐカスタマイズ`, en: `🎨 Customize Now` },
 
   'changelog.label': { ja: `🆕 更新情報`, en: `🆕 Updates` },
   'changelog.sub1': { ja: `大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正まではすべて載せていません。`, en: `Major feature additions and changes are logged here by hand as they happen. Minor bug fixes are not all listed.` },
   'changelog.sub2': { ja: `日付は各リポジトリのgitコミット履歴に基づく実際の日付です。`, en: `Dates reflect the actual git commit history of each repository.` },
+  'changelog.filterAriaLabel': { ja: `更新の種類で絞り込み`, en: `Filter by update type` },
+  'changelog.filterAll': { ja: `すべて`, en: `All` },
+  // 🆕 「前回訪問以降の新着」区切り線のラベル。CHANGELOG_SESSION_LAST_SEENより新しい
+  // （＝この訪問で初めて表示される）エントリの直後にだけ差し込まれる（renderChangelog参照）。
+  'changelog.sinceLastVisitDivider': { ja: `ここから下は前回までにご覧いただいた内容です`, en: `Everything below this line, you've already seen` },
+  'changelog.filterEmpty': { ja: `このフィルタに該当する更新はまだありません。`, en: `There are no updates matching this filter yet.` },
 
   'credits.label': { ja: `🙏 クレジット`, en: `🙏 Credits` },
   'credits.made.title': { ja: `制作`, en: `Created By` },
@@ -862,6 +902,7 @@ const I18N = {
 
   'references.label': { ja: `📚 参考文献・画像引用元`, en: `📚 References & Image Credits` },
   'references.sub': { ja: `このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに載せていましたが、このページに統合しました。`, en: `A list of references and sources consulted while building this family of sites. This used to be listed elsewhere, but has been consolidated onto this page.` },
+  'references.quickJumpAriaLabel': { ja: `参考文献グループへジャンプ`, en: `Jump to a reference group` },
 
   'iconCustom.title': { ja: `🎨 ホーム画面アイコンをカスタマイズ`, en: `🎨 Customize Home Screen Icon` },
   'iconCustom.hint': { ja: `スマホの「ホーム画面に追加」をしたときのアイコンを、好きな絵文字や画像に変更できます。<br><b>追加する前に</b>設定してください。追加した後に変更しても、既に追加済みのアイコンは自動更新されません（変更したい場合は一度削除して追加し直してください）。`, en: `You can change the icon used when adding this site to your phone's home screen. Set this up before adding it — changing it afterward won't update an icon that's already been added (remove and re-add it if you want to change it later).` },
@@ -1584,6 +1625,13 @@ function getChangelogLastSeen() {
   try { return localStorage.getItem(CHANGELOG_LAST_SEEN_KEY) || ''; } catch (e) { return ''; }
 }
 
+// 📌 「前回訪問以降の新着」区切り線（renderChangelog参照）の基準日を、ページ読み込み時点の
+// スナップショットとして固定する。更新情報タブを開くとmarkChangelogSeen()が即座に
+// last-seenを最新化してしまうため、renderChangelog()の中で毎回getChangelogLastSeen()を
+// 呼んでしまうと、タブを開いた瞬間に区切り線が消えてしまう（見た瞬間に既読扱いになるため）。
+// このセッション中（＝このページを開いている間）は、この訪問の開始時点の値を使い続ける。
+const CHANGELOG_SESSION_LAST_SEEN = getChangelogLastSeen();
+
 function hasUnreadChangelog() {
   return changelogLatestDate() > getChangelogLastSeen();
 }
@@ -1615,13 +1663,45 @@ function escRefHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// 🏷️ 更新情報タブの種類別フィルタ（'all' | 'NEW' | 'CHANGE' | 'FIX'）。
+// 各エントリの既存のtagフィールドをそのまま絞り込みに使う（新しいデータ構造は追加しない）。
+let changelogFilter = 'all';
+
+function setChangelogFilter(filter) {
+  changelogFilter = filter;
+  document.querySelectorAll('#changelogFilters .filter-chip').forEach(btn => {
+    const isActive = btn.dataset.filter === filter;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+  renderChangelog();
+}
+
 function renderChangelog() {
   const el = document.getElementById('changelogCard');
   if (!el) return;
-  el.innerHTML = CHANGELOG.map(e => {
+  const list = changelogFilter === 'all' ? CHANGELOG : CHANGELOG.filter(e => e.tag === changelogFilter);
+  if (!list.length) {
+    el.innerHTML = `<p class="log-desc">${t('changelog.filterEmpty')}</p>`;
+    return;
+  }
+  // 🆕 「前回訪問以降の新着」区切り線: CHANGELOG_SESSION_LAST_SEENより新しいエントリが
+  // 連続する先頭部分と、それ以降（既読済み）の間に一度だけ差し込む。前回訪問の記録が
+  // ない（初回訪問）場合や、絞り込み結果がすべて新着/すべて既読の場合は表示しない
+  // （区切っても意味がないため）。
+  const hasNew = list.some(e => e.date > CHANGELOG_SESSION_LAST_SEEN);
+  const hasSeen = list.some(e => e.date <= CHANGELOG_SESSION_LAST_SEEN);
+  const showDivider = !!CHANGELOG_SESSION_LAST_SEEN && hasNew && hasSeen;
+  let dividerInserted = false;
+  el.innerHTML = list.map(e => {
     const title = LANG === 'en' ? (e.titleEn || e.titleJa) : e.titleJa;
     const desc = LANG === 'en' ? (e.descEn || e.descJa) : e.descJa;
-    return `
+    let dividerHtml = '';
+    if (showDivider && !dividerInserted && e.date <= CHANGELOG_SESSION_LAST_SEEN) {
+      dividerInserted = true;
+      dividerHtml = `<div class="changelog-divider"><span>${t('changelog.sinceLastVisitDivider')}</span></div>`;
+    }
+    return `${dividerHtml}
     <div class="log-entry">
       <div class="log-date">${e.date}</div>
       <div class="log-body">
@@ -1698,9 +1778,20 @@ const referenceSources = [
   },
 ];
 
+// 🔖 参考文献タブ上部のクイックジャンプピル。referenceSourcesの各グループへ
+// スクロール+ハイライトする（既存のディープリンク用scrollToCardAnchor()をそのまま流用）。
+function renderRefQuickJump() {
+  const el = document.getElementById('refQuickJump');
+  if (!el) return;
+  el.innerHTML = referenceSources.map(g => `
+    <button type="button" class="ref-jump-pill" onclick="scrollToCardAnchor('references', '${g.id}')">${escRefHtml(LANG === 'en' ? (g.groupEn || g.group) : g.group)}</button>`
+  ).join('');
+}
+
 function renderReferences() {
   const el = document.getElementById('refCard');
   if (!el) return;
+  renderRefQuickJump();
   el.innerHTML = referenceSources.map(g => `
   <div class="ref-group" id="references-${g.id}" tabindex="-1">
     <div class="ref-group-label">${escRefHtml(LANG === 'en' ? (g.groupEn || g.group) : g.group)}</div>
