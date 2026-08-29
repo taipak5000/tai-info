@@ -480,10 +480,11 @@
       <div class="card" id="privacy-transfer" tabindex="-1">
         <h3 data-i18n="privacy.transfer.title">🔄 データ引継ぎ機能について</h3>
         <p data-i18n="privacy.transfer.p1">機種変更などで、データを別のスマホ・パソコンに移したいときのための機能です。仕組みはシンプルで、
-          あなたのデータを一旦「コード」という文字の羅列に変換し、それをあなた自身がコピー&amp;ペーストで
-          別の端末に貼り付ける、という流れです。</p>
-        <p style="margin-top:8px;" data-i18n="privacy.transfer.p2">このコードが自動でどこかに送られることはありません。あなたがコピー&amp;ペースト
-          という操作をしない限り、データが動くことは一切ありません。</p>
+          あなたのデータを一旦「コード」という文字の羅列に変換し、それを①あなた自身がコピー&amp;ペーストで
+          別の端末に貼り付けるか、②ファイルとしてダウンロードして別の端末で読み込むか、いずれかの方法で
+          移します。</p>
+        <p style="margin-top:8px;" data-i18n="privacy.transfer.p2">このコード・ファイルが自動でどこかに送られることはありません。あなたがコピー&amp;ペースト、
+          またはファイルのダウンロード/読み込みという操作をしない限り、データが動くことは一切ありません。</p>
       </div>
       <div class="card" id="privacy-contact" tabindex="-1">
         <h3 data-i18n="privacy.contact.title">✉️ お問い合わせ</h3>
@@ -900,8 +901,8 @@ const I18N = {
   },
 
   'privacy.transfer.title': { ja: `🔄 データ引継ぎ機能について`, en: `🔄 About the Data Transfer feature` },
-  'privacy.transfer.p1': { ja: `機種変更などで、データを別のスマホ・パソコンに移したいときのための機能です。仕組みはシンプルで、あなたのデータを一旦「コード」という文字の羅列に変換し、それをあなた自身がコピー&amp;ペーストで別の端末に貼り付ける、という流れです。`, en: `This feature is for when you want to move your data to a different phone or computer, such as when getting a new device. The process is simple: your data is converted into a string of characters called a "code," which you then copy and paste into the other device yourself.` },
-  'privacy.transfer.p2': { ja: `このコードが自動でどこかに送られることはありません。あなたがコピー&amp;ペーストという操作をしない限り、データが動くことは一切ありません。`, en: `This code is never automatically sent anywhere. Unless you perform the copy-and-paste action yourself, your data never moves at all.` },
+  'privacy.transfer.p1': { ja: `機種変更などで、データを別のスマホ・パソコンに移したいときのための機能です。仕組みはシンプルで、あなたのデータを一旦「コード」という文字の羅列に変換し、それを①あなた自身がコピー&amp;ペーストで別の端末に貼り付けるか、②ファイルとしてダウンロードして別の端末で読み込むか、いずれかの方法で移します。`, en: `This feature is for when you want to move your data to a different phone or computer, such as when getting a new device. The process is simple: your data is converted into a string of characters called a "code," which you then move to the other device either by ① copying and pasting it yourself, or ② downloading it as a file and loading that file on the other device.` },
+  'privacy.transfer.p2': { ja: `このコード・ファイルが自動でどこかに送られることはありません。あなたがコピー&amp;ペースト、またはファイルのダウンロード/読み込みという操作をしない限り、データが動くことは一切ありません。`, en: `This code — whether copied or saved as a file — is never automatically sent anywhere. Unless you yourself perform the copy-and-paste, or the file download/load, your data never moves at all.` },
 
   'privacy.contact.title': { ja: `✉️ お問い合わせ`, en: `✉️ Contact` },
   'privacy.contact.body': { ja: `データの扱いについて不安な点や質問があれば、<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>（X）までお気軽にご連絡ください。`, en: `If you have any concerns or questions about how your data is handled, feel free to reach out via <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a> (X).` },
@@ -1450,6 +1451,51 @@ window.addEventListener('hashchange', applyHashRoute);
    訳が用意でき次第追加（未訳の場合はJAへフォールバック表示）。
    ================================================================ */
 const CHANGELOG = [
+  { date: '2026-08-29', tag: 'NEW',
+    titleJa: `「他のツール」一覧に作者プロフィールへのリンクを追加`,
+    titleEn: `Added a Creator Profile link to the "Other Tools" list`,
+    descJa: `画面下部ドック「☰ 他のツール」から開くドロワーに、制作者のプロフィールページ（skyzztai-profile）への🔗リンクを追加しました。`,
+    descEn: `Added a 🔗 link to the creator's profile page (skyzztai-profile) in the drawer opened from the "☰ Other Tools" dock button at the bottom of the screen.` },
+  { date: '2026-08-29', tag: 'NEW',
+    titleJa: `楽譜づくり(tai-score)を公開ツールとして追加（test版）`,
+    titleEn: `Added Sheet Music Maker (tai-score) as a public tool (test version)`,
+    descJa: `「他のツール」一覧の羽トラッカーの直後に、新しい姉妹サイト「🎵 楽譜づくり」を追加しました。まだ動作に不安が残るため、名称の先頭に小さく「test」の注記を付けています。`,
+    descEn: `Added a new sister site, "🎵 Sheet Music Maker," to the "Other Tools" list right after Wing Tracker. Since it's still not fully stable, its name carries a small "test" label.` },
+  { date: '2026-08-26', tag: 'NEW',
+    titleJa: `更新情報にNEW/CHANGE/FIXの絞り込み、参考文献にクイックジャンプを追加`,
+    titleEn: `Added NEW/CHANGE/FIX filters to Updates and quick-jump to References`,
+    descJa: `更新情報タブに、種類（NEW/CHANGE/FIX）で絞り込めるフィルタチップと、前回ご覧いただいた内容との境目を示す区切り線を追加しました。参考文献タブの上部には、各グループへ直接ジャンプできるクイックジャンプボタンも追加。あわせて、設定についてタブの「📱 ホーム画面アイコン」カードに、表示設定モーダル内のアイコンカスタマイズへ直行できるボタンを追加しました。`,
+    descEn: `Added filter chips to the Updates tab so you can narrow the list to NEW, CHANGE, or FIX, plus a divider marking where entries you've already seen begin. Added quick-jump buttons to the top of the References tab that scroll straight to each group. Also added a button on the "📱 Home Screen Icon" card (About Settings tab) that jumps directly to icon customization inside the Display Settings modal.` },
+  { date: '2026-08-26', tag: 'CHANGE',
+    titleJa: `常時表示サイドバーを撤去し「他のツール」ドロワーに一本化`,
+    titleEn: `Removed the always-visible sidebar, consolidating into the "Other Tools" drawer`,
+    descJa: `デスクトップ幅（850px以上）で常時表示されていた2カラムのサイドバーを撤去し、ドック「☰ 他のツール」ボタンから開くドロワー表示に一本化しました。ドロワーの内容も🔗関連ツール一覧のみに整理し、ホーム画面アイコンのカスタマイズ・表示設定へは引き続き⚙️表示設定モーダルから到達できます。この変更に伴い1400px前後の幅でタブバーが横スクロールしてしまう回帰が一時発生しましたが、同日中に修正しています。`,
+    descEn: `Removed the always-visible two-column sidebar that used to show at desktop widths (850px+), consolidating it into the drawer opened from the dock's "☰ Other Tools" button. The drawer's contents were also trimmed down to just the 🔗 related-tools list; home screen icon customization and display settings remain reachable from the ⚙️ Display Settings modal. This change briefly introduced a regression where the tab bar would scroll horizontally around 1400px width, which was fixed the same day.` },
+  { date: '2026-08-22', tag: 'CHANGE',
+    titleJa: `ダークモード切替をlight/dark/systemの3状態に拡張`,
+    titleEn: `Expanded the dark mode toggle to a light/dark/system 3-state cycle`,
+    descJa: `表示設定のダークモード切替を、light→dark→system→light…と巡回する3状態に拡張しました。「システムに合わせる」を選んでいる間は、OS側のダーク/ライト設定が変わったときにリロードなしでその場で追従します。また、taipak5000.github.io系サイトはlocalStorageを共有しているため、別タブ・別サイトでテーマを変更した場合も、開いたままのこのタブに即座に反映されます。`,
+    descEn: `Expanded the Display Settings dark mode toggle into a 3-state cycle: Light → Dark → System → Light, and so on. While "Match System" is selected, the display now follows your OS's dark/light setting live, without a reload, whenever it changes. Since taipak5000.github.io sites share localStorage, changing the theme on another tab or site is also reflected immediately on this tab, even while it's still open.` },
+  { date: '2026-08-22', tag: 'NEW',
+    titleJa: `更新情報タブに未読インジケーター、カード単位のディープリンクを追加`,
+    titleEn: `Added an unread indicator to Updates and per-card deep links`,
+    descJa: `前回このタブを見た日付と最新の更新日を比較し、未読の更新があるときだけ更新情報タブ・画面下部ドックにドットを表示するようにしました。あわせてURLのハッシュを「#タブ名:アンカー名」の形式に拡張し、設定について・クレジット・プライバシーポリシーの各カードや、参考文献の各グループへ、直接リンクしてスクロール・ハイライトできるようにしました。`,
+    descEn: `The Updates tab and the bottom dock now show a dot whenever there's an update newer than the last time you viewed that tab, by comparing dates. Also extended the URL hash to a "#tabname:anchor" format, so you can link directly to individual cards in About Settings, Credits, and Privacy Policy, or to individual groups in References, with the target automatically scrolled to and highlighted.` },
+  { date: '2026-08-20', tag: 'NEW',
+    titleJa: `画面下部にクイックメニュー（ドック）、表示設定に言語選択ボタンを追加`,
+    titleEn: `Added a bottom quick-menu dock and language-selection buttons in Display Settings`,
+    descJa: `更新情報・クレジット・他のツール・表示設定へのショートカットを、pengram.jp風のアイコン+ラベルのドックとして画面下部に固定表示しました（既存のハンバーガーメニューとは併存）。表示設定モーダルには「日本語」「English」から直接選べる言語ボタンも追加し、ヘッダーの言語切替ボタンと状態を同期。あわせて、他サイトとの統一のため表示設定モーダル末尾に閉じるボタンも追加しました。`,
+    descEn: `Added a pengram.jp-style icon-and-label dock, fixed to the bottom of the screen, with shortcuts to Updates, Credits, Other Tools, and Display Settings (alongside the existing hamburger menu, not replacing it). Also added "日本語"/"English" buttons inside the Display Settings modal for picking a language directly, kept in sync with the header's language toggle, and added a closing button at the bottom of the modal to match other sites.` },
+  { date: '2026-08-19', tag: 'NEW',
+    titleJa: `表示設定（ダークモード・キーボードショートカット）を追加`,
+    titleEn: `Added Display Settings (dark mode & keyboard shortcuts)`,
+    descJa: `全サイト共通のダークモード切替とキーボードショートカット（?で設定を開く、dでダーク切替、Escで閉じる。sky_shortcuts_enabledで無効化可）を追加しました。サイドバーの「⚙️ 表示設定を開く」から開けます。`,
+    descEn: `Added a dark mode toggle and keyboard shortcuts shared across all sites (? opens Display Settings, D toggles dark mode, Esc closes — can be disabled via sky_shortcuts_enabled). Reachable from the sidebar via "⚙️ Open Display Settings."` },
+  { date: '2026-08-19', tag: 'NEW',
+    titleJa: `全ページで日本語・英語表示の切り替えに対応`,
+    titleEn: `Added Japanese/English display switching across every page`,
+    descJa: `sky_app_lang（localStorage、全サイト共通キー）で言語設定を管理するJA/EN切り替えボタンを追加しました。サイドバー・プロフィール切替・ダッシュボード・バックアップ復元モーダルなどの共通UI文言は、既にi18n実装済みだったitem・companionの英語表記に統一しています。`,
+    descEn: `Added a JA/EN toggle button, with the language setting managed via sky_app_lang (a localStorage key shared across all sites). Common UI text — sidebar, profile switcher, dashboard, backup/restore modal, and more — was aligned with the English wording already used in Item Tracker and Spirit Companion Tool, which already had i18n.` },
   { date: '2026-08-16', tag: 'CHANGE',
     titleJa: `データ引継ぎのコードを大幅短縮、ファイル転送にも対応`,
     titleEn: `Greatly shortened Data Transfer codes and added file transfer support`,
