@@ -208,6 +208,15 @@
       background: var(--card); color: var(--indigo-d); border: 1px solid var(--sep); white-space: nowrap;
     }
 
+    /* 📊 参考文献タブ「サイト別機能対応表」。カードの横幅に収まらないモバイル幅では
+       表自体を横スクロールさせ、ページ本体は横スクロールさせない（.compat-table-wrapに閉じ込める）。 */
+    .compat-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 4px; }
+    .compat-table { width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
+    .compat-table th, .compat-table td { padding: 7px 10px; text-align: left; border-bottom: 0.5px solid var(--sep); }
+    .compat-table th { color: var(--text-2); font-weight: 700; font-size: 11px; }
+    .compat-table td:not(:first-child), .compat-table th:not(:first-child) { text-align: center; }
+    .compat-table tbody tr:last-child td { border-bottom: none; }
+
     footer { text-align: center; font-size: 11.5px; color: var(--text-3); padding: 34px 16px 12px; line-height: 1.9; }
     footer a { color: var(--indigo-d); text-decoration: none; }
 
@@ -398,8 +407,8 @@
       <div class="card" id="credits-dataSource" tabindex="-1">
         <h3 data-i18n="credits.dataSource.title">データ・画像の参照元</h3>
         <ul data-i18n="credits.dataSource.list">
-          <li>Sky: Children of the Light Wiki（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
-          <li>9bit、ゲームエイト、wikiwiki.jp（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>
+          <li><a href="https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki" target="_blank" rel="noopener noreferrer">Sky: Children of the Light Wiki</a>（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
+          <li><a href="https://9-bit.jp/skygold/" target="_blank" rel="noopener noreferrer">9bit</a>、<a href="https://game8.jp/sky" target="_blank" rel="noopener noreferrer">ゲームエイト</a>、<a href="https://wikiwiki.jp/sky-jp/" target="_blank" rel="noopener noreferrer">wikiwiki.jp</a>（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>
         </ul>
         <p style="margin-top:8px;" data-i18n="credits.dataSource.note">詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。</p>
       </div>
@@ -498,6 +507,56 @@
       <p class="sec-label" data-i18n="references.label">📚 参考文献・画像引用元</p>
       <p class="sec-sub" data-i18n="references.sub">このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに
         載せていましたが、このページに統合しました。</p>
+
+      <div class="card" id="references-toolGuide" tabindex="-1">
+        <h3 data-i18n="references.toolGuide.title">🧭 目的別ツール早見表</h3>
+        <p style="margin-bottom:8px;" data-i18n="references.toolGuide.sub">やりたいことから、使うツールを探せます。</p>
+        <ul data-i18n="references.toolGuide.list">
+          <li>🕯️ <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
+          <li>🪽 <b>翼・光の子（ウィングバフ）を集めたい</b> → <a href="https://taipak5000.github.io/wings/">羽トラッカー</a></li>
+          <li>🗂️ <b>アイテムの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-item/">アイテム所持管理</a></li>
+          <li>🎭 <b>エモートの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-emote/">エモート所持率管理</a></li>
+          <li>✨ <b>精霊と一緒に過ごしたい・精霊友情やシーズンツリーを進めたい</b> → <a href="https://taipak5000.github.io/companion/">精霊同行ツール</a></li>
+          <li>📍 <b>自分のコーデ・創作物を紹介したい</b> → <a href="https://taipak5000.github.io/share/">創作物管理ツール</a></li>
+          <li>🎵 <b>楽譜を演奏・作成したい</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">楽譜づくり</a></li>
+          <li>🔄 <b>別の端末にデータを引き継ぎたい</b> → <a href="https://taipak5000.github.io/tai-transfer/">データ引継ぎ</a></li>
+          <li>⚙️ <b>使い方や共通設定について知りたい</b> → <a href="#settings">設定について</a>タブ</li>
+          <li>👤 <b>制作者について知りたい・リクエストを送りたい</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">作者プロフィール</a></li>
+        </ul>
+      </div>
+
+      <div class="card" id="references-compatTable" tabindex="-1">
+        <h3 data-i18n="references.compatTable.title">📊 サイト別機能対応表</h3>
+        <p style="margin-bottom:10px;" data-i18n="references.compatTable.sub">公開中の姉妹サイト間での、共通機能の対応状況です。</p>
+        <div class="compat-table-wrap">
+          <table class="compat-table">
+            <thead>
+              <tr>
+                <th data-i18n="references.compatTable.colTool">ツール</th>
+                <th data-i18n="references.compatTable.colDark">🌙 ダーク</th>
+                <th data-i18n="references.compatTable.colProfile">👤 複数プロフィール</th>
+                <th data-i18n="references.compatTable.colLang">🌐 言語数</th>
+                <th data-i18n="references.compatTable.colTest">注記</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><a href="https://taipak5000.github.io/tai-item/" data-i18n="tools.item">🗂️ アイテム所持管理</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-emote/" data-i18n="tools.emote">🎭 エモート所持率管理</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/share/" data-i18n="tools.share">📍 創作物管理ツール</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-nomacan/" data-i18n="tools.nomacan">🕯️ ノマキャン計算機</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/star-candle/" data-i18n="tools.starCandle">🕯️ 星のキャンドル計算機</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/companion/" data-i18n="tools.companion">✨ 精霊同行ツール</a></td><td>✅</td><td>✅</td><td>4</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/wings/" data-i18n="tools.wings">🪽 羽トラッカー</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-transfer/" data-i18n="tools.transfer">🔄 データ引継ぎ</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-info/" data-i18n="tools.info">⚙️ 設定・更新情報</a></td><td>✅</td><td>—</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-score/" data-i18n="tools.score">🎵 楽譜づくり</a></td><td>✅</td><td>—</td><td>2</td><td><span class="tool-badge-test">test</span></td></tr>
+              <tr><td><a href="https://taipak5000.github.io/skyzztai-profile/" data-i18n="tools.profile">👤 作者プロフィール</a></td><td>✅</td><td>—</td><td>2</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:8px; color:var(--text-2); font-size:11.5px;" data-i18n="references.compatTable.footnote">※「👤 複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「🌐 言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。</p>
+      </div>
+
       <div class="ref-quickjump" id="refQuickJump" data-i18n-aria="references.quickJumpAriaLabel" aria-label="参考文献グループへジャンプ"></div>
       <div class="card" id="refCard"></div>
     </section>
@@ -840,10 +899,10 @@ const I18N = {
 
   'credits.dataSource.title': { ja: `データ・画像の参照元`, en: `Data & Image Sources` },
   'credits.dataSource.list': {
-    ja: `<li>Sky: Children of the Light Wiki（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
-      <li>9bit、ゲームエイト、wikiwiki.jp（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>`,
-    en: `<li>Sky: Children of the Light Wiki (Fandom, Japanese &amp; English editions) — data and images for items, spirits, events, etc.</li>
-      <li>9bit, Game8, wikiwiki.jp (Sky: Children of the Light Wiki*) — supplementary sources for verifying Japanese-language data</li>`
+    ja: `<li><a href="https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki" target="_blank" rel="noopener noreferrer">Sky: Children of the Light Wiki</a>（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
+      <li><a href="https://9-bit.jp/skygold/" target="_blank" rel="noopener noreferrer">9bit</a>、<a href="https://game8.jp/sky" target="_blank" rel="noopener noreferrer">ゲームエイト</a>、<a href="https://wikiwiki.jp/sky-jp/" target="_blank" rel="noopener noreferrer">wikiwiki.jp</a>（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>`,
+    en: `<li><a href="https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki" target="_blank" rel="noopener noreferrer">Sky: Children of the Light Wiki</a> (Fandom, Japanese &amp; English editions) — data and images for items, spirits, events, etc.</li>
+      <li><a href="https://9-bit.jp/skygold/" target="_blank" rel="noopener noreferrer">9bit</a>, <a href="https://game8.jp/sky" target="_blank" rel="noopener noreferrer">Game8</a>, <a href="https://wikiwiki.jp/sky-jp/" target="_blank" rel="noopener noreferrer">wikiwiki.jp</a> (Sky: Children of the Light Wiki*) — supplementary sources for verifying Japanese-language data</li>`
   },
   'credits.dataSource.note': { ja: `詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。`, en: `See the "📚 References &amp; Image Credits" tab for the full list of sources.` },
 
@@ -910,6 +969,40 @@ const I18N = {
   'references.label': { ja: `📚 参考文献・画像引用元`, en: `📚 References & Image Credits` },
   'references.sub': { ja: `このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに載せていましたが、このページに統合しました。`, en: `A list of references and sources consulted while building this family of sites. This used to be listed elsewhere, but has been consolidated onto this page.` },
   'references.quickJumpAriaLabel': { ja: `参考文献グループへジャンプ`, en: `Jump to a reference group` },
+
+  'references.toolGuide.title': { ja: `🧭 目的別ツール早見表`, en: `🧭 Which Tool Should I Use?` },
+  'references.toolGuide.sub': { ja: `やりたいことから、使うツールを探せます。`, en: `Find the right tool based on what you want to do.` },
+  'references.toolGuide.list': {
+    ja: `<li>🕯️ <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
+      <li>🪽 <b>翼・光の子（ウィングバフ）を集めたい</b> → <a href="https://taipak5000.github.io/wings/">羽トラッカー</a></li>
+      <li>🗂️ <b>アイテムの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-item/">アイテム所持管理</a></li>
+      <li>🎭 <b>エモートの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-emote/">エモート所持率管理</a></li>
+      <li>✨ <b>精霊と一緒に過ごしたい・精霊友情やシーズンツリーを進めたい</b> → <a href="https://taipak5000.github.io/companion/">精霊同行ツール</a></li>
+      <li>📍 <b>自分のコーデ・創作物を紹介したい</b> → <a href="https://taipak5000.github.io/share/">創作物管理ツール</a></li>
+      <li>🎵 <b>楽譜を演奏・作成したい</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">楽譜づくり</a></li>
+      <li>🔄 <b>別の端末にデータを引き継ぎたい</b> → <a href="https://taipak5000.github.io/tai-transfer/">データ引継ぎ</a></li>
+      <li>⚙️ <b>使い方や共通設定について知りたい</b> → <a href="#settings">設定について</a>タブ</li>
+      <li>👤 <b>制作者について知りたい・リクエストを送りたい</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">作者プロフィール</a></li>`,
+    en: `<li>🕯️ <b>Want to calculate candles</b> (target amount, days until you have enough, etc.) → <a href="https://taipak5000.github.io/tai-nomacan/">Nomacan Calculator</a> / <a href="https://taipak5000.github.io/star-candle/">Star Candle Calculator</a></li>
+      <li>🪽 <b>Want to collect wings</b> (Wing Buff) from Children of Light → <a href="https://taipak5000.github.io/wings/">Wing Tracker</a></li>
+      <li>🗂️ <b>Want to track which items you own</b> → <a href="https://taipak5000.github.io/tai-item/">Item Tracker</a></li>
+      <li>🎭 <b>Want to track which emotes you own</b> → <a href="https://taipak5000.github.io/tai-emote/">Emote Tracker</a></li>
+      <li>✨ <b>Want to hang out with a spirit companion, or progress friendship/season trees</b> → <a href="https://taipak5000.github.io/companion/">Spirit Companion Tool</a></li>
+      <li>📍 <b>Want to showcase your outfits or creations</b> → <a href="https://taipak5000.github.io/share/">Creation Manager</a></li>
+      <li>🎵 <b>Want to play or create sheet music</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">Sheet Music Maker</a></li>
+      <li>🔄 <b>Want to move your data to another device</b> → <a href="https://taipak5000.github.io/tai-transfer/">Data Transfer</a></li>
+      <li>⚙️ <b>Want to learn how things work or find shared settings</b> → the <a href="#settings">About Settings</a> tab</li>
+      <li>👤 <b>Want to learn about the creator or send a request</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">Creator Profile</a></li>`
+  },
+
+  'references.compatTable.title': { ja: `📊 サイト別機能対応表`, en: `📊 Feature Compatibility Table` },
+  'references.compatTable.sub': { ja: `公開中の姉妹サイト間での、共通機能の対応状況です。`, en: `Shows how shared features compare across the published sister sites.` },
+  'references.compatTable.colTool': { ja: `ツール`, en: `Tool` },
+  'references.compatTable.colDark': { ja: `🌙 ダーク`, en: `🌙 Dark` },
+  'references.compatTable.colProfile': { ja: `👤 複数プロフィール`, en: `👤 Multi-Profile` },
+  'references.compatTable.colLang': { ja: `🌐 言語数`, en: `🌐 Languages` },
+  'references.compatTable.colTest': { ja: `注記`, en: `Note` },
+  'references.compatTable.footnote': { ja: `※「👤 複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「🌐 言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。`, en: `*The three sites showing "—" under "👤 Multi-Profile" (Settings &amp; Updates, Sheet Music Maker, Creator Profile) don't manage any owned-item save data of their own, so they fall outside the shared profile-switching system. "🌐 Languages" is 2 (Japanese/English) by default; only Spirit Companion Tool supports 4 (Japanese, English, Traditional Chinese, Korean).` },
 
   'iconCustom.title': { ja: `🎨 ホーム画面アイコンをカスタマイズ`, en: `🎨 Customize Home Screen Icon` },
   'iconCustom.hint': { ja: `スマホの「ホーム画面に追加」をしたときのアイコンを、好きな絵文字や画像に変更できます。<br><b>追加する前に</b>設定してください。追加した後に変更しても、既に追加済みのアイコンは自動更新されません（変更したい場合は一度削除して追加し直してください）。`, en: `You can change the icon used when adding this site to your phone's home screen. Set this up before adding it — changing it afterward won't update an icon that's already been added (remove and re-add it if you want to change it later).` },
