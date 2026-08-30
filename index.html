@@ -191,6 +191,26 @@
     }
     .changelog-divider::before, .changelog-divider::after { content: ''; flex: 1; height: 0.5px; background: var(--sep); }
 
+    /* 🏠 パーソナライズされた「おかえりなさい」セクション（更新情報タブ上部）。
+       同一オリジンで共有されるlocalStorageに、他の公開ツールの特徴的なキーが
+       存在するかを直接チェックして検出したツールだけを表示する（renderWelcomeBack()参照）。
+       1つも検出できない場合（初回訪問の端末等）は.showを付けず非表示のまま。 */
+    .welcome-back-card { display: none; background: var(--indigo-bg); box-shadow: none; }
+    .welcome-back-card.show { display: block; }
+    .welcome-back-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+    .welcome-back-label { font-size: 13px; font-weight: 700; color: var(--text); }
+    .welcome-back-pill {
+      display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; color: var(--indigo-d); background: var(--card);
+      border: 1px solid var(--sep); white-space: nowrap;
+    }
+
+    /* ⭐ 上のDETECTED_TOOLSのいずれかのツール名が、タイトル/説明に単純な文字列一致した
+       更新情報エントリを控えめに強調する。色だけに頼らないよう.log-tag-relevantの
+       テキストラベルも併記する（renderChangelog()参照）。 */
+    .log-entry.log-relevant { background: var(--indigo-bg); border-radius: var(--r-sm); padding: 12px 10px; margin: 2px 0; border-bottom: none; }
+    .log-tag.log-tag-relevant { background: var(--indigo); color: #fff; }
+
     /* 参考文献グループ */
     .ref-group { margin: 0 0 14px; }
     .ref-group:last-child { margin-bottom: 0; }
@@ -387,6 +407,7 @@
       <p class="sec-sub" data-i18n="changelog.sub1">大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正までは
         すべて載せていません。</p>
       <p class="sec-sub" style="padding-top:0;" data-i18n="changelog.sub2">日付は各リポジトリのgitコミット履歴に基づく実際の日付です。</p>
+      <div class="card welcome-back-card" id="welcomeBackCard"></div>
       <div class="changelog-filters" id="changelogFilters" role="group" data-i18n-aria="changelog.filterAriaLabel" aria-label="更新の種類で絞り込み">
         <button type="button" class="filter-chip active" data-filter="all" aria-pressed="true" onclick="setChangelogFilter('all')" data-i18n="changelog.filterAll">すべて</button>
         <button type="button" class="filter-chip" data-filter="NEW" aria-pressed="false" onclick="setChangelogFilter('NEW')">NEW</button>
@@ -892,6 +913,11 @@ const I18N = {
   // （＝この訪問で初めて表示される）エントリの直後にだけ差し込まれる（renderChangelog参照）。
   'changelog.sinceLastVisitDivider': { ja: `ここから下は前回までにご覧いただいた内容です`, en: `Everything below this line, you've already seen` },
   'changelog.filterEmpty': { ja: `このフィルタに該当する更新はまだありません。`, en: `There are no updates matching this filter yet.` },
+  // 🏠 パーソナライズされた「おかえりなさい」セクション（renderWelcomeBack()参照）。
+  // 同一オリジンで共有されるlocalStorageから検出した「お使いのツール」一覧のラベル。
+  'changelog.welcomeBack.label': { ja: `🏠 あなたがお使いのツール:`, en: `🏠 Tools you use:` },
+  // ⭐ 検出したツールに関連する更新情報エントリに付く強調タグ（renderChangelog()参照）。
+  'changelog.relevantTag': { ja: `⭐ あなた向け`, en: `⭐ For You` },
 
   'credits.label': { ja: `🙏 クレジット`, en: `🙏 Credits` },
   'credits.made.title': { ja: `制作`, en: `Created By` },
@@ -1102,6 +1128,7 @@ function setLang(lang) {
   try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
   applyI18n();
   renderChangelog();
+  renderWelcomeBack();
   renderReferences();
   settingsSyncLangUI();
   updateChangelogUnreadUI();
@@ -1544,6 +1571,11 @@ window.addEventListener('hashchange', applyHashRoute);
    訳が用意でき次第追加（未訳の場合はJAへフォールバック表示）。
    ================================================================ */
 const CHANGELOG = [
+  { date: '2026-08-30', tag: 'NEW',
+    titleJa: `更新情報タブに、お使いのツールを自動検出するパーソナライズ表示を追加`,
+    titleEn: `Added a personalized "tools you use" summary to the Updates tab`,
+    descJa: `taipak5000.github.io系のサイトは同一オリジンでlocalStorageを共有しているため、通信は一切行わず、他の公開ツールのデータがこのブラウザに存在するかを直接チェックして、実際に使っていそうなツールを推測できるようにしました。1つでも検出できた場合のみ、更新情報タブの上部に「🏠 あなたがお使いのツール」として一覧表示し、その使用中ツールに言及している更新エントリを⭐マークつきで控えめに強調表示します。初回訪問の端末など、何も検出できない場合はこのセクション自体を表示しません。`,
+    descEn: `Since taipak5000.github.io sites share localStorage under the same origin, this page can now check — with zero network requests — whether other public tools' data already exists in this browser, to guess which ones you actually use. Whenever at least one is detected, a "🏠 Tools you use" summary appears at the top of the Updates tab, and any update entry mentioning one of those tools gets a subtle ⭐ highlight. On a first-time device where nothing is detected, this section is skipped entirely.` },
   { date: '2026-08-29', tag: 'NEW',
     titleJa: `「他のツール」一覧に作者プロフィールへのリンクを追加`,
     titleEn: `Added a Creator Profile link to the "Other Tools" list`,
@@ -1808,6 +1840,89 @@ function escRefHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+/* ================================================================
+   🏠 パーソナライズされた「おかえりなさい」セクション（更新情報タブ上部）
+   taipak5000.github.io系の公開サイトは全て同一オリジンでlocalStorageを共有している
+   ため、通信（fetch等）を一切行わずに、他の公開ツールが書き込む特徴的なキーが
+   このブラウザのlocalStorageに存在するかどうかを直接チェックできる。存在すれば
+   「このツールを実際に使っている」とみなし、更新情報タブ上部に検出結果の要約を出し、
+   その使用中ツールに言及している更新情報エントリを控えめに強調表示する。
+   1つも検出できない場合（初回訪問の端末等）はセクション自体を表示しない
+   （空・不自然な表示になるのを避けるため）。
+
+   各keyPrefixesは、taipak5000.github.io/<tool>のソースを実際に読んで確認した
+   実在のキー名（推測ではない。下記コメント参照）。各ツールの大半はプロフィール
+   切替（nsKey()）で `<rawKey>__p_<プロフィールID>` という接尾辞が付いた保存キーを
+   使うため、完全一致ではなく startsWith 判定にしている（companion独自の
+   `sky_companion_v4_data__<記録ID>` という接尾辞も、itemの `gameItems_<カテゴリ>`
+   というカテゴリ違いのキーも、同じstartsWith判定で無理なく拾える）。
+   - item:       gameItems_<カテゴリ名>（例: gameItems_outfit）… 所持アイテムの保存キー
+   - emote:      emoteOwned_v1 … 所持エモートの保存キー
+   - share:      sky_tracker_storage … 創作物（コラージュ設置物）記録の保存キー
+   - tai-nomacan: skyNomacanCalc_v1 … キャンドル計算機の入力値保存キー
+   - star-candle: skyStarCandleCalc_v1 … 星のキャンドル計算機の入力値保存キー
+   - companion:  sky_companion_v4_data … 精霊同行ツールのメイン記録データキー
+   - wings:      wingTracker_v1 … 羽（ウィングバフ）記録の保存キー
+   - tai-score:  taiScoreSongs_v1 … 保存した楽譜一覧の保存キー
+   - data-transfer: dataTransferHistory_v1 … 実際に引継ぎ（エクスポート/インポート）を
+     行った履歴の保存キー（単に開いただけでは書き込まれない）
+   profile（作者プロフィール）は所持データ等の独自保存キーを持たないため対象外。
+   matchJa/matchEnは、更新情報エントリのタイトル・説明文中でそのツールに言及する際に
+   実際に使われている表記（tai-info内のCHANGELOG本文・references.toolGuide等で
+   使われている表記に合わせてある）。
+   ================================================================ */
+const TOOL_USAGE_SIGNS = [
+  { toolKey: 'tools.item',       keyPrefixes: ['gameItems_'],            matchJa: 'アイテム所持',     matchEn: 'Item Tracker' },
+  { toolKey: 'tools.emote',      keyPrefixes: ['emoteOwned_v1'],         matchJa: 'エモート所持',     matchEn: 'Emote Tracker' },
+  { toolKey: 'tools.share',      keyPrefixes: ['sky_tracker_storage'],   matchJa: '創作物管理',       matchEn: 'Creation Manager' },
+  { toolKey: 'tools.nomacan',    keyPrefixes: ['skyNomacanCalc_v1'],     matchJa: 'ノマキャン計算機', matchEn: 'Nomacan Calculator' },
+  { toolKey: 'tools.starCandle', keyPrefixes: ['skyStarCandleCalc_v1'], matchJa: '星のキャンドル',   matchEn: 'Star Candle Calculator' },
+  { toolKey: 'tools.companion',  keyPrefixes: ['sky_companion_v4_data'], matchJa: '精霊同行',         matchEn: 'Spirit Companion Tool' },
+  { toolKey: 'tools.wings',      keyPrefixes: ['wingTracker_v1'],        matchJa: '羽トラッカー',     matchEn: 'Wing Tracker' },
+  { toolKey: 'tools.score',      keyPrefixes: ['taiScoreSongs_v1'],      matchJa: '楽譜づくり',       matchEn: 'Sheet Music Maker' },
+  { toolKey: 'tools.transfer',   keyPrefixes: ['dataTransferHistory_v1'], matchJa: 'データ引継ぎ',    matchEn: 'Data Transfer' },
+];
+
+function detectUsedTools() {
+  let keys;
+  try { keys = Object.keys(localStorage); } catch (e) { return []; }
+  return TOOL_USAGE_SIGNS.filter(tool =>
+    tool.keyPrefixes.some(prefix => keys.some(k => k.indexOf(prefix) === 0))
+  );
+}
+
+// 📌 ページ読み込み時に一度だけ判定する。このタブを開いている間に他ツールの
+// 使用でlocalStorageの中身が変わることは通常なく、renderChangelog()のたびに
+// 再計算する必要はない（CHANGELOG_SESSION_LAST_SEENと同じ考え方）。
+const DETECTED_TOOLS = detectUsedTools();
+
+function renderWelcomeBack() {
+  const el = document.getElementById('welcomeBackCard');
+  if (!el) return;
+  if (!DETECTED_TOOLS.length) {
+    el.classList.remove('show');
+    el.innerHTML = '';
+    return;
+  }
+  el.classList.add('show');
+  el.innerHTML = `
+    <div class="welcome-back-row">
+      <span class="welcome-back-label">${t('changelog.welcomeBack.label')}</span>
+      ${DETECTED_TOOLS.map(tool => `<span class="welcome-back-pill">${t(tool.toolKey)}</span>`).join('')}
+    </div>`;
+}
+
+// 🔎 更新情報エントリのタイトル・説明文（現在の表示言語側のみ）に、指定ツールの
+// 表記（matchJa/matchEn）が単純な文字列として含まれているかどうか。完全なタグ付け
+// システムは作らず、素朴な文字列一致に留める（仕様どおり）。
+function changelogEntryMentionsTool(entry, tool) {
+  const text = LANG === 'en'
+    ? ((entry.titleEn || entry.titleJa) + ' ' + (entry.descEn || entry.descJa || ''))
+    : (entry.titleJa + ' ' + (entry.descJa || ''));
+  const needle = LANG === 'en' ? tool.matchEn : tool.matchJa;
+  return text.indexOf(needle) !== -1;
+}
+
 // 🏷️ 更新情報タブの種類別フィルタ（'all' | 'NEW' | 'CHANGE' | 'FIX'）。
 // 各エントリの既存のtagフィールドをそのまま絞り込みに使う（新しいデータ構造は追加しない）。
 let changelogFilter = 'all';
@@ -1846,11 +1961,15 @@ function renderChangelog() {
       dividerInserted = true;
       dividerHtml = `<div class="changelog-divider"><span>${t('changelog.sinceLastVisitDivider')}</span></div>`;
     }
+    // ⭐ 検出済みの「お使いのツール」のいずれかにこのエントリが言及していれば、
+    // 控えめに強調表示する（changelogEntryMentionsTool参照）。
+    const isRelevant = DETECTED_TOOLS.some(tool => changelogEntryMentionsTool(e, tool));
+    const relevantTag = isRelevant ? `<span class="log-tag log-tag-relevant">${t('changelog.relevantTag')}</span>` : '';
     return `${dividerHtml}
-    <div class="log-entry">
+    <div class="log-entry${isRelevant ? ' log-relevant' : ''}">
       <div class="log-date">${e.date}</div>
       <div class="log-body">
-        <div class="log-title"><span class="log-tag">${e.tag}</span>${title}</div>
+        <div class="log-title">${relevantTag}<span class="log-tag">${e.tag}</span>${title}</div>
         ${desc ? `<div class="log-desc">${desc}</div>` : ''}
       </div>
     </div>`;
@@ -1951,6 +2070,7 @@ function renderReferences() {
 }
 
 renderChangelog();
+renderWelcomeBack();
 renderReferences();
 applyI18n();
 updateChangelogUnreadUI();
