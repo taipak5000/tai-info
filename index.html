@@ -331,7 +331,7 @@
 <div class="app-layout">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">
-      <div class="sidebar-section-label" data-i18n="sidebar.relatedTools">🔗 関連ツール</div>
+      <div class="sidebar-section-label" data-i18n="sidebar.relatedTools">関連ツール</div>
       <button class="sidebar-close-btn" onclick="toggleSidebar()">✕</button>
     </div>
     <a href="https://taipak5000.github.io/tai-item/" class="sidebar-nav-link" data-i18n="tools.item">🗂️ アイテム所持管理</a>
@@ -349,21 +349,21 @@
 
   <div>
     <div class="page-tabs" id="pageTabs" role="tablist">
-      <button class="page-tab" id="tab-settings" data-tab="settings" role="tab" aria-selected="false" aria-controls="panel-settings" data-i18n="tabs.settings">⚙️ 設定について</button>
-      <button class="page-tab" id="tab-changelog" data-tab="changelog" role="tab" aria-selected="false" aria-controls="panel-changelog" data-i18n="tabs.changelog">🆕 更新情報</button>
-      <button class="page-tab" id="tab-credits" data-tab="credits" role="tab" aria-selected="false" aria-controls="panel-credits" data-i18n="tabs.credits">🙏 クレジット</button>
-      <button class="page-tab" id="tab-privacy" data-tab="privacy" role="tab" aria-selected="false" aria-controls="panel-privacy" data-i18n="tabs.privacy">🔒 プライバシーポリシー</button>
-      <button class="page-tab" id="tab-references" data-tab="references" role="tab" aria-selected="false" aria-controls="panel-references" data-i18n="tabs.references">📚 参考文献・画像引用元</button>
+      <button class="page-tab" id="tab-settings" data-tab="settings" role="tab" aria-selected="false" aria-controls="panel-settings" data-i18n="tabs.settings">設定について</button>
+      <button class="page-tab" id="tab-changelog" data-tab="changelog" role="tab" aria-selected="false" aria-controls="panel-changelog" data-i18n="tabs.changelog">更新情報</button>
+      <button class="page-tab" id="tab-credits" data-tab="credits" role="tab" aria-selected="false" aria-controls="panel-credits" data-i18n="tabs.credits">クレジット</button>
+      <button class="page-tab" id="tab-privacy" data-tab="privacy" role="tab" aria-selected="false" aria-controls="panel-privacy" data-i18n="tabs.privacy">プライバシーポリシー</button>
+      <button class="page-tab" id="tab-references" data-tab="references" role="tab" aria-selected="false" aria-controls="panel-references" data-i18n="tabs.references">参考文献・画像引用元</button>
     </div>
 
     <!-- ▸ 設定について -->
     <section data-tab="settings" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" tabindex="0">
-      <p class="sec-label" data-i18n="settings.label">⚙️ 設定について</p>
+      <p class="sec-label" data-i18n="settings.label">設定について</p>
       <p class="sec-sub" data-i18n="settings.sub">taipak5000.github.io系のSkyツール群に共通する設定・機能の説明です。実際の操作は
         各サイト側の画面で行ってください。</p>
 
       <div class="card" id="settings-profile" tabindex="-1">
-        <h3 data-i18n="settings.profile.title">👤 プロフィール（保存枠）切替</h3>
+        <h3 data-i18n="settings.profile.title">プロフィール（保存枠）切替</h3>
         <p data-i18n="settings.profile.body">ほとんどのサイトのヘッダー・サイドバーから開ける「プロフィール切替」メニューで、複数のセーブデータ
           （サブ垢など）を切り替えられます。プロフィールを切り替えると、所持アイテム・マイコーデ・お気に入り・
           精霊ツリーの解放状況などが、切り替え先のプロフィールのものに入れ替わります。データはすべてこの
@@ -371,14 +371,14 @@
       </div>
 
       <div class="card" id="settings-currency" tabindex="-1">
-        <h3 data-i18n="settings.currency.title">💰 所持通貨（6種統一管理）</h3>
+        <h3 data-i18n="settings.currency.title">所持通貨（6種統一管理）</h3>
         <p data-i18n="settings.currency.body">プロフィール切替メニュー内の「所持通貨」セクションで、キャンドル・ハート・昇華キャンドル・
           シーズンキャンドル・シーズンハート・イベント通貨をどのサイトからでも編集できます。編集した内容は
           全サイトで共通して反映されます。</p>
       </div>
 
       <div class="card" id="settings-backup" tabindex="-1">
-        <h3 data-i18n="settings.backup.title">💾 データのバックアップ・復元・削除</h3>
+        <h3 data-i18n="settings.backup.title">データのバックアップ・復元・削除</h3>
         <p data-i18n="settings.backup.body">プロフィール切替メニュー内の「データのバックアップ・復元・削除」から、このブラウザに保存されている
           データ全体をファイルに書き出し・読み込み・削除できます。別の端末へ引き継ぎたい場合は
           <a href="https://taipak5000.github.io/tai-transfer/">🔄 データ引継ぎ</a>で、サイトを選んでコードの
@@ -386,23 +386,23 @@
       </div>
 
       <div class="card" id="settings-lang" tabindex="-1">
-        <h3 data-i18n="settings.lang.title">🌐 言語切替（EN/JA）</h3>
+        <h3 data-i18n="settings.lang.title">言語切替（EN/JA）</h3>
         <p data-i18n="settings.lang.body">多くのサイトでは、ヘッダーの「EN」ボタンから日本語・英語の表示を切り替えられます。対応は順次拡大中で、一部のサイトはまだ非対応です。</p>
       </div>
 
       <div class="card" id="settings-icon" tabindex="-1">
-        <h3 data-i18n="settings.icon.title">📱 ホーム画面アイコンのカスタマイズ</h3>
-        <p data-i18n="settings.icon.body">各サイトの「⚙️ 表示設定」内の「🎨 表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを
+        <h3 data-i18n="settings.icon.title">ホーム画面アイコンのカスタマイズ</h3>
+        <p data-i18n="settings.icon.body">各サイトの「表示設定」内の「表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを
           絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、
           プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>
           （追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。</p>
-        <button type="button" class="action-btn primary" style="margin-top:10px;" onclick="openModal('iconCustomModal')" data-i18n="settings.icon.customizeBtn">🎨 今すぐカスタマイズ</button>
+        <button type="button" class="action-btn primary" style="margin-top:10px;" onclick="openModal('iconCustomModal')" data-i18n="settings.icon.customizeBtn">今すぐカスタマイズ</button>
       </div>
     </section>
 
     <!-- ▸ 更新情報 -->
     <section data-tab="changelog" id="panel-changelog" role="tabpanel" aria-labelledby="tab-changelog" tabindex="0">
-      <p class="sec-label" data-i18n="changelog.label">🆕 更新情報</p>
+      <p class="sec-label" data-i18n="changelog.label">更新情報</p>
       <p class="sec-sub" data-i18n="changelog.sub1">大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正までは
         すべて載せていません。</p>
       <p class="sec-sub" style="padding-top:0;" data-i18n="changelog.sub2">日付は各リポジトリのgitコミット履歴に基づく実際の日付です。</p>
@@ -418,7 +418,7 @@
 
     <!-- ▸ クレジット -->
     <section data-tab="credits" id="panel-credits" role="tabpanel" aria-labelledby="tab-credits" tabindex="0">
-      <p class="sec-label" data-i18n="credits.label">🙏 クレジット</p>
+      <p class="sec-label" data-i18n="credits.label">クレジット</p>
       <div class="card" id="credits-made" tabindex="-1">
         <h3 data-i18n="credits.made.title">制作</h3>
         <p data-i18n="credits.made.body"><a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／
@@ -430,7 +430,7 @@
           <li><a href="https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki" target="_blank" rel="noopener noreferrer">Sky: Children of the Light Wiki</a>（Fandom、日本語版・英語版）— アイテム・精霊・イベント等のデータ、画像</li>
           <li><a href="https://9-bit.jp/skygold/" target="_blank" rel="noopener noreferrer">9bit</a>、<a href="https://game8.jp/sky" target="_blank" rel="noopener noreferrer">ゲームエイト</a>、<a href="https://wikiwiki.jp/sky-jp/" target="_blank" rel="noopener noreferrer">wikiwiki.jp</a>（Sky 星を紡ぐ子どもたち Wiki*）— 日本語データの補助的な確認元</li>
         </ul>
-        <p style="margin-top:8px;" data-i18n="credits.dataSource.note">詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。</p>
+        <p style="margin-top:8px;" data-i18n="credits.dataSource.note">詳しい引用元の一覧は「参考文献・画像引用元」タブをご覧ください。</p>
       </div>
       <div class="card" id="credits-libs" tabindex="-1">
         <h3 data-i18n="credits.libs.title">使用ライブラリ</h3>
@@ -446,7 +446,7 @@
           制作・運営に一切関与していません。</p>
       </div>
       <div class="card" id="credits-policy" tabindex="-1">
-        <h3 data-i18n="credits.policy.title">🛡️ 制作方針について</h3>
+        <h3 data-i18n="credits.policy.title">制作方針について</h3>
         <p data-i18n="credits.policy.intro">このサイト群は、thatgamecompanyが公開しているファンコンテンツ向けのガイドライン
           （<a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/697-can-i-create-a-supplemental-app-or-service-for-sky/" target="_blank" rel="noopener noreferrer">補助アプリ・サービスについて</a>／
           <a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/655-can-i-share-my-fan-art-and-other-sky-inspired-works/" target="_blank" rel="noopener noreferrer">ファンアートについて</a>）
@@ -467,15 +467,15 @@
 
     <!-- ▸ プライバシーポリシー -->
     <section data-tab="privacy" id="panel-privacy" role="tabpanel" aria-labelledby="tab-privacy" tabindex="0">
-      <p class="sec-label" data-i18n="privacy.label">🔒 プライバシーポリシー</p>
+      <p class="sec-label" data-i18n="privacy.label">プライバシーポリシー</p>
       <div class="card" id="privacy-summary" tabindex="-1" style="background:var(--indigo-bg); box-shadow:none;">
-        <h3 data-i18n="privacy.summary.title">🔑 ひとことで言うと</h3>
+        <h3 data-i18n="privacy.summary.title">ひとことで言うと</h3>
         <p data-i18n="privacy.summary.body">あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、<b>今お使いのスマホ・
           パソコンの中だけ</b>に保存されます。インターネットのどこか（サーバーなど）に送られることはなく、
           運営者を含めて<b>誰にも見られません</b>。会員登録も不要です。</p>
       </div>
       <div class="card" id="privacy-storage" tabindex="-1">
-        <h3 data-i18n="privacy.storage.title">💾 データはどこに保存されているの？</h3>
+        <h3 data-i18n="privacy.storage.title">データはどこに保存されているの？</h3>
         <p data-i18n="privacy.storage.p1">スマホやパソコンの「ブラウザ」（Safari・Chromeなどのアプリ）には、それぞれのブラウザだけが使える
           専用の保存スペースがあります（専門用語では「ローカルストレージ」と呼びます）。所持アイテムのチェックや
           コーデ、通貨の記録は、すべてこの中に書き込まれます。</p>
@@ -486,18 +486,18 @@
           「データ引継ぎ機能について」をご覧ください。</p>
       </div>
       <div class="card" id="privacy-account" tabindex="-1">
-        <h3 data-i18n="privacy.account.title">👤 会員登録・ログインは必要？</h3>
+        <h3 data-i18n="privacy.account.title">会員登録・ログインは必要？</h3>
         <p data-i18n="privacy.account.body">不要です。名前やメールアドレスの入力、パスワードの設定なども一切ありません。「プロフィール」という
           機能がありますが、これは同じブラウザの中で複数のセーブデータ（例: サブ垢用）を切り替えるための
           ものだけで、外部のアカウントとは関係ありません。</p>
       </div>
       <div class="card" id="privacy-analytics" tabindex="-1">
-        <h3 data-i18n="privacy.analytics.title">👀 行動を記録・分析する仕組みは使っている？</h3>
+        <h3 data-i18n="privacy.analytics.title">行動を記録・分析する仕組みは使っている？</h3>
         <p data-i18n="privacy.analytics.body">使っていません。「どのページが何回見られたか」のような、訪問者の行動を計測する仕組み（アクセス
           解析・Cookieなど）は入れていません。</p>
       </div>
       <div class="card" id="privacy-network" tabindex="-1">
-        <h3 data-i18n="privacy.network.title">🌐 インターネットへの通信は発生する？</h3>
+        <h3 data-i18n="privacy.network.title">インターネットへの通信は発生する？</h3>
         <p data-i18n="privacy.network.intro">基本的にはありませんが、以下の2つの場面でだけ、外部への通信が発生します。どちらも「画像やアイテム名を
           表示するために取ってくる」だけの通信で、あなたの個人情報が送られることはありません。</p>
         <ul data-i18n="privacy.network.list">
@@ -507,7 +507,7 @@
         </ul>
       </div>
       <div class="card" id="privacy-transfer" tabindex="-1">
-        <h3 data-i18n="privacy.transfer.title">🔄 データ引継ぎ機能について</h3>
+        <h3 data-i18n="privacy.transfer.title">データ引継ぎ機能について</h3>
         <p data-i18n="privacy.transfer.p1">機種変更などで、データを別のスマホ・パソコンに移したいときのための機能です。仕組みはシンプルで、
           あなたのデータを一旦「コード」という文字の羅列に変換し、それを①あなた自身がコピー&amp;ペーストで
           別の端末に貼り付けるか、②ファイルとしてダウンロードして別の端末で読み込むか、いずれかの方法で
@@ -516,7 +516,7 @@
           またはファイルのダウンロード/読み込みという操作をしない限り、データが動くことは一切ありません。</p>
       </div>
       <div class="card" id="privacy-contact" tabindex="-1">
-        <h3 data-i18n="privacy.contact.title">✉️ お問い合わせ</h3>
+        <h3 data-i18n="privacy.contact.title">お問い合わせ</h3>
         <p data-i18n="privacy.contact.body">データの扱いについて不安な点や質問があれば、<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>
           （X）までお気軽にご連絡ください。</p>
       </div>
@@ -524,12 +524,12 @@
 
     <!-- ▸ 参考文献・画像引用元 -->
     <section data-tab="references" id="panel-references" role="tabpanel" aria-labelledby="tab-references" tabindex="0">
-      <p class="sec-label" data-i18n="references.label">📚 参考文献・画像引用元</p>
+      <p class="sec-label" data-i18n="references.label">参考文献・画像引用元</p>
       <p class="sec-sub" data-i18n="references.sub">このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに
         載せていましたが、このページに統合しました。</p>
 
       <div class="card" id="references-toolGuide" tabindex="-1">
-        <h3 data-i18n="references.toolGuide.title">🧭 目的別ツール早見表</h3>
+        <h3 data-i18n="references.toolGuide.title">目的別ツール早見表</h3>
         <p style="margin-bottom:8px;" data-i18n="references.toolGuide.sub">やりたいことから、使うツールを探せます。</p>
         <ul data-i18n="references.toolGuide.list">
           <li>🕯️ <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
@@ -546,7 +546,7 @@
       </div>
 
       <div class="card" id="references-compatTable" tabindex="-1">
-        <h3 data-i18n="references.compatTable.title">📊 サイト別機能対応表</h3>
+        <h3 data-i18n="references.compatTable.title">サイト別機能対応表</h3>
         <p style="margin-bottom:10px;" data-i18n="references.compatTable.sub">公開中の姉妹サイト間での、共通機能の対応状況です。</p>
         <div class="compat-table-wrap">
           <table class="compat-table">
@@ -574,7 +574,7 @@
             </tbody>
           </table>
         </div>
-        <p style="margin-top:8px; color:var(--text-2); font-size:11.5px;" data-i18n="references.compatTable.footnote">※「👤 複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「🌐 言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。</p>
+        <p style="margin-top:8px; color:var(--text-2); font-size:11.5px;" data-i18n="references.compatTable.footnote">※「複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。</p>
       </div>
 
       <div class="ref-quickjump" id="refQuickJump" data-i18n-aria="references.quickJumpAriaLabel" aria-label="参考文献グループへジャンプ"></div>
@@ -587,7 +587,7 @@
 <div class="modal-overlay" id="iconCustomModal" onclick="if(event.target===this)closeModal('iconCustomModal')">
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="iconCustomModalTitle" tabindex="-1">
     <div class="modal-header">
-      <span class="modal-title" id="iconCustomModalTitle" data-i18n="iconCustom.title">🎨 ホーム画面アイコンをカスタマイズ</span>
+      <span class="modal-title" id="iconCustomModalTitle" data-i18n="iconCustom.title">ホーム画面アイコンをカスタマイズ</span>
       <button class="modal-close" onclick="closeModal('iconCustomModal')">✕</button>
     </div>
 
@@ -600,8 +600,8 @@
     </div>
 
     <div style="display:flex; gap:8px; margin:16px 0 14px;">
-      <button type="button" class="action-btn" id="iconModeEmojiBtn" onclick="pfIconSetMode('emoji')" aria-pressed="true" data-i18n="iconCustom.modeEmoji">😀 絵文字</button>
-      <button type="button" class="action-btn" id="iconModeImageBtn" onclick="pfIconSetMode('image')" aria-pressed="false" data-i18n="iconCustom.modeImage">🖼️ 画像</button>
+      <button type="button" class="action-btn" id="iconModeEmojiBtn" onclick="pfIconSetMode('emoji')" aria-pressed="true" data-i18n="iconCustom.modeEmoji">絵文字</button>
+      <button type="button" class="action-btn" id="iconModeImageBtn" onclick="pfIconSetMode('image')" aria-pressed="false" data-i18n="iconCustom.modeImage">画像</button>
     </div>
 
     <div id="iconEmojiPanel">
@@ -623,7 +623,7 @@
         <button type="button" onclick="pfIconPickSwatch('#32ADE6')" data-i18n-aria="iconCustom.swatch.lightBlue" style="width:32px; height:32px; border-radius:50%; background:#32ADE6; border:2px solid transparent;"></button>
         <button type="button" onclick="pfIconPickSwatch('#48484A')" data-i18n-aria="iconCustom.swatch.darkGray" style="width:32px; height:32px; border-radius:50%; background:#48484A; border:2px solid transparent;"></button>
       </div>
-      <p style="font-size:11.5px; color:var(--text-2); margin:0 0 6px;" data-i18n="iconCustom.colorPickHint">🎨 タップして好きな色を自由に選ぶこともできます</p>
+      <p style="font-size:11.5px; color:var(--text-2); margin:0 0 6px;" data-i18n="iconCustom.colorPickHint">タップして好きな色を自由に選ぶこともできます</p>
       <input type="color" id="iconBgColorInput" value="#5E5CE6" oninput="pfIconUpdatePreview()" style="width:100%; height:40px; border:none; border-radius:var(--r-sm); background:none;">
     </div>
 
@@ -649,12 +649,12 @@
 <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this)closeModal('settingsModal')">
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" tabindex="-1">
     <div class="modal-header">
-      <span class="modal-title" id="settingsModalTitle" data-i18n="dispSettings.title">⚙️ 表示設定</span>
+      <span class="modal-title" id="settingsModalTitle" data-i18n="dispSettings.title">表示設定</span>
       <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
     </div>
 
     <div class="settings-section">
-      <p class="settings-section-label" data-i18n="dispSettings.displayLabel">🌙 表示</p>
+      <p class="settings-section-label" data-i18n="dispSettings.displayLabel">表示</p>
       <div class="settings-row">
         <span class="settings-row-text" data-i18n="dispSettings.darkModeLabel">ダークモード</span>
         <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()"></button>
@@ -662,7 +662,7 @@
     </div>
 
     <div class="settings-section">
-      <p class="settings-section-label" data-i18n="dispSettings.shortcutsLabel">⌨️ キーボードショートカット</p>
+      <p class="settings-section-label" data-i18n="dispSettings.shortcutsLabel">キーボードショートカット</p>
       <div class="settings-row">
         <span class="settings-row-text" data-i18n="dispSettings.shortcutsEnable">ショートカットを有効にする</span>
         <input type="checkbox" id="shortcutsEnabledCheckbox" onchange="settingsSaveShortcutsPref()" style="width:19px; height:19px; flex-shrink:0; cursor:pointer;">
@@ -682,7 +682,7 @@
     </div>
 
     <div class="settings-section">
-      <p class="settings-section-label" data-i18n="dispSettings.customizeLabel">🎨 表示のカスタマイズ</p>
+      <p class="settings-section-label" data-i18n="dispSettings.customizeLabel">表示のカスタマイズ</p>
       <div class="settings-row">
         <span class="settings-row-text" data-i18n="dispSettings.customizeIconLabel">アイコンをカスタマイズ</span>
         <button type="button" class="theme-toggle-btn" onclick="closeModal('settingsModal'); openModal('iconCustomModal');" data-i18n="dispSettings.customizeOpenBtn">開く</button>
@@ -690,7 +690,7 @@
     </div>
 
     <div class="settings-section">
-      <p class="settings-section-label" data-i18n="dispSettings.langLabel">🌐 言語 / Language</p>
+      <p class="settings-section-label" data-i18n="dispSettings.langLabel">言語 / Language</p>
       <div class="settings-row">
         <button type="button" class="settings-lang-btn" id="settingsLangJaBtn" onclick="setLang('ja')" aria-pressed="false">日本語</button>
         <button type="button" class="settings-lang-btn" id="settingsLangEnBtn" onclick="setLang('en')" aria-pressed="false">English</button>
@@ -860,7 +860,7 @@ const I18N = {
 
   'nav.title': { ja: `⚙️ 設定・更新情報`, en: `⚙️ Settings & Updates` },
   'sidebar.toggle': { ja: `☰ ツール`, en: `☰ Tools` },
-  'sidebar.relatedTools': { ja: `🔗 関連ツール`, en: `🔗 Related Tools` },
+  'sidebar.relatedTools': { ja: `関連ツール`, en: `Related Tools` },
   'tools.item': { ja: `🗂️ アイテム所持管理`, en: `🗂️ Item Collection` },
   'tools.emote': { ja: `🎭 エモート所持率管理`, en: `🎭 Emote Collection` },
   'tools.share': { ja: `📍 創作物管理ツール`, en: `📍 Creation Manager` },
@@ -873,37 +873,37 @@ const I18N = {
   'tools.info': { ja: `⚙️ 設定・更新情報`, en: `⚙️ Settings & Updates` },
   'tools.profile': { ja: `👤 作者プロフィール`, en: `👤 Creator Profile` },
 
-  'tabs.settings': { ja: `⚙️ 設定について`, en: `⚙️ About Settings` },
-  'tabs.changelog': { ja: `🆕 更新情報`, en: `🆕 Updates` },
-  'tabs.credits': { ja: `🙏 クレジット`, en: `🙏 Credits` },
-  'tabs.privacy': { ja: `🔒 プライバシーポリシー`, en: `🔒 Privacy Policy` },
-  'tabs.references': { ja: `📚 参考文献・画像引用元`, en: `📚 References & Image Credits` },
+  'tabs.settings': { ja: `設定について`, en: `About Settings` },
+  'tabs.changelog': { ja: `更新情報`, en: `Updates` },
+  'tabs.credits': { ja: `クレジット`, en: `Credits` },
+  'tabs.privacy': { ja: `プライバシーポリシー`, en: `Privacy Policy` },
+  'tabs.references': { ja: `参考文献・画像引用元`, en: `References & Image Credits` },
   // ♿ 更新情報タブに未読の更新がある場合、ページタブ/ドックのボタンに一時的にaria-labelとして
   // 設定する（未読のときだけ絵文字入りの通常ラベルを上書きし、既読になったらaria-label自体を除去して
   // 通常のテキストコンテンツ読み上げに戻す。updateChangelogUnreadUI()参照）。
-  'tabs.changelogUnreadAria': { ja: `🆕 更新情報（未読の更新あり）`, en: `🆕 Updates (unread updates available)` },
+  'tabs.changelogUnreadAria': { ja: `更新情報（未読の更新あり）`, en: `Updates (unread updates available)` },
   'dock.changelogUnreadAria': { ja: `更新情報（未読の更新あり）`, en: `Updates (unread updates available)` },
 
-  'settings.label': { ja: `⚙️ 設定について`, en: `⚙️ About Settings` },
+  'settings.label': { ja: `設定について`, en: `About Settings` },
   'settings.sub': { ja: `taipak5000.github.io系のSkyツール群に共通する設定・機能の説明です。実際の操作は各サイト側の画面で行ってください。`, en: `This explains settings and features shared across the taipak5000.github.io family of Sky tools. Please perform the actual operations on each site's own screen.` },
 
-  'settings.profile.title': { ja: `👤 プロフィール（保存枠）切替`, en: `👤 Profile (Save Slot) Switching` },
+  'settings.profile.title': { ja: `プロフィール（保存枠）切替`, en: `Profile (Save Slot) Switching` },
   'settings.profile.body': { ja: `ほとんどのサイトのヘッダー・サイドバーから開ける「プロフィール切替」メニューで、複数のセーブデータ（サブ垢など）を切り替えられます。プロフィールを切り替えると、所持アイテム・マイコーデ・お気に入り・精霊ツリーの解放状況などが、切り替え先のプロフィールのものに入れ替わります。データはすべてこのブラウザ内に保存されます。`, en: `The "Profile Switch" menu, available from the header or sidebar on most sites, lets you switch between multiple save data sets (e.g. sub-accounts). Switching profiles swaps in that profile's owned items, my outfits, favorites, spirit tree unlock progress, and more. All data is stored within this browser.` },
 
-  'settings.currency.title': { ja: `💰 所持通貨（6種統一管理）`, en: `💰 Owned Currency (Unified Across 6 Types)` },
+  'settings.currency.title': { ja: `所持通貨（6種統一管理）`, en: `Owned Currency (Unified Across 6 Types)` },
   'settings.currency.body': { ja: `プロフィール切替メニュー内の「所持通貨」セクションで、キャンドル・ハート・昇華キャンドル・シーズンキャンドル・シーズンハート・イベント通貨をどのサイトからでも編集できます。編集した内容は全サイトで共通して反映されます。`, en: `In the "Owned Currency" section inside the Profile Switch menu, you can edit your candles, hearts, ascended candles, season candles, season hearts, and event currency from any site. Edits are reflected consistently across all sites.` },
 
-  'settings.backup.title': { ja: `💾 データのバックアップ・復元・削除`, en: `💾 Data Backup, Restore & Deletion` },
+  'settings.backup.title': { ja: `データのバックアップ・復元・削除`, en: `Data Backup, Restore & Deletion` },
   'settings.backup.body': { ja: `プロフィール切替メニュー内の「データのバックアップ・復元・削除」から、このブラウザに保存されているデータ全体をファイルに書き出し・読み込み・削除できます。別の端末へ引き継ぎたい場合は<a href="https://taipak5000.github.io/tai-transfer/">🔄 データ引継ぎ</a>で、サイトを選んでコードの形で引き継ぐこともできます。`, en: `From "Data Backup, Restore & Deletion" inside the Profile Switch menu, you can export, import, or delete all of the data stored in this browser. To move your data to another device, you can also use <a href="https://taipak5000.github.io/tai-transfer/">🔄 Data Transfer</a> to choose which sites' data to carry over as a code.` },
 
-  'settings.lang.title': { ja: `🌐 言語切替（EN/JA）`, en: `🌐 Language Toggle (EN/JA)` },
+  'settings.lang.title': { ja: `言語切替（EN/JA）`, en: `Language Toggle (EN/JA)` },
   'settings.lang.body': { ja: `多くのサイトでは、ヘッダーの「EN」ボタンから日本語・英語の表示を切り替えられます。対応は順次拡大中で、一部のサイトはまだ非対応です。`, en: `Most sites let you switch the display between Japanese and English using the "EN" button in the header. Support is being rolled out across the tool family, so a few sites may not have it yet.` },
 
-  'settings.icon.title': { ja: `📱 ホーム画面アイコンのカスタマイズ`, en: `📱 Customizing the Home Screen Icon` },
-  'settings.icon.body': { ja: `各サイトの「⚙️ 表示設定」内の「🎨 表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>（追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。`, en: `From "🎨 Display Customization" inside "⚙️ Display Settings" on each site, you can change the icon used for "Add to Home Screen" — either an emoji plus background color, or an image of your choice. This is a per-device, per-browser setting and is not affected by switching profiles (save slots). <b>Please set this up before adding to your home screen</b> (changing it afterward won't update an icon you've already added).` },
-  'settings.icon.customizeBtn': { ja: `🎨 今すぐカスタマイズ`, en: `🎨 Customize Now` },
+  'settings.icon.title': { ja: `ホーム画面アイコンのカスタマイズ`, en: `Customizing the Home Screen Icon` },
+  'settings.icon.body': { ja: `各サイトの「表示設定」内の「表示のカスタマイズ」から、「ホーム画面に追加」時のアイコンを絵文字＋背景色、または好きな画像に変更できます。この端末・ブラウザごとの設定で、プロフィール（保存枠）の切替には影響されません。<b>「ホーム画面に追加」をする前に設定してください</b>（追加した後に変更しても、既に追加済みのアイコンは自動更新されません）。`, en: `From "Display Customization" inside "Display Settings" on each site, you can change the icon used for "Add to Home Screen" — either an emoji plus background color, or an image of your choice. This is a per-device, per-browser setting and is not affected by switching profiles (save slots). <b>Please set this up before adding to your home screen</b> (changing it afterward won't update an icon you've already added).` },
+  'settings.icon.customizeBtn': { ja: `今すぐカスタマイズ`, en: `Customize Now` },
 
-  'changelog.label': { ja: `🆕 更新情報`, en: `🆕 Updates` },
+  'changelog.label': { ja: `更新情報`, en: `Updates` },
   'changelog.sub1': { ja: `大きな機能追加・変更があったときに、ここに手動で追記しています。細かな不具合修正まではすべて載せていません。`, en: `Major feature additions and changes are logged here by hand as they happen. Minor bug fixes are not all listed.` },
   'changelog.sub2': { ja: `日付は各リポジトリのgitコミット履歴に基づく実際の日付です。`, en: `Dates reflect the actual git commit history of each repository.` },
   'changelog.filterAriaLabel': { ja: `更新の種類で絞り込み`, en: `Filter by update type` },
@@ -914,11 +914,11 @@ const I18N = {
   'changelog.filterEmpty': { ja: `このフィルタに該当する更新はまだありません。`, en: `There are no updates matching this filter yet.` },
   // 🏠 パーソナライズされた「おかえりなさい」セクション（renderWelcomeBack()参照）。
   // 同一オリジンで共有されるlocalStorageから検出した「お使いのツール」一覧のラベル。
-  'changelog.welcomeBack.label': { ja: `🏠 あなたがお使いのツール:`, en: `🏠 Tools you use:` },
+  'changelog.welcomeBack.label': { ja: `あなたがお使いのツール:`, en: `Tools you use:` },
   // ⭐ 検出したツールに関連する更新情報エントリに付く強調タグ（renderChangelog()参照）。
   'changelog.relevantTag': { ja: `⭐ あなた向け`, en: `⭐ For You` },
 
-  'credits.label': { ja: `🙏 クレジット`, en: `🙏 Credits` },
+  'credits.label': { ja: `クレジット`, en: `Credits` },
   'credits.made.title': { ja: `制作`, en: `Created By` },
   'credits.made.body': { ja: `<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a>`, en: `<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">Request form</a>` },
 
@@ -929,7 +929,7 @@ const I18N = {
     en: `<li><a href="https://sky-children-of-the-light.fandom.com/wiki/Sky:_Children_of_the_Light_Wiki" target="_blank" rel="noopener noreferrer">Sky: Children of the Light Wiki</a> (Fandom, Japanese &amp; English editions) — data and images for items, spirits, events, etc.</li>
       <li><a href="https://9-bit.jp/skygold/" target="_blank" rel="noopener noreferrer">9bit</a>, <a href="https://game8.jp/sky" target="_blank" rel="noopener noreferrer">Game8</a>, <a href="https://wikiwiki.jp/sky-jp/" target="_blank" rel="noopener noreferrer">wikiwiki.jp</a> (Sky: Children of the Light Wiki*) — supplementary sources for verifying Japanese-language data</li>`
   },
-  'credits.dataSource.note': { ja: `詳しい引用元の一覧は「📚 参考文献・画像引用元」タブをご覧ください。`, en: `See the "📚 References &amp; Image Credits" tab for the full list of sources.` },
+  'credits.dataSource.note': { ja: `詳しい引用元の一覧は「参考文献・画像引用元」タブをご覧ください。`, en: `See the "References &amp; Image Credits" tab for the full list of sources.` },
 
   'credits.libs.title': { ja: `使用ライブラリ`, en: `Libraries Used` },
   'credits.libs.list': {
@@ -944,7 +944,7 @@ const I18N = {
   'credits.disclaimer.title': { ja: `免責事項`, en: `Disclaimer` },
   'credits.disclaimer.body': { ja: `これらのサイトはすべて「Sky 星を紡ぐ子どもたち」の非公式ファンサイトです。thatgamecompanyは制作・運営に一切関与していません。`, en: `All of these sites are unofficial fan sites for Sky: Children of the Light. thatgamecompany is not involved in their creation or operation in any way.` },
 
-  'credits.policy.title': { ja: `🛡️ 制作方針について`, en: `🛡️ Our Approach to Fan Content` },
+  'credits.policy.title': { ja: `制作方針について`, en: `Our Approach to Fan Content` },
   'credits.policy.intro': { ja: `このサイト群は、thatgamecompanyが公開しているファンコンテンツ向けのガイドライン（<a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/697-can-i-create-a-supplemental-app-or-service-for-sky/" target="_blank" rel="noopener noreferrer">補助アプリ・サービスについて</a>／<a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/655-can-i-share-my-fan-art-and-other-sky-inspired-works/" target="_blank" rel="noopener noreferrer">ファンアートについて</a>）を確認したうえで、以下の方針で制作・運営しています。`, en: `Having reviewed thatgamecompany's published guidelines for fan content (<a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/697-can-i-create-a-supplemental-app-or-service-for-sky/" target="_blank" rel="noopener noreferrer">on supplemental apps/services</a> / <a href="https://thatgamecompany.helpshift.com/hc/ja/17-sky-children-of-the-light/faq/655-can-i-share-my-fan-art-and-other-sky-inspired-works/" target="_blank" rel="noopener noreferrer">on fan art</a>), this family of sites is built and operated under the following principles.` },
   'credits.policy.list': {
     ja: `<li>すべて無料・非営利で提供しており、対価は一切受け取っていません</li>
@@ -960,22 +960,22 @@ const I18N = {
   },
   'credits.policy.footnote': { ja: `※上記は公開されているガイドラインを踏まえた自主的な運営方針であり、thatgamecompanyから個別の許諾・お墨付きを得たものではありません。内容は今後変更される可能性があります。`, en: `*The above is a voluntary operating policy based on publicly available guidelines, and does not represent individual permission or endorsement from thatgamecompany. This content may change in the future.` },
 
-  'privacy.label': { ja: `🔒 プライバシーポリシー`, en: `🔒 Privacy Policy` },
-  'privacy.summary.title': { ja: `🔑 ひとことで言うと`, en: `🔑 In Short` },
+  'privacy.label': { ja: `プライバシーポリシー`, en: `Privacy Policy` },
+  'privacy.summary.title': { ja: `ひとことで言うと`, en: `In Short` },
   'privacy.summary.body': { ja: `あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、<b>今お使いのスマホ・パソコンの中だけ</b>に保存されます。インターネットのどこか（サーバーなど）に送られることはなく、運営者を含めて<b>誰にも見られません</b>。会員登録も不要です。`, en: `The data you enter (item ownership checks, outfits, currency records, etc.) is stored <b>only on the phone or computer you're currently using</b>. It is never sent anywhere on the internet (such as to a server), and <b>no one — including us, the operators — can see it</b>. No account registration is required.` },
 
-  'privacy.storage.title': { ja: `💾 データはどこに保存されているの？`, en: `💾 Where is my data stored?` },
+  'privacy.storage.title': { ja: `データはどこに保存されているの？`, en: `Where is my data stored?` },
   'privacy.storage.p1': { ja: `スマホやパソコンの「ブラウザ」（Safari・Chromeなどのアプリ）には、それぞれのブラウザだけが使える専用の保存スペースがあります（専門用語では「ローカルストレージ」と呼びます）。所持アイテムのチェックやコーデ、通貨の記録は、すべてこの中に書き込まれます。`, en: `Your phone or computer's browser (apps like Safari or Chrome) has a dedicated storage space that only that browser can use — technically called "local storage." Your item ownership checks, outfits, and currency records are all written into this space.` },
   'privacy.storage.p2': { ja: `つまり、あなたのデータは<b>あなたの手元の端末だけ</b>にあり、私たち運営者を含め、誰かがそれを見たり集めたりすることはできません。`, en: `In other words, your data exists <b>only on the device in your hands</b>, and no one — including us, the operators — can view or collect it.` },
   'privacy.storage.p3': { ja: `※ただし、同じ端末でも「別のブラウザ」（SafariとChromeなど）や「別のスマホ・パソコン」に切り替えると、データは引き継がれません。機種変更などでデータを移したいときは、下の「データ引継ぎ機能について」をご覧ください。`, en: `*Note that switching to a different browser on the same device (e.g. Safari vs. Chrome) or to a different phone/computer will not carry your data over. If you want to move your data when getting a new device, see "About the Data Transfer feature" below.` },
 
-  'privacy.account.title': { ja: `👤 会員登録・ログインは必要？`, en: `👤 Do I need to sign up or log in?` },
+  'privacy.account.title': { ja: `会員登録・ログインは必要？`, en: `Do I need to sign up or log in?` },
   'privacy.account.body': { ja: `不要です。名前やメールアドレスの入力、パスワードの設定なども一切ありません。「プロフィール」という機能がありますが、これは同じブラウザの中で複数のセーブデータ（例: サブ垢用）を切り替えるためのものだけで、外部のアカウントとは関係ありません。`, en: `No. There's no need to enter a name or email address, set a password, or anything like that. There is a "Profile" feature, but it's only for switching between multiple save data sets within the same browser (e.g. for a sub-account) — it has nothing to do with any external account.` },
 
-  'privacy.analytics.title': { ja: `👀 行動を記録・分析する仕組みは使っている？`, en: `👀 Do you use any tracking or analytics?` },
+  'privacy.analytics.title': { ja: `行動を記録・分析する仕組みは使っている？`, en: `Do you use any tracking or analytics?` },
   'privacy.analytics.body': { ja: `使っていません。「どのページが何回見られたか」のような、訪問者の行動を計測する仕組み（アクセス解析・Cookieなど）は入れていません。`, en: `No. We don't include any mechanism (such as web analytics or cookies) that measures visitor behavior, like how many times a page was viewed.` },
 
-  'privacy.network.title': { ja: `🌐 インターネットへの通信は発生する？`, en: `🌐 Does the site communicate over the internet?` },
+  'privacy.network.title': { ja: `インターネットへの通信は発生する？`, en: `Does the site communicate over the internet?` },
   'privacy.network.intro': { ja: `基本的にはありませんが、以下の2つの場面でだけ、外部への通信が発生します。どちらも「画像やアイテム名を表示するために取ってくる」だけの通信で、あなたの個人情報が送られることはありません。`, en: `Generally, no — but there are two situations where communication with an external source occurs. In both cases, it's purely fetching images or item names to display; none of your personal information is ever sent out.` },
   'privacy.network.list': {
     ja: `<li>アイテムや精霊の画像を表示するとき、Sky Wiki（外部サイト）から画像を読み込みます</li>
@@ -984,18 +984,18 @@ const I18N = {
       <li>Features like "Item Search" and "Outfit Share Links" fetch item names and images from other tools' pages made by the same developer</li>`
   },
 
-  'privacy.transfer.title': { ja: `🔄 データ引継ぎ機能について`, en: `🔄 About the Data Transfer feature` },
+  'privacy.transfer.title': { ja: `データ引継ぎ機能について`, en: `About the Data Transfer feature` },
   'privacy.transfer.p1': { ja: `機種変更などで、データを別のスマホ・パソコンに移したいときのための機能です。仕組みはシンプルで、あなたのデータを一旦「コード」という文字の羅列に変換し、それを①あなた自身がコピー&amp;ペーストで別の端末に貼り付けるか、②ファイルとしてダウンロードして別の端末で読み込むか、いずれかの方法で移します。`, en: `This feature is for when you want to move your data to a different phone or computer, such as when getting a new device. The process is simple: your data is converted into a string of characters called a "code," which you then move to the other device either by ① copying and pasting it yourself, or ② downloading it as a file and loading that file on the other device.` },
   'privacy.transfer.p2': { ja: `このコード・ファイルが自動でどこかに送られることはありません。あなたがコピー&amp;ペースト、またはファイルのダウンロード/読み込みという操作をしない限り、データが動くことは一切ありません。`, en: `This code — whether copied or saved as a file — is never automatically sent anywhere. Unless you yourself perform the copy-and-paste, or the file download/load, your data never moves at all.` },
 
-  'privacy.contact.title': { ja: `✉️ お問い合わせ`, en: `✉️ Contact` },
+  'privacy.contact.title': { ja: `お問い合わせ`, en: `Contact` },
   'privacy.contact.body': { ja: `データの扱いについて不安な点や質問があれば、<a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>（X）までお気軽にご連絡ください。`, en: `If you have any concerns or questions about how your data is handled, feel free to reach out via <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a> (X).` },
 
-  'references.label': { ja: `📚 参考文献・画像引用元`, en: `📚 References & Image Credits` },
+  'references.label': { ja: `参考文献・画像引用元`, en: `References & Image Credits` },
   'references.sub': { ja: `このサイト群を作る際に参考にした文献・引用元の一覧です。以前は別のページに載せていましたが、このページに統合しました。`, en: `A list of references and sources consulted while building this family of sites. This used to be listed elsewhere, but has been consolidated onto this page.` },
   'references.quickJumpAriaLabel': { ja: `参考文献グループへジャンプ`, en: `Jump to a reference group` },
 
-  'references.toolGuide.title': { ja: `🧭 目的別ツール早見表`, en: `🧭 Which Tool Should I Use?` },
+  'references.toolGuide.title': { ja: `目的別ツール早見表`, en: `Which Tool Should I Use?` },
   'references.toolGuide.sub': { ja: `やりたいことから、使うツールを探せます。`, en: `Find the right tool based on what you want to do.` },
   'references.toolGuide.list': {
     ja: `<li>🕯️ <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
@@ -1020,22 +1020,22 @@ const I18N = {
       <li>👤 <b>Want to learn about the creator or send a request</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">Creator Profile</a></li>`
   },
 
-  'references.compatTable.title': { ja: `📊 サイト別機能対応表`, en: `📊 Feature Compatibility Table` },
+  'references.compatTable.title': { ja: `サイト別機能対応表`, en: `Feature Compatibility Table` },
   'references.compatTable.sub': { ja: `公開中の姉妹サイト間での、共通機能の対応状況です。`, en: `Shows how shared features compare across the published sister sites.` },
   'references.compatTable.colTool': { ja: `ツール`, en: `Tool` },
   'references.compatTable.colDark': { ja: `🌙 ダーク`, en: `🌙 Dark` },
   'references.compatTable.colProfile': { ja: `👤 複数プロフィール`, en: `👤 Multi-Profile` },
   'references.compatTable.colLang': { ja: `🌐 言語数`, en: `🌐 Languages` },
   'references.compatTable.colTest': { ja: `注記`, en: `Note` },
-  'references.compatTable.footnote': { ja: `※「👤 複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「🌐 言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。`, en: `*The three sites showing "—" under "👤 Multi-Profile" (Settings &amp; Updates, Sheet Music Maker, Creator Profile) don't manage any owned-item save data of their own, so they fall outside the shared profile-switching system. "🌐 Languages" is 2 (Japanese/English) by default; only Spirit Companion Tool supports 4 (Japanese, English, Traditional Chinese, Korean).` },
+  'references.compatTable.footnote': { ja: `※「複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。`, en: `*The three sites showing "—" under "Multi-Profile" (Settings &amp; Updates, Sheet Music Maker, Creator Profile) don't manage any owned-item save data of their own, so they fall outside the shared profile-switching system. "Languages" is 2 (Japanese/English) by default; only Spirit Companion Tool supports 4 (Japanese, English, Traditional Chinese, Korean).` },
 
-  'iconCustom.title': { ja: `🎨 ホーム画面アイコンをカスタマイズ`, en: `🎨 Customize Home Screen Icon` },
+  'iconCustom.title': { ja: `ホーム画面アイコンをカスタマイズ`, en: `Customize Home Screen Icon` },
   'iconCustom.hint': { ja: `スマホの「ホーム画面に追加」をしたときのアイコンを、好きな絵文字や画像に変更できます。<br><b>追加する前に</b>設定してください。追加した後に変更しても、既に追加済みのアイコンは自動更新されません（変更したい場合は一度削除して追加し直してください）。`, en: `You can change the icon used when adding this site to your phone's home screen. Set this up before adding it — changing it afterward won't update an icon that's already been added (remove and re-add it if you want to change it later).` },
-  'iconCustom.modeEmoji': { ja: `😀 絵文字`, en: `😀 Emoji` },
-  'iconCustom.modeImage': { ja: `🖼️ 画像`, en: `🖼️ Image` },
+  'iconCustom.modeEmoji': { ja: `絵文字`, en: `Emoji` },
+  'iconCustom.modeImage': { ja: `画像`, en: `Image` },
   'iconCustom.emojiLabel': { ja: `絵文字`, en: `Emoji` },
   'iconCustom.bgColorLabel': { ja: `背景色`, en: `Background Color` },
-  'iconCustom.colorPickHint': { ja: `🎨 タップして好きな色を自由に選ぶこともできます`, en: `🎨 Or tap below to pick any color freely` },
+  'iconCustom.colorPickHint': { ja: `タップして好きな色を自由に選ぶこともできます`, en: `Or tap below to pick any color freely` },
   'iconCustom.swatch.indigo': { ja: `インディゴ`, en: `Indigo` },
   'iconCustom.swatch.blue': { ja: `青`, en: `Blue` },
   'iconCustom.swatch.green': { ja: `緑`, en: `Green` },
@@ -1057,28 +1057,28 @@ const I18N = {
   'iconCustom.saveSuccess': { ja: `✅ 保存しました。これでホーム画面に追加すると反映されます`, en: `✅ Saved. This will apply next time you add to your home screen` },
   'iconCustom.resetDone': { ja: `デフォルトのアイコンに戻しました`, en: `Reset to the default icon` },
 
-  'dispSettings.title': { ja: `⚙️ 表示設定`, en: `⚙️ Display Settings` },
-  'dispSettings.displayLabel': { ja: `🌙 表示`, en: `🌙 Display` },
+  'dispSettings.title': { ja: `表示設定`, en: `Display Settings` },
+  'dispSettings.displayLabel': { ja: `表示`, en: `Display` },
   'dispSettings.darkModeLabel': { ja: `ダークモード`, en: `Dark Mode` },
   // ♿ ボタンのラベルは「今の状態」ではなく「押すと何が起きるか（次の動作）」を表す文言にする
   // （light→dark→system→light…の3状態循環）。aria-pressedは二値の属性のため3状態を
   // 表現できず、代わりにaria-label（dispSettings.themeAria.*）で「現在の状態＋次に
   // 切り替わる先」の両方を伝える構成にしている（updateThemeToggleLabel参照）。
-  'dispSettings.themeToggleToDark': { ja: `🌙 ダークにする`, en: `🌙 Switch to Dark` },
-  'dispSettings.themeToggleToSystem': { ja: `🖥️ システムに合わせる`, en: `🖥️ Switch to System` },
-  'dispSettings.themeToggleToLight': { ja: `☀️ ライトにする`, en: `☀️ Switch to Light` },
+  'dispSettings.themeToggleToDark': { ja: `ダークにする`, en: `Switch to Dark` },
+  'dispSettings.themeToggleToSystem': { ja: `システムに合わせる`, en: `Switch to System` },
+  'dispSettings.themeToggleToLight': { ja: `ライトにする`, en: `Switch to Light` },
   'dispSettings.themeAria.light': { ja: `テーマ: ライト（次はダークに切り替わります）`, en: `Theme: Light (switches to Dark next)` },
   'dispSettings.themeAria.dark': { ja: `テーマ: ダーク（次はシステムに合わせるに切り替わります）`, en: `Theme: Dark (switches to System next)` },
   'dispSettings.themeAria.system': { ja: `テーマ: システムに合わせる（次はライトに切り替わります）`, en: `Theme: System (switches to Light next)` },
-  'dispSettings.shortcutsLabel': { ja: `⌨️ キーボードショートカット`, en: `⌨️ Keyboard Shortcuts` },
+  'dispSettings.shortcutsLabel': { ja: `キーボードショートカット`, en: `Keyboard Shortcuts` },
   'dispSettings.shortcutsEnable': { ja: `ショートカットを有効にする`, en: `Enable keyboard shortcuts` },
   'dispSettings.shortcutOpen': { ja: `この設定を開く`, en: `Open this settings panel` },
   'dispSettings.shortcutTheme': { ja: `テーマ切替（ライト/ダーク/システム）`, en: `Cycle theme (Light/Dark/System)` },
   'dispSettings.shortcutEscape': { ja: `開いているウィンドウを閉じる`, en: `Close the open window` },
-  'dispSettings.customizeLabel': { ja: `🎨 表示のカスタマイズ`, en: `🎨 Display Customization` },
+  'dispSettings.customizeLabel': { ja: `表示のカスタマイズ`, en: `Display Customization` },
   'dispSettings.customizeIconLabel': { ja: `アイコンをカスタマイズ`, en: `Customize Icon` },
   'dispSettings.customizeOpenBtn': { ja: `開く`, en: `Open` },
-  'dispSettings.langLabel': { ja: `🌐 言語 / Language`, en: `🌐 Language` },
+  'dispSettings.langLabel': { ja: `言語 / Language`, en: `Language` },
   'dispSettings.closeBtn': { ja: `閉じる`, en: `Close` },
 
   'footer.text': { ja: `このサイトはSky 星を紡ぐ子どもたちの非公式ファンサイトです。thatgamecompanyは一切関与していません。<br>作成・ご意見: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a>`, en: `This is an unofficial fan site for Sky: Children of the Light. thatgamecompany is not involved in any way.<br>Created by / feedback: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">Request form</a>` },
@@ -1573,28 +1573,28 @@ const CHANGELOG = [
   { date: '2026-08-30', tag: 'NEW',
     titleJa: `更新情報タブに、お使いのツールを自動検出するパーソナライズ表示を追加`,
     titleEn: `Added a personalized "tools you use" summary to the Updates tab`,
-    descJa: `taipak5000.github.io系のサイトは同一オリジンでlocalStorageを共有しているため、通信は一切行わず、他の公開ツールのデータがこのブラウザに存在するかを直接チェックして、実際に使っていそうなツールを推測できるようにしました。1つでも検出できた場合のみ、更新情報タブの上部に「🏠 あなたがお使いのツール」として一覧表示し、その使用中ツールに言及している更新エントリを⭐マークつきで控えめに強調表示します。初回訪問の端末など、何も検出できない場合はこのセクション自体を表示しません。`,
-    descEn: `Since taipak5000.github.io sites share localStorage under the same origin, this page can now check — with zero network requests — whether other public tools' data already exists in this browser, to guess which ones you actually use. Whenever at least one is detected, a "🏠 Tools you use" summary appears at the top of the Updates tab, and any update entry mentioning one of those tools gets a subtle ⭐ highlight. On a first-time device where nothing is detected, this section is skipped entirely.` },
+    descJa: `taipak5000.github.io系のサイトは同一オリジンでlocalStorageを共有しているため、通信は一切行わず、他の公開ツールのデータがこのブラウザに存在するかを直接チェックして、実際に使っていそうなツールを推測できるようにしました。1つでも検出できた場合のみ、更新情報タブの上部に「あなたがお使いのツール」として一覧表示し、その使用中ツールに言及している更新エントリを⭐マークつきで控えめに強調表示します。初回訪問の端末など、何も検出できない場合はこのセクション自体を表示しません。`,
+    descEn: `Since taipak5000.github.io sites share localStorage under the same origin, this page can now check — with zero network requests — whether other public tools' data already exists in this browser, to guess which ones you actually use. Whenever at least one is detected, a "Tools you use" summary appears at the top of the Updates tab, and any update entry mentioning one of those tools gets a subtle ⭐ highlight. On a first-time device where nothing is detected, this section is skipped entirely.` },
   { date: '2026-08-29', tag: 'NEW',
     titleJa: `「他のツール」一覧に作者プロフィールへのリンクを追加`,
     titleEn: `Added a Creator Profile link to the "Other Tools" list`,
-    descJa: `画面下部ドック「☰ 他のツール」から開くドロワーに、制作者のプロフィールページ（skyzztai-profile）への🔗リンクを追加しました。`,
-    descEn: `Added a 🔗 link to the creator's profile page (skyzztai-profile) in the drawer opened from the "☰ Other Tools" dock button at the bottom of the screen.` },
+    descJa: `画面下部ドック「他のツール」から開くドロワーに、制作者のプロフィールページ（skyzztai-profile）へのリンクを追加しました。`,
+    descEn: `Added a link to the creator's profile page (skyzztai-profile) in the drawer opened from the "Other Tools" dock button at the bottom of the screen.` },
   { date: '2026-08-29', tag: 'NEW',
     titleJa: `楽譜づくり(tai-score)を公開ツールとして追加（test版）`,
     titleEn: `Added Sheet Music Maker (tai-score) as a public tool (test version)`,
-    descJa: `「他のツール」一覧の羽トラッカーの直後に、新しい姉妹サイト「🎵 楽譜づくり」を追加しました。まだ動作に不安が残るため、名称の先頭に小さく「test」の注記を付けています。`,
-    descEn: `Added a new sister site, "🎵 Sheet Music Maker," to the "Other Tools" list right after Wing Tracker. Since it's still not fully stable, its name carries a small "test" label.` },
+    descJa: `「他のツール」一覧の羽トラッカーの直後に、新しい姉妹サイト「楽譜づくり」を追加しました。まだ動作に不安が残るため、名称の先頭に小さく「test」の注記を付けています。`,
+    descEn: `Added a new sister site, "Sheet Music Maker," to the "Other Tools" list right after Wing Tracker. Since it's still not fully stable, its name carries a small "test" label.` },
   { date: '2026-08-26', tag: 'NEW',
     titleJa: `更新情報にNEW/CHANGE/FIXの絞り込み、参考文献にクイックジャンプを追加`,
     titleEn: `Added NEW/CHANGE/FIX filters to Updates and quick-jump to References`,
-    descJa: `更新情報タブに、種類（NEW/CHANGE/FIX）で絞り込めるフィルタチップと、前回ご覧いただいた内容との境目を示す区切り線を追加しました。参考文献タブの上部には、各グループへ直接ジャンプできるクイックジャンプボタンも追加。あわせて、設定についてタブの「📱 ホーム画面アイコン」カードに、表示設定モーダル内のアイコンカスタマイズへ直行できるボタンを追加しました。`,
-    descEn: `Added filter chips to the Updates tab so you can narrow the list to NEW, CHANGE, or FIX, plus a divider marking where entries you've already seen begin. Added quick-jump buttons to the top of the References tab that scroll straight to each group. Also added a button on the "📱 Home Screen Icon" card (About Settings tab) that jumps directly to icon customization inside the Display Settings modal.` },
+    descJa: `更新情報タブに、種類（NEW/CHANGE/FIX）で絞り込めるフィルタチップと、前回ご覧いただいた内容との境目を示す区切り線を追加しました。参考文献タブの上部には、各グループへ直接ジャンプできるクイックジャンプボタンも追加。あわせて、設定についてタブの「ホーム画面アイコン」カードに、表示設定モーダル内のアイコンカスタマイズへ直行できるボタンを追加しました。`,
+    descEn: `Added filter chips to the Updates tab so you can narrow the list to NEW, CHANGE, or FIX, plus a divider marking where entries you've already seen begin. Added quick-jump buttons to the top of the References tab that scroll straight to each group. Also added a button on the "Home Screen Icon" card (About Settings tab) that jumps directly to icon customization inside the Display Settings modal.` },
   { date: '2026-08-26', tag: 'CHANGE',
     titleJa: `常時表示サイドバーを撤去し「他のツール」ドロワーに一本化`,
     titleEn: `Removed the always-visible sidebar, consolidating into the "Other Tools" drawer`,
-    descJa: `デスクトップ幅（850px以上）で常時表示されていた2カラムのサイドバーを撤去し、ドック「☰ 他のツール」ボタンから開くドロワー表示に一本化しました。ドロワーの内容も🔗関連ツール一覧のみに整理し、ホーム画面アイコンのカスタマイズ・表示設定へは引き続き⚙️表示設定モーダルから到達できます。この変更に伴い1400px前後の幅でタブバーが横スクロールしてしまう回帰が一時発生しましたが、同日中に修正しています。`,
-    descEn: `Removed the always-visible two-column sidebar that used to show at desktop widths (850px+), consolidating it into the drawer opened from the dock's "☰ Other Tools" button. The drawer's contents were also trimmed down to just the 🔗 related-tools list; home screen icon customization and display settings remain reachable from the ⚙️ Display Settings modal. This change briefly introduced a regression where the tab bar would scroll horizontally around 1400px width, which was fixed the same day.` },
+    descJa: `デスクトップ幅（850px以上）で常時表示されていた2カラムのサイドバーを撤去し、ドック「他のツール」ボタンから開くドロワー表示に一本化しました。ドロワーの内容も関連ツール一覧のみに整理し、ホーム画面アイコンのカスタマイズ・表示設定へは引き続き表示設定モーダルから到達できます。この変更に伴い1400px前後の幅でタブバーが横スクロールしてしまう回帰が一時発生しましたが、同日中に修正しています。`,
+    descEn: `Removed the always-visible two-column sidebar that used to show at desktop widths (850px+), consolidating it into the drawer opened from the dock's "Other Tools" button. The drawer's contents were also trimmed down to just the related-tools list; home screen icon customization and display settings remain reachable from the Display Settings modal. This change briefly introduced a regression where the tab bar would scroll horizontally around 1400px width, which was fixed the same day.` },
   { date: '2026-08-22', tag: 'CHANGE',
     titleJa: `ダークモード切替をlight/dark/systemの3状態に拡張`,
     titleEn: `Expanded the dark mode toggle to a light/dark/system 3-state cycle`,
@@ -1613,8 +1613,8 @@ const CHANGELOG = [
   { date: '2026-08-19', tag: 'NEW',
     titleJa: `表示設定（ダークモード・キーボードショートカット）を追加`,
     titleEn: `Added Display Settings (dark mode & keyboard shortcuts)`,
-    descJa: `全サイト共通のダークモード切替とキーボードショートカット（?で設定を開く、dでダーク切替、Escで閉じる。sky_shortcuts_enabledで無効化可）を追加しました。サイドバーの「⚙️ 表示設定を開く」から開けます。`,
-    descEn: `Added a dark mode toggle and keyboard shortcuts shared across all sites (? opens Display Settings, D toggles dark mode, Esc closes — can be disabled via sky_shortcuts_enabled). Reachable from the sidebar via "⚙️ Open Display Settings."` },
+    descJa: `全サイト共通のダークモード切替とキーボードショートカット（?で設定を開く、dでダーク切替、Escで閉じる。sky_shortcuts_enabledで無効化可）を追加しました。サイドバーの「表示設定を開く」から開けます。`,
+    descEn: `Added a dark mode toggle and keyboard shortcuts shared across all sites (? opens Display Settings, D toggles dark mode, Esc closes — can be disabled via sky_shortcuts_enabled). Reachable from the sidebar via "Open Display Settings."` },
   { date: '2026-08-19', tag: 'NEW',
     titleJa: `全ページで日本語・英語表示の切り替えに対応`,
     titleEn: `Added Japanese/English display switching across every page`,
@@ -1628,8 +1628,8 @@ const CHANGELOG = [
   { date: '2026-08-15', tag: 'NEW',
     titleJa: `ホーム画面アイコンをカスタマイズできる機能を追加（全サイト対応）`,
     titleEn: `Added the ability to customize your home screen icon (all sites)`,
-    descJa: `taipak5000.github.io系の全9サイトで、スマホの「ホーム画面に追加」をしたときのアイコンを自分好みに変更できるようになりました。各サイトのサイドバー下部「📱 ホーム画面アイコン」から、①絵文字＋背景色を選ぶ方法と、②好きな画像をアップロードする方法のどちらかを選んで設定できます。設定はこのブラウザ・端末ごとの保存で、プロフィール（保存枠）の切替には影響されません。「ホーム画面に追加」をする前に設定しておく必要がある点にご注意ください（追加後に変更しても、既に追加済みのアイコンは自動更新されません）。`,
-    descEn: `Across all 9 sites in the taipak5000.github.io family, you can now customize the icon used when adding the site to your phone's home screen. From "📱 Home Screen Icon" at the bottom of each site's sidebar, choose either ① an emoji plus background color, or ② an image you upload. The setting is saved per browser/device and is not affected by switching profiles (save slots). Please note that you need to set this up before using "Add to Home Screen" — icons already added won't update automatically if you change the setting afterward.` },
+    descJa: `taipak5000.github.io系の全9サイトで、スマホの「ホーム画面に追加」をしたときのアイコンを自分好みに変更できるようになりました。各サイトのサイドバー下部「ホーム画面アイコン」から、①絵文字＋背景色を選ぶ方法と、②好きな画像をアップロードする方法のどちらかを選んで設定できます。設定はこのブラウザ・端末ごとの保存で、プロフィール（保存枠）の切替には影響されません。「ホーム画面に追加」をする前に設定しておく必要がある点にご注意ください（追加後に変更しても、既に追加済みのアイコンは自動更新されません）。`,
+    descEn: `Across all 9 sites in the taipak5000.github.io family, you can now customize the icon used when adding the site to your phone's home screen. From "Home Screen Icon" at the bottom of each site's sidebar, choose either ① an emoji plus background color, or ② an image you upload. The setting is saved per browser/device and is not affected by switching profiles (save slots). Please note that you need to set this up before using "Add to Home Screen" — icons already added won't update automatically if you change the setting afterward.` },
   { date: '2026-08-11', tag: 'NEW',
     titleJa: `クローゼットコラージュ機能を追加`,
     titleEn: `Added the Closet Collage feature`,
@@ -1643,8 +1643,8 @@ const CHANGELOG = [
   { date: '2026-08-11', tag: 'NEW',
     titleJa: `ノマキャン計算機・星のキャンドル計算機の所持通貨を相互同期`,
     titleEn: `Synced owned currency between Nomacan Calculator and Star Candle Calculator`,
-    descJa: `両サイトで所持本数を入力すると、プロフィール共通の所持キャンドル/星のキャンドル数にも自動で反映されるようにしました。ページを開いただけでは同期しないため、他サイトで先に更新した値を誤って上書きすることはありません。プロフィールモーダルを開いたまま編集した場合も、その場で表示が更新されます。反映が確認できない場合向けに「🔄 最新の状態に更新」ボタン（キャッシュを回避した強制リロード）も両サイトに追加しました。`,
-    descEn: `Entering an owned quantity on either site now automatically updates the shared profile candle / star candle count as well. Syncing doesn't happen just from opening the page, so a value updated first on another site won't be accidentally overwritten. If you edit while the profile modal is open, the display updates immediately. A "🔄 Refresh to Latest" button (a cache-busting forced reload) was also added to both sites for cases where the update isn't visible.` },
+    descJa: `両サイトで所持本数を入力すると、プロフィール共通の所持キャンドル/星のキャンドル数にも自動で反映されるようにしました。ページを開いただけでは同期しないため、他サイトで先に更新した値を誤って上書きすることはありません。プロフィールモーダルを開いたまま編集した場合も、その場で表示が更新されます。反映が確認できない場合向けに「最新の状態に更新」ボタン（キャッシュを回避した強制リロード）も両サイトに追加しました。`,
+    descEn: `Entering an owned quantity on either site now automatically updates the shared profile candle / star candle count as well. Syncing doesn't happen just from opening the page, so a value updated first on another site won't be accidentally overwritten. If you edit while the profile modal is open, the display updates immediately. A "Refresh to Latest" button (a cache-busting forced reload) was also added to both sites for cases where the update isn't visible.` },
   { date: '2026-08-11', tag: 'NEW',
     titleJa: `ノマキャン計算機に「使用予定本数」「今日の分を集め終わった」を追加`,
     titleEn: `Added "Planned Usage Amount" and "Finished Today's Collection" to Nomacan Calculator`,
@@ -1703,8 +1703,8 @@ const CHANGELOG = [
   { date: '2026-08-06', tag: 'NEW',
     titleJa: `コーデの共有リンク機能`,
     titleEn: `Added outfit share links`,
-    descJa: `アイテム所持管理の「マイコーデ」「ランダムコーデ」に🔗共有リンクボタンを追加。コーデの中身をURLで共有でき、開いた側は所持済みアイテムが自動でわかります。未所持アイテムを含むコーデ提案（コーデリクエスト）にも使えます。`,
-    descEn: `Added a 🔗 share-link button to "My Outfits" and "Random Outfit" in Item Tracker. It lets you share an outfit's contents via URL, and whoever opens it automatically sees which items they already own. It also works for outfit suggestions (outfit requests) that include items you don't own.` },
+    descJa: `アイテム所持管理の「マイコーデ」「ランダムコーデ」に共有リンクボタンを追加。コーデの中身をURLで共有でき、開いた側は所持済みアイテムが自動でわかります。未所持アイテムを含むコーデ提案（コーデリクエスト）にも使えます。`,
+    descEn: `Added a share-link button to "My Outfits" and "Random Outfit" in Item Tracker. It lets you share an outfit's contents via URL, and whoever opens it automatically sees which items they already own. It also works for outfit suggestions (outfit requests) that include items you don't own.` },
   { date: '2026-08-05', tag: 'NEW',
     titleJa: `データ引継ぎを新設`,
     titleEn: `Launched Data Transfer`,
