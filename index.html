@@ -26,6 +26,10 @@
           ? (saved === 'dark')
           : window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        // 📱 PWA/ブラウザUIの theme-color もここで即時同期する（初回描画時から
+        // ダークモードならブラウザのアドレスバー等の色もちらつきなく黒系にする）。
+        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeColorMeta) themeColorMeta.setAttribute('content', isDark ? '#000000' : '#5E5CE6');
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'light');
       }
@@ -719,7 +723,7 @@
     <span class="site-dock-icon">🙏</span>
     <span class="site-dock-label" data-i18n="dock.credits">クレジット</span>
   </button>
-  <button type="button" onclick="toggleSidebar()">
+  <button type="button" id="dockToolsBtn" onclick="toggleSidebar()">
     <span class="site-dock-icon">☰</span>
     <span class="site-dock-label" data-i18n="dock.otherTools">他のツール</span>
   </button>
@@ -800,15 +804,15 @@ function closeModal(id) {
     // （display:noneになった）要素にフォーカスが取り残されたままになる。そのため
     // focus()を呼んだ後に実際にフォーカスが移ったかをdocument.activeElementで検証し、
     // 移っていなければ（＝triggerが実質フォーカス不可能だった場合と同様に）常に
-    // モバイル幅で表示されているハンバーガーメニューのトグルボタンへフォールバックする。
+    // 画面下部に固定表示されているサイトドックの「他のツール」ボタン（#dockToolsBtn）
+    // へフォールバックする。
     const triggerFocusable = trigger && typeof trigger.focus === 'function' && document.contains(trigger)
       && (trigger.offsetWidth > 0 || trigger.offsetHeight > 0);
     if (triggerFocusable) trigger.focus();
     if (!triggerFocusable || document.activeElement !== trigger) {
-      const fallback = document.querySelector('.sidebar-toggle-btn');
+      const fallback = document.querySelector('#dockToolsBtn');
       if (fallback) fallback.focus();
-      // 🛟 最終防衛線: デスクトップ幅（.sidebar-toggle-btnがvisibility:hiddenで
-      // フォーカス不可）かつtrigger自体が最初から<body>だった場合など、上記の
+      // 🛟 最終防衛線: fallback要素がDOMから失われている等、上記の
       // フォールバックも効かないケースが残る。その場合でも、直前まで閉じた
       // モーダル内の非表示（display:none）要素にフォーカスが取り残されたままには
       // しない。blur()は対象のフォーカス可否を問わず必ずフォーカスを<body>へ
@@ -1186,6 +1190,10 @@ function isDarkMode() {
 
 function applyThemeToDOM(isDark) {
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  // 📱 <head>内の同期スクリプトと同じ理由で、PWA/ブラウザUIのtheme-colorも
+  // ここで実際のテーマに追従させる（トグル・OS追従・クロスタブ同期の全経路がここを通る）。
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+  if (themeColorMeta) themeColorMeta.setAttribute('content', isDark ? '#000000' : '#5E5CE6');
 }
 
 // 現在保存されているsky_app_themeの値を、実際のDOM（data-theme属性）に反映する。
