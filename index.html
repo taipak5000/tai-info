@@ -90,12 +90,6 @@
     }
     .nav-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
     .nav-actions { display: flex; align-items: center; gap: 8px; }
-    .sidebar-toggle-btn {
-      background: var(--card); border: 1px solid var(--sep); border-radius: var(--r-sm);
-      padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--text);
-      display: flex; align-items: center; gap: 6px; white-space: nowrap;
-    }
-    @media (min-width: 850px) { .sidebar-toggle-btn { visibility: hidden; } }
     .lang-toggle-btn {
       background: var(--card); border: 1px solid var(--sep); border-radius: var(--r-sm);
       padding: 6px 12px; font-size: 13px; font-weight: 700; color: var(--indigo-d);
@@ -863,7 +857,6 @@ const I18N = {
   'meta.appleTitle': { ja: `設定・更新情報`, en: `Settings & Updates` },
 
   'nav.title': { ja: `⚙️ 設定・更新情報`, en: `⚙️ Settings & Updates` },
-  'sidebar.toggle': { ja: `☰ ツール`, en: `☰ Tools` },
   'sidebar.relatedTools': { ja: `関連ツール`, en: `Related Tools` },
   'tools.item': { ja: `🗂️ アイテム所持管理`, en: `🗂️ Item Collection` },
   'tools.emote': { ja: `🎭 エモート所持率管理`, en: `🎭 Emote Collection` },
@@ -1182,10 +1175,6 @@ function getThemePref() {
 function resolveIsDarkTheme(pref) {
   if (pref === 'light' || pref === 'dark') return pref === 'dark';
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
-
-function isDarkMode() {
-  return document.documentElement.getAttribute('data-theme') === 'dark';
 }
 
 function applyThemeToDOM(isDark) {
