@@ -323,7 +323,7 @@
       align-items: flex-end; justify-content: center; padding: 0;
       transition: background-color 0.32s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .modal-overlay.open { animation: none; }
+    .modal-overlay.open { animation: iosFade 0.32s cubic-bezier(0.25, 1, 0.5, 1); }
     .modal-overlay.is-closing { display: flex; pointer-events: none; }
     .modal-card {
       width: 100%; max-width: 100%; max-height: 88vh; max-height: 88dvh;
@@ -334,7 +334,12 @@
       animation: none;
       transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .modal-card.is-dragging, .modal-card.js-anim { transition: none; cursor: grabbing; user-select: none; }
+    /* display:none→flexへの切り替えと同一同期タスク内ではtransitionが発火しないため、
+       開いた瞬間だけ@keyframesで確実にスライドインさせる（sidebarのiosSlideInと同じ手法）。
+       :where()で特異度を素の.modal-cardと揃え、850px以上のiosSheetIn上書き（後方のソース順）
+       がこれまで通り優先されるようにしている。 */
+    :where(.modal-overlay.open) .modal-card { animation: sheetSlideUp 0.32s cubic-bezier(0.25, 1, 0.5, 1); }
+    .modal-card.is-dragging, .modal-card.js-anim { transition: none; animation: none; cursor: grabbing; user-select: none; }
     .modal-card::before {
       content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
       width: 36px; height: 5px; border-radius: 3px; background: rgba(60, 60, 67, 0.3);
@@ -352,6 +357,7 @@
     }
     @keyframes iosSheetIn { from { opacity: 0; transform: scale(0.94) translateY(8px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
     @keyframes iosFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes sheetSlideUp { from { transform: translate3d(0, 100%, 0); } to { transform: translate3d(0, 0, 0); } }
 
     /* ── サイドバー（関連ツールドロワー）のスライドイン ── */
     .sidebar.sidebar-open { animation: iosSlideIn 0.32s cubic-bezier(0.25, 1, 0.5, 1); }
