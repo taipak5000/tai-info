@@ -73,6 +73,19 @@
     }
     [data-theme="dark"] nav { background: rgba(0,0,0,0.86); }
 
+    .inline-icon { stroke: var(--indigo-d); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; color: var(--indigo-d); }
+    .inline-icon.warn { stroke: var(--red); color: var(--red); }
+    .inline-icon.ok { stroke: var(--green); color: var(--green); }
+    .icon-chip {
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      background: var(--indigo-bg); background-image: linear-gradient(180deg, rgba(255,255,255,0.32), rgba(255,255,255,0) 60%);
+      border-radius: 26%; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), inset 0 1px 1px rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.10);
+      color: var(--indigo-d);
+    }
+    .icon-chip svg { display: block; stroke: var(--indigo-d); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .pf-titles-caret { transition: transform 0.15s ease; }
+    .pf-titles-toggle[aria-expanded="true"] .pf-titles-caret { transform: rotate(180deg); }
+
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     a { text-decoration:none; color:inherit; -webkit-tap-highlight-color:transparent; }
     button { cursor:pointer; border:none; background:none; font-family:inherit; }
@@ -361,8 +374,90 @@
 </head>
 <body>
 
+<svg id="pf-icon-sprite" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true"><defs>
+    <symbol id="i-folder" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M4 6.5A1.5 1.5 0 0 1 5.5 5h4l1.6 2H18.5A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5Z"/></g></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.458) translate(-12 -12)"><path d="M6 6l12 12M18 6L6 18"/></g></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/><path d="M21 21l-4.8-4.8"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4.5 5.5h15a1 1 0 0 1 1 1V19a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V6.5a1 1 0 0 1 1-1Z"/><path d="M8 3.5v4M16 3.5v4M3.5 10h17"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4L3 20h18L12 4Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.149) translate(-11.615 -12.385)"><path d="M4 20l1-4.2L15.6 5.2a1.5 1.5 0 0 1 2.1 0l1.1 1.1a1.5 1.5 0 0 1 0 2.1L8.2 19 4 20Z"/><path d="M13.8 6.8l3.4 3.4"/></g></symbol>
+    <symbol id="i-candle" viewBox="0 0 24 24"><path d="M9.5 21h5a1 1 0 0 0 1-1v-7.5a3 3 0 0 0-3-3h-1a3 3 0 0 0-3 3V20a1 1 0 0 0 1 1Z"/><path d="M12 9.5V5M10.3 5.2C10.3 3.7 12 3.5 12 2c0 1.5 1.7 1.7 1.7 3.2 0 .9-.75 1.3-1.7 1.3s-1.7-.4-1.7-1.3Z"/></symbol>
+    <symbol id="i-star-candle" viewBox="0 0 24 24"><path d="M9.5 21h5a1 1 0 0 0 1-1v-7.5a3 3 0 0 0-3-3h-1a3 3 0 0 0-3 3V20a1 1 0 0 0 1 1Z"/><path d="M12 9.5V5M10.3 5.2C10.3 3.7 12 3.5 12 2c0 1.5 1.7 1.7 1.7 3.2 0 .9-.75 1.3-1.7 1.3s-1.7-.4-1.7-1.3Z"/><path fill="currentColor" stroke="none" d="M18 4.7L18.7 6.3L20.3 7L18.7 7.7L18 9.3L17.3 7.7L15.7 7L17.3 6.3Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.129) translate(-12.25 -12)"><path d="M4.5 12.5l5 5L20 6.5"/></g></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.5 5.6 6.1.6-4.6 4.1 1.3 6-5.3-3.2-5.3 3.2 1.3-6-4.6-4.1 6.1-.6Z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5c-5-3.5-9-7-9-11.2C3 6 5 4 7.7 4c1.7 0 3.3.9 4.3 2.4C13 4.9 14.6 4 16.3 4 19 4 21 6 21 9.3c0 4.2-4 7.7-9 11.2Z"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><path d="M6 3l6 9m6-9l-6 9M12 12v9M8.5 14.5h7M8.5 17.5h7"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M4 9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1.3a1.5 1.5 0 0 0 0 3.4V15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1.3a1.5 1.5 0 0 0 0-3.4Z"/><path d="M12 7v10" stroke-dasharray="1.5 2"/></g></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.5 11h10L20 8H6"/><path d="M9 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM17 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6"/></g></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 4a8 8 0 0 0 0 16c1.2 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.9 1.8-1.9H16a4 4 0 0 0 4-4c0-3.9-3.6-7-8-7Z"/><path d="M9 9v.01M13 7.5v.01M16.5 10v.01M9.5 13.5v.01"/></symbol>
+    <symbol id="i-question" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.167) translate(-12 -12)"><path d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.6 1.3c0 1.7-2.1 1.9-2.1 3.4"/><path d="M12 17v.01"/></g></symbol>
+    <symbol id="i-masks" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Z"/><path d="M9 10v.01M15 10v.01"/><path d="M8.5 14.5q3.5 3 7 0"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.1-6.5-11A6.5 6.5 0 0 1 18.5 10c0 4.9-6.5 11-6.5 11Z"/><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.5 6L20 12l-6.5 1.5L12 21l-1.5-6L4 12l6.5-1.5Z"/></symbol>
+    <symbol id="i-wing" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.281) translate(-10.5 -12.83)"><path d="M4 19c2-6 6-11 13-13-1 6-2 9-6 12-3 2-5 2-7 1Z"/><path d="M7 17c3-2 6-5 8-9"/></g></symbol>
+    <symbol id="i-music-note" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.207) translate(-13.75 -10.75)"><path d="M9 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/><path d="M11.5 15.5V5l7-1.5v9"/><path d="M18.5 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/></g></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M17 7h-8a4 4 0 0 0-4 4"/><path d="M11 4l-2 3 2 3"/><path d="M7 17h8a4 4 0 0 0 4-4"/><path d="M13 20l2-3-2-3"/></g></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-6 6c0 2.5 1.5 4 2.5 5.5.5.7.5 1 .5 1.5h6c0-.5 0-.8.5-1.5C16.5 13 18 11.5 18 9a6 6 0 0 0-6-6Z"/></symbol>
+    <symbol id="i-sheet-music" viewBox="0 0 24 24"><path d="M6 4h9l3 3v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M8 10h8M8 13h8M8 16h5"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-12 -12)"><path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h11A1.5 1.5 0 0 1 19 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 17.5Z"/><path d="M8.5 8.5v.01M15.5 8.5v.01M12 12v.01M8.5 15.5v.01M15.5 15.5v.01"/></g></symbol>
+    <symbol id="i-hanger" viewBox="0 0 24 24"><path d="M12 4.2a1.8 1.8 0 1 0-1.8 1.8"/><path d="M12 6v1.6"/><path d="M3.5 17.5 12 11l8.5 6.5"/><path d="M3.5 17.5h17"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.167) translate(-12 -12)"><path d="M4.5 4.5h15v15h-15Z"/><path d="M4.5 15.5l4.2-4.5a1 1 0 0 1 1.5 0l2.3 2.5 2.5-3a1 1 0 0 1 1.5 0l3 4.5"/><path d="M9 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4Z"/></g></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><path d="M4 5.5h16a1 1 0 0 1 1 1V16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6.5a1 1 0 0 1 1-1Z"/><path d="M9 20.5h6M12 17v3.5"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h14a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 18H5a1.5 1.5 0 0 1-1.5-1.5Z"/><path d="M6.5 9.5h.01M9.5 9.5h.01M12.5 9.5h.01M15.5 9.5h.01M17.5 9.5h.01M6.5 12.5h.01M9.5 12.5h.01M12.5 12.5h.01M15.5 12.5h.01M17.5 12.5h.01M8 15.5h8"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"/><path d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.049) translate(-11.66 -12.34)"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></g></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M4.5 9h15M4.5 15h15"/><path d="M12 4a12 12 0 0 1 0 16"/><path d="M12 4a12 12 0 0 0 0 16"/></g></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M4 10l4 3 4-6 4 6 4-3v7H4Z"/></g></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><path d="M8 3l3 8M16 3l-3 8"/><path d="M12 20a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/><path d="M10 14.5l2-1.2 2 1.2"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.061) translate(-12 -12.25)"><path d="M8 4h8v6a4 4 0 0 1-8 0V4Z"/><path d="M8 5H5.5A1.5 1.5 0 0 0 4 6.5 3.5 3.5 0 0 0 7.5 10H8"/><path d="M16 5h2.5A1.5 1.5 0 0 1 20 6.5 3.5 3.5 0 0 1 16.5 10H16"/><path d="M12 14v3M9 20.5h6M9.5 17.5h5v3h-5Z"/></g></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12.5)"><path d="M4 9h16v3H4Z"/><path d="M5 12h14v8H5Z"/><path d="M12 9v11"/><path d="M9 9c-1.3 0-2.3-.9-2.3-2S7.7 5 9 5c1.3 0 3 1.7 3 4M15 9c1.3 0 2.3-.9 2.3-2S16.3 5 15 5c-1.3 0-3 1.7-3 4"/></g></symbol>
+    <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6.5 9L12 3l5.5 6L12 20Z"/><path d="M6.5 9h11"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.074) translate(-12 -12.15)"><path d="M4 6l6-2 4 2 6-2v14l-6 2-4-2-6 2Z"/><path d="M10 4.3v14M14 6.3v14"/></g></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M14.5 9.5l-1.8 4.2-4.2 1.8 1.8-4.2Z"/></g></symbol>
+    <symbol id="i-flashlight" viewBox="0 0 24 24"><path d="M9 4h6l1.5 2.5v3l-1.5 1.5v9a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-9L7.5 9.5v-3Z"/><path d="M9.5 4V2.5h5V4"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M12 3c-5 2-8 6-8 11a8 8 0 0 0 8 7c5-2 8-6 8-11a8 8 0 0 0-8-7Z"/><path d="M12 21V9"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c4 0 6-3 6-6.5 0-2-1-3.5-2-5 0 2-1.5 3-2.5 2C14 9 13 6 10 4c1 3-1 5-2.5 7-1 1.3-1.5 2.5-1.5 3.5C6 18 8 21 12 21Z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 14h5l-1 7 9-12h-5Z"/></symbol>
+    <symbol id="i-hammer" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.389) translate(-11.5 -12.1)"><path d="M14.8 6.2l3 3-2.1 2.1-3-3Z"/><path d="M12.7 8.3l-7.5 7.5v2.2h2.2l7.5-7.5Z"/></g></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12.75)"><path d="M4 20.5h16"/><path d="M5.5 20.5V10L12 5l6.5 5v10.5"/><path d="M8 20.5v-6M12 20.5v-6M16 20.5v-6"/></g></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.097) translate(-12 -12.475)"><path d="M5 7h14"/><path d="M9 7V5.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7"/><path d="M7 7l1 12.5a1 1 0 0 0 1 .95h6a1 1 0 0 0 1-.95L17 7"/><path d="M10 11v5M14 11v5"/></g></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h11A1.5 1.5 0 0 1 18 7.5V9h1.5A1.5 1.5 0 0 1 21 10.5v7A1.5 1.5 0 0 1 19.5 19h-14A1.5 1.5 0 0 1 4 17.5Z"/><path d="M15.5 14.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M6.5 11h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/><path d="M8 11V8a4 4 0 1 1 8 0v3"/></g></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"/><path d="M12 16v5"/></symbol>
+    <symbol id="i-scroll" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-13 -12)"><path d="M5 7a2 2 0 1 1 0 4h1.5"/><path d="M19 17a2 2 0 1 0 0-4h-1.5"/><path d="M6.5 7H17a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5H6.5"/><path d="M9 10.5h6M9 13.5h4"/></g></symbol>
+    <symbol id="i-geyser" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-12 -12)"><path d="M5 19h14"/><path d="M8 19c0-3 1.5-5 4-5s4 2 4 5"/><path d="M12 12V5"/><path d="M9.5 8l2.5-3 2.5 3"/></g></symbol>
+    <symbol id="i-bread" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -13.75)"><path d="M4 14a8 5 0 0 1 16 0v2.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M9 12l1-3M13.5 12l1-3"/></g></symbol>
+    <symbol id="i-turtle" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.389) translate(-12 -12)"><path d="M12 8a6 4.2 0 0 0-6 4.2A6 4.2 0 0 0 12 16.4a6 4.2 0 0 0 6-4.2A6 4.2 0 0 0 12 8Z"/><path d="M12 8V6M8 10.5l-2.3-1.2M16 10.5l2.3-1.2M8.3 14l-2 1.4M15.7 14l2 1.4M10.3 16l-1 2M13.7 16l1 2"/></g></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.458) translate(-12 -12)"><path d="M6 9l6 6-6 6"/></g></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.458) translate(-12 -12)"><path d="M9 6l6 6-6 6"/></g></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-11.5 -12)"><path d="M15 5l-7 7 7 7"/></g></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-12 -12)"><path d="M12 5v14M5 12h14"/></g></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-12 -12)"><path d="M5 12h14"/></g></symbol>
+    <symbol id="i-tap" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12.5 -11)"><path d="M6 3l4.5 15.5 2-6 6-2L6 3Z"/><path d="M14 14l5 5"/></g></symbol>
+    <symbol id="i-shoe" viewBox="0 0 24 24"><path d="M4 18v-3.2c0-.8.5-1.5 1.3-1.8L9 11.5l3-3a2 2 0 0 1 2.6-.2L17 10h2a2 2 0 0 1 2 2v3a3 3 0 0 1-3 3H5a1 1 0 0 1-1-1Z"/><path d="M4 18h17"/></symbol>
+    <symbol id="i-necklace" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M5 4c0 5.5 3 9 7 9s7-3.5 7-9"/><path d="M12 13v2.3"/><circle cx="12" cy="17.7" r="2.3"/></g></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.207) translate(-12.75 -12)"><circle cx="7.5" cy="8" r="2"/><circle cx="7.5" cy="16" r="2"/><path d="M9 9.5L20 17M9 14.5L20 7"/></g></symbol>
+    <symbol id="i-hat" viewBox="0 0 24 24"><path d="M4 13c0-4.5 3.5-8 8-8s8 3.5 8 8"/><path d="M2.5 13h19"/><path d="M6 13v1.5A2.5 2.5 0 0 0 8.5 17h7a2.5 2.5 0 0 0 2.5-2.5V13"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -11.25)"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14a1.5 1.5 0 0 1 1.5-1.5h1A1.5 1.5 0 0 1 8 14v3a1.5 1.5 0 0 1-1.5 1.5h-1A1.5 1.5 0 0 1 4 17Z"/><path d="M16 14a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5Z"/></g></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.167) translate(-12.5 -11.5)"><path d="M9 5H6.5A1.5 1.5 0 0 0 5 6.5v11A1.5 1.5 0 0 0 6.5 19h11a1.5 1.5 0 0 0 1.5-1.5V15"/><path d="M14 4h6v6"/><path d="M20 4L10 14"/></g></symbol>
+    <symbol id="i-flower" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><circle cx="12" cy="12" r="2"/><path d="M12 4a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3ZM12 20a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3ZM4 12a3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3ZM20 12a3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3Z"/></g></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16.2 8.1 4.5 4.5 0 0 1 17.5 18Z"/></symbol>
+    <symbol id="i-peach" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.108) translate(-12 -11.1)"><path d="M12 6c-3 0-5.5 2.5-5.5 6s2 7 5.5 7 5.5-3.5 5.5-7S15 6 12 6Z"/><path d="M12 6c0-1.2.6-2.2 1.8-2.8"/><path d="M8.6 8.3c0-2 .6-3.3 1.8-4.2"/></g></symbol>
+    <symbol id="i-x-logo" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-12 -12)"><path d="M5 5l14 14M19 5L5 19"/></g></symbol>
+    <symbol id="i-ribbon" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.25) translate(-12 -13.5)"><path d="M12 12L5 6.5v3.5c0 1.2 1 2.2 2.2 2.2H12ZM12 12l7-5.5v3.5c0 1.2-1 2.2-2.2 2.2H12Z"/><circle cx="12" cy="12" r="1.6"/><path d="M12 13.6v6.9M9.3 20.5h5.4"/></g></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.167) translate(-12 -12)"><path d="M4.5 4.5h6.5v6.5h-6.5Z"/><path d="M13 4.5h6.5v6.5h-6.5Z"/><path d="M4.5 13h6.5v6.5h-6.5Z"/><path d="M13 13h6.5v6.5h-6.5Z"/></g></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.094) translate(-12 -12)"><path d="M12 4v11M8 11l4 4 4-4"/><path d="M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6"/></g></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M12 3.2a1.3 1.3 0 0 0-1.3 1.3v.4C8.6 5.5 7 7.8 7 10.4V14l-1.8 2.8h13.6L17 14v-3.6c0-2.6-1.6-4.9-3.7-5.5v-.4A1.3 1.3 0 0 0 12 3.2Z"/><path d="M9.8 18.3a2.2 2.2 0 0 0 4.4 0"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g transform="translate(12 12) scale(1.167) translate(-12 -12)"><path d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z"/><path d="M12 8.2V12.3l3 1.8"/></g></symbol>
+    <symbol id="i-duplicate" viewBox="0 0 24 24"><path d="M8.5 8.5V5.5A1.5 1.5 0 0 1 10 4h8.5A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H15.5"/><path d="M4 9.5A1.5 1.5 0 0 1 5.5 8h8A1.5 1.5 0 0 1 15 9.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 18.5Z"/></symbol>
+</defs></svg>
+
 <nav>
-  <div class="nav-title" data-i18n="nav.title">⚙️ 設定・更新情報</div>
+  <div class="nav-title" data-i18n="nav.title"><svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> 設定・更新情報</div>
   <div class="nav-actions">
     <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLang()">EN</button>
   </div>
@@ -374,19 +469,19 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">
       <div class="sidebar-section-label" data-i18n="sidebar.relatedTools">関連ツール</div>
-      <button class="sidebar-close-btn" onclick="toggleSidebar()">✕</button>
+      <button class="sidebar-close-btn" onclick="toggleSidebar()"><svg class="inline-icon" width="14" height="14"><use href="#i-close"/></svg></button>
     </div>
-    <a href="https://taipak5000.github.io/tai-item/" class="sidebar-nav-link" data-i18n="tools.item">🗂️ アイテム所持管理</a>
-    <a href="https://taipak5000.github.io/tai-emote/" class="sidebar-nav-link" data-i18n="tools.emote">🎭 エモート所持率管理</a>
-    <a href="https://taipak5000.github.io/share/" class="sidebar-nav-link" data-i18n="tools.share">📍 創作物管理ツール</a>
-    <a href="https://taipak5000.github.io/tai-nomacan/" class="sidebar-nav-link" data-i18n="tools.nomacan">🕯️ ノマキャン計算機</a>
-    <a href="https://taipak5000.github.io/star-candle/" class="sidebar-nav-link" data-i18n="tools.starCandle">🕯️ 星のキャンドル計算機</a>
-    <a href="https://taipak5000.github.io/companion/" class="sidebar-nav-link" data-i18n="tools.companion">✨ 精霊同行ツール</a>
-    <a href="https://taipak5000.github.io/wings/" class="sidebar-nav-link" data-i18n="tools.wings">🪽 羽トラッカー</a>
-    <a href="https://taipak5000.github.io/tai-score/" class="sidebar-nav-link"><span class="tool-badge-test">test</span><span data-i18n="tools.score">🎵 楽譜づくり</span></a>
-    <a href="https://taipak5000.github.io/tai-transfer/" class="sidebar-nav-link" data-i18n="tools.transfer">🔄 データ引継ぎ</a>
-    <a href="https://taipak5000.github.io/tai-info/" class="sidebar-nav-link current-tool" data-i18n="tools.info">⚙️ 設定・更新情報</a>
-    <a href="https://taipak5000.github.io/skyzztai-profile/" class="sidebar-nav-link"><span data-i18n="tools.profile">👤 作者プロフィール</span></a>
+    <a href="https://taipak5000.github.io/tai-item/" class="sidebar-nav-link" data-i18n="tools.item"><svg class="inline-icon" width="19" height="19"><use href="#i-folder"/></svg> アイテム所持管理</a>
+    <a href="https://taipak5000.github.io/tai-emote/" class="sidebar-nav-link" data-i18n="tools.emote"><svg class="inline-icon" width="19" height="19"><use href="#i-masks"/></svg> エモート所持率管理</a>
+    <a href="https://taipak5000.github.io/share/" class="sidebar-nav-link" data-i18n="tools.share"><svg class="inline-icon" width="19" height="19"><use href="#i-pin"/></svg> 創作物管理ツール</a>
+    <a href="https://taipak5000.github.io/tai-nomacan/" class="sidebar-nav-link" data-i18n="tools.nomacan"><svg class="inline-icon" width="19" height="19"><use href="#i-candle"/></svg> ノマキャン計算機</a>
+    <a href="https://taipak5000.github.io/star-candle/" class="sidebar-nav-link" data-i18n="tools.starCandle"><svg class="inline-icon" width="19" height="19"><use href="#i-star-candle"/></svg> 星のキャンドル計算機</a>
+    <a href="https://taipak5000.github.io/companion/" class="sidebar-nav-link" data-i18n="tools.companion"><svg class="inline-icon" width="19" height="19"><use href="#i-sparkle"/></svg> 精霊同行ツール</a>
+    <a href="https://taipak5000.github.io/wings/" class="sidebar-nav-link" data-i18n="tools.wings"><svg class="inline-icon" width="19" height="19"><use href="#i-wing"/></svg> 羽トラッカー</a>
+    <a href="https://taipak5000.github.io/tai-score/" class="sidebar-nav-link"><span class="tool-badge-test">test</span><span data-i18n="tools.score"><svg class="inline-icon" width="19" height="19"><use href="#i-music-note"/></svg> 楽譜づくり</span></a>
+    <a href="https://taipak5000.github.io/tai-transfer/" class="sidebar-nav-link" data-i18n="tools.transfer"><svg class="inline-icon" width="19" height="19"><use href="#i-sync"/></svg> データ引継ぎ</a>
+    <a href="https://taipak5000.github.io/tai-info/" class="sidebar-nav-link current-tool" data-i18n="tools.info"><svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> 設定・更新情報</a>
+    <a href="https://taipak5000.github.io/skyzztai-profile/" class="sidebar-nav-link"><span data-i18n="tools.profile"><svg class="inline-icon" width="19" height="19"><use href="#i-person"/></svg> 作者プロフィール</span></a>
   </aside>
 
   <div>
@@ -423,7 +518,7 @@
         <h3 data-i18n="settings.backup.title">データのバックアップ・復元・削除</h3>
         <p data-i18n="settings.backup.body">プロフィール切替メニュー内の「データのバックアップ・復元・削除」から、このブラウザに保存されている
           データ全体をファイルに書き出し・読み込み・削除できます。別の端末へ引き継ぎたい場合は
-          <a href="https://taipak5000.github.io/tai-transfer/">🔄 データ引継ぎ</a>で、サイトを選んでコードの
+          <a href="https://taipak5000.github.io/tai-transfer/"><svg class="inline-icon" width="14" height="14"><use href="#i-sync"/></svg> データ引継ぎ</a>で、サイトを選んでコードの
           形で引き継ぐこともできます。</p>
       </div>
 
@@ -574,16 +669,16 @@
         <h3 data-i18n="references.toolGuide.title">目的別ツール早見表</h3>
         <p style="margin-bottom:8px;" data-i18n="references.toolGuide.sub">やりたいことから、使うツールを探せます。</p>
         <ul data-i18n="references.toolGuide.list">
-          <li>🕯️ <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
-          <li>🪽 <b>翼・光の子（ウィングバフ）を集めたい</b> → <a href="https://taipak5000.github.io/wings/">羽トラッカー</a></li>
-          <li>🗂️ <b>アイテムの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-item/">アイテム所持管理</a></li>
-          <li>🎭 <b>エモートの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-emote/">エモート所持率管理</a></li>
-          <li>✨ <b>精霊と一緒に過ごしたい・精霊友情やシーズンツリーを進めたい</b> → <a href="https://taipak5000.github.io/companion/">精霊同行ツール</a></li>
-          <li>📍 <b>自分のコーデ・創作物を紹介したい</b> → <a href="https://taipak5000.github.io/share/">創作物管理ツール</a></li>
-          <li>🎵 <b>楽譜を演奏・作成したい</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">楽譜づくり</a></li>
-          <li>🔄 <b>別の端末にデータを引き継ぎたい</b> → <a href="https://taipak5000.github.io/tai-transfer/">データ引継ぎ</a></li>
-          <li>⚙️ <b>使い方や共通設定について知りたい</b> → <a href="#settings">設定について</a>タブ</li>
-          <li>👤 <b>制作者について知りたい・リクエストを送りたい</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">作者プロフィール</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-candle"/></svg> <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-wing"/></svg> <b>翼・光の子（ウィングバフ）を集めたい</b> → <a href="https://taipak5000.github.io/wings/">羽トラッカー</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-folder"/></svg> <b>アイテムの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-item/">アイテム所持管理</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-masks"/></svg> <b>エモートの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-emote/">エモート所持率管理</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-sparkle"/></svg> <b>精霊と一緒に過ごしたい・精霊友情やシーズンツリーを進めたい</b> → <a href="https://taipak5000.github.io/companion/">精霊同行ツール</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-pin"/></svg> <b>自分のコーデ・創作物を紹介したい</b> → <a href="https://taipak5000.github.io/share/">創作物管理ツール</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-music-note"/></svg> <b>楽譜を演奏・作成したい</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">楽譜づくり</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-sync"/></svg> <b>別の端末にデータを引き継ぎたい</b> → <a href="https://taipak5000.github.io/tai-transfer/">データ引継ぎ</a></li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-settings"/></svg> <b>使い方や共通設定について知りたい</b> → <a href="#settings">設定について</a>タブ</li>
+          <li><svg class="inline-icon" width="15" height="15"><use href="#i-person"/></svg> <b>制作者について知りたい・リクエストを送りたい</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">作者プロフィール</a></li>
         </ul>
       </div>
 
@@ -595,24 +690,24 @@
             <thead>
               <tr>
                 <th data-i18n="references.compatTable.colTool">ツール</th>
-                <th data-i18n="references.compatTable.colDark">🌙 ダーク</th>
-                <th data-i18n="references.compatTable.colProfile">👤 複数プロフィール</th>
-                <th data-i18n="references.compatTable.colLang">🌐 言語数</th>
+                <th data-i18n="references.compatTable.colDark"><svg class="inline-icon" width="14" height="14"><use href="#i-moon"/></svg> ダーク</th>
+                <th data-i18n="references.compatTable.colProfile"><svg class="inline-icon" width="14" height="14"><use href="#i-person"/></svg> 複数プロフィール</th>
+                <th data-i18n="references.compatTable.colLang"><svg class="inline-icon" width="14" height="14"><use href="#i-globe"/></svg> 言語数</th>
                 <th data-i18n="references.compatTable.colTest">注記</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td><a href="https://taipak5000.github.io/tai-item/" data-i18n="tools.item">🗂️ アイテム所持管理</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/tai-emote/" data-i18n="tools.emote">🎭 エモート所持率管理</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/share/" data-i18n="tools.share">📍 創作物管理ツール</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/tai-nomacan/" data-i18n="tools.nomacan">🕯️ ノマキャン計算機</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/star-candle/" data-i18n="tools.starCandle">🕯️ 星のキャンドル計算機</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/companion/" data-i18n="tools.companion">✨ 精霊同行ツール</a></td><td>✅</td><td>✅</td><td>4</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/wings/" data-i18n="tools.wings">🪽 羽トラッカー</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/tai-transfer/" data-i18n="tools.transfer">🔄 データ引継ぎ</a></td><td>✅</td><td>✅</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/tai-info/" data-i18n="tools.info">⚙️ 設定・更新情報</a></td><td>✅</td><td>—</td><td>2</td><td>—</td></tr>
-              <tr><td><a href="https://taipak5000.github.io/tai-score/" data-i18n="tools.score">🎵 楽譜づくり</a></td><td>✅</td><td>—</td><td>2</td><td><span class="tool-badge-test">test</span></td></tr>
-              <tr><td><a href="https://taipak5000.github.io/skyzztai-profile/" data-i18n="tools.profile">👤 作者プロフィール</a></td><td>✅</td><td>—</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-item/" data-i18n="tools.item"><svg class="inline-icon" width="19" height="19"><use href="#i-folder"/></svg> アイテム所持管理</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-emote/" data-i18n="tools.emote"><svg class="inline-icon" width="19" height="19"><use href="#i-masks"/></svg> エモート所持率管理</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/share/" data-i18n="tools.share"><svg class="inline-icon" width="19" height="19"><use href="#i-pin"/></svg> 創作物管理ツール</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-nomacan/" data-i18n="tools.nomacan"><svg class="inline-icon" width="19" height="19"><use href="#i-candle"/></svg> ノマキャン計算機</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/star-candle/" data-i18n="tools.starCandle"><svg class="inline-icon" width="19" height="19"><use href="#i-star-candle"/></svg> 星のキャンドル計算機</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/companion/" data-i18n="tools.companion"><svg class="inline-icon" width="19" height="19"><use href="#i-sparkle"/></svg> 精霊同行ツール</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>4</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/wings/" data-i18n="tools.wings"><svg class="inline-icon" width="19" height="19"><use href="#i-wing"/></svg> 羽トラッカー</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-transfer/" data-i18n="tools.transfer"><svg class="inline-icon" width="19" height="19"><use href="#i-sync"/></svg> データ引継ぎ</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-info/" data-i18n="tools.info"><svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> 設定・更新情報</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>—</td><td>2</td><td>—</td></tr>
+              <tr><td><a href="https://taipak5000.github.io/tai-score/" data-i18n="tools.score"><svg class="inline-icon" width="19" height="19"><use href="#i-music-note"/></svg> 楽譜づくり</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>—</td><td>2</td><td><span class="tool-badge-test">test</span></td></tr>
+              <tr><td><a href="https://taipak5000.github.io/skyzztai-profile/" data-i18n="tools.profile"><svg class="inline-icon" width="19" height="19"><use href="#i-person"/></svg> 作者プロフィール</a></td><td><svg class="inline-icon ok" width="14" height="14"><use href="#i-check"/></svg></td><td>—</td><td>2</td><td>—</td></tr>
             </tbody>
           </table>
         </div>
@@ -630,11 +725,11 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="iconCustomModalTitle" tabindex="-1">
     <div class="modal-header">
       <span class="modal-title" id="iconCustomModalTitle" data-i18n="iconCustom.title">ホーム画面アイコンをカスタマイズ</span>
-      <button class="modal-close" onclick="closeModal('iconCustomModal')">✕</button>
+      <button class="modal-close" onclick="closeModal('iconCustomModal')"><svg class="inline-icon" width="16" height="16"><use href="#i-close"/></svg></button>
     </div>
 
     <div class="hint">
-      <span>💡</span>
+      <span><svg class="inline-icon" width="16" height="16"><use href="#i-lightbulb"/></svg></span>
       <span data-i18n="iconCustom.hint">
         スマホの「ホーム画面に追加」をしたときのアイコンを、好きな絵文字や画像に変更できます。<br>
         <b>追加する前に</b>設定してください。追加した後に変更しても、既に追加済みのアイコンは自動更新されません（変更したい場合は一度削除して追加し直してください）。
@@ -692,7 +787,7 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" tabindex="-1">
     <div class="modal-header">
       <span class="modal-title" id="settingsModalTitle" data-i18n="dispSettings.title">表示設定</span>
-      <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
+      <button class="modal-close" onclick="closeModal('settingsModal')"><svg class="inline-icon" width="16" height="16"><use href="#i-close"/></svg></button>
     </div>
 
     <div class="settings-section">
@@ -754,19 +849,19 @@
 <!-- ▸ サイトドック（クイックアクセスバー。ハンバーガーサイドバーとは並存し、置き換えない） -->
 <nav class="site-dock" data-i18n-aria="dock.ariaLabel" aria-label="クイックメニュー">
   <button type="button" id="dockChangelogBtn" onclick="showTab('changelog')">
-    <span class="site-dock-icon">🆕</span>
+    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-bell"/></svg></span>
     <span class="site-dock-label" data-i18n="dock.changelog">更新情報</span>
   </button>
   <button type="button" onclick="showTab('credits')">
-    <span class="site-dock-icon">🙏</span>
+    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-heart"/></svg></span>
     <span class="site-dock-label" data-i18n="dock.credits">クレジット</span>
   </button>
   <button type="button" id="dockToolsBtn" onclick="toggleSidebar()">
-    <span class="site-dock-icon">☰</span>
+    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-menu"/></svg></span>
     <span class="site-dock-label" data-i18n="dock.otherTools">他のツール</span>
   </button>
   <button type="button" onclick="settingsOpen()">
-    <span class="site-dock-icon">⚙️</span>
+    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-settings"/></svg></span>
     <span class="site-dock-label" data-i18n="dock.displaySettings">表示設定</span>
   </button>
 </nav>
@@ -900,19 +995,19 @@ const I18N = {
   'meta.title': { ja: `設定・更新情報・クレジット - Sky所持率管理`, en: `Settings, Updates & Credits - Sky Ownership Tracker` },
   'meta.appleTitle': { ja: `設定・更新情報`, en: `Settings & Updates` },
 
-  'nav.title': { ja: `⚙️ 設定・更新情報`, en: `⚙️ Settings & Updates` },
+  'nav.title': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> 設定・更新情報`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> Settings & Updates` },
   'sidebar.relatedTools': { ja: `関連ツール`, en: `Related Tools` },
-  'tools.item': { ja: `🗂️ アイテム所持管理`, en: `🗂️ Item Collection` },
-  'tools.emote': { ja: `🎭 エモート所持率管理`, en: `🎭 Emote Collection` },
-  'tools.share': { ja: `📍 創作物管理ツール`, en: `📍 Creation Manager` },
-  'tools.nomacan': { ja: `🕯️ ノマキャン計算機`, en: `🕯️ Nomacan Calculator` },
-  'tools.starCandle': { ja: `🕯️ 星のキャンドル計算機`, en: `🕯️ Star Candle Calculator` },
-  'tools.companion': { ja: `✨ 精霊同行ツール`, en: `✨ Spirit Companion Tool` },
-  'tools.wings': { ja: `🪽 羽トラッカー`, en: `🪽 Wing Tracker` },
-  'tools.score': { ja: `🎵 楽譜づくり`, en: `🎵 Sheet Music Maker` },
-  'tools.transfer': { ja: `🔄 データ引継ぎ`, en: `🔄 Data Transfer` },
-  'tools.info': { ja: `⚙️ 設定・更新情報`, en: `⚙️ Settings & Updates` },
-  'tools.profile': { ja: `👤 作者プロフィール`, en: `👤 Creator Profile` },
+  'tools.item': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-folder"/></svg> アイテム所持管理`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-folder"/></svg> Item Collection` },
+  'tools.emote': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-masks"/></svg> エモート所持率管理`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-masks"/></svg> Emote Collection` },
+  'tools.share': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-pin"/></svg> 創作物管理ツール`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-pin"/></svg> Creation Manager` },
+  'tools.nomacan': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-candle"/></svg> ノマキャン計算機`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-candle"/></svg> Nomacan Calculator` },
+  'tools.starCandle': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-star-candle"/></svg> 星のキャンドル計算機`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-star-candle"/></svg> Star Candle Calculator` },
+  'tools.companion': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-sparkle"/></svg> 精霊同行ツール`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-sparkle"/></svg> Spirit Companion Tool` },
+  'tools.wings': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-wing"/></svg> 羽トラッカー`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-wing"/></svg> Wing Tracker` },
+  'tools.score': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-music-note"/></svg> 楽譜づくり`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-music-note"/></svg> Sheet Music Maker` },
+  'tools.transfer': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-sync"/></svg> データ引継ぎ`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-sync"/></svg> Data Transfer` },
+  'tools.info': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> 設定・更新情報`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-settings"/></svg> Settings & Updates` },
+  'tools.profile': { ja: `<svg class="inline-icon" width="19" height="19"><use href="#i-person"/></svg> 作者プロフィール`, en: `<svg class="inline-icon" width="19" height="19"><use href="#i-person"/></svg> Creator Profile` },
 
   'tabs.settings': { ja: `設定について`, en: `About Settings` },
   'tabs.changelog': { ja: `更新情報`, en: `Updates` },
@@ -935,7 +1030,7 @@ const I18N = {
   'settings.currency.body': { ja: `プロフィール切替メニュー内の「所持通貨」セクションで、キャンドル・ハート・昇華キャンドル・シーズンキャンドル・シーズンハート・イベント通貨をどのサイトからでも編集できます。編集した内容は全サイトで共通して反映されます。`, en: `In the "Owned Currency" section inside the Profile Switch menu, you can edit your candles, hearts, ascended candles, season candles, season hearts, and event currency from any site. Edits are reflected consistently across all sites.` },
 
   'settings.backup.title': { ja: `データのバックアップ・復元・削除`, en: `Data Backup, Restore & Deletion` },
-  'settings.backup.body': { ja: `プロフィール切替メニュー内の「データのバックアップ・復元・削除」から、このブラウザに保存されているデータ全体をファイルに書き出し・読み込み・削除できます。別の端末へ引き継ぎたい場合は<a href="https://taipak5000.github.io/tai-transfer/">🔄 データ引継ぎ</a>で、サイトを選んでコードの形で引き継ぐこともできます。`, en: `From "Data Backup, Restore & Deletion" inside the Profile Switch menu, you can export, import, or delete all of the data stored in this browser. To move your data to another device, you can also use <a href="https://taipak5000.github.io/tai-transfer/">🔄 Data Transfer</a> to choose which sites' data to carry over as a code.` },
+  'settings.backup.body': { ja: `プロフィール切替メニュー内の「データのバックアップ・復元・削除」から、このブラウザに保存されているデータ全体をファイルに書き出し・読み込み・削除できます。別の端末へ引き継ぎたい場合は<a href="https://taipak5000.github.io/tai-transfer/"><svg class="inline-icon" width="14" height="14"><use href="#i-sync"/></svg> データ引継ぎ</a>で、サイトを選んでコードの形で引き継ぐこともできます。`, en: `From "Data Backup, Restore & Deletion" inside the Profile Switch menu, you can export, import, or delete all of the data stored in this browser. To move your data to another device, you can also use <a href="https://taipak5000.github.io/tai-transfer/"><svg class="inline-icon" width="14" height="14"><use href="#i-sync"/></svg> Data Transfer</a> to choose which sites' data to carry over as a code.` },
 
   'settings.lang.title': { ja: `言語切替（EN/JA）`, en: `Language Toggle (EN/JA)` },
   'settings.lang.body': { ja: `多くのサイトでは、ヘッダーの「EN」ボタンから日本語・英語の表示を切り替えられます。対応は順次拡大中で、一部のサイトはまだ非対応です。`, en: `Most sites let you switch the display between Japanese and English using the "EN" button in the header. Support is being rolled out across the tool family, so a few sites may not have it yet.` },
@@ -957,7 +1052,7 @@ const I18N = {
   // 同一オリジンで共有されるlocalStorageから検出した「お使いのツール」一覧のラベル。
   'changelog.welcomeBack.label': { ja: `あなたがお使いのツール:`, en: `Tools you use:` },
   // ⭐ 検出したツールに関連する更新情報エントリに付く強調タグ（renderChangelog()参照）。
-  'changelog.relevantTag': { ja: `⭐ あなた向け`, en: `⭐ For You` },
+  'changelog.relevantTag': { ja: `<svg class="inline-icon" width="13" height="13"><use href="#i-sparkle"/></svg> あなた向け`, en: `<svg class="inline-icon" width="13" height="13"><use href="#i-sparkle"/></svg> For You` },
 
   'credits.label': { ja: `クレジット`, en: `Credits` },
   'credits.made.title': { ja: `制作`, en: `Created By` },
@@ -1039,34 +1134,34 @@ const I18N = {
   'references.toolGuide.title': { ja: `目的別ツール早見表`, en: `Which Tool Should I Use?` },
   'references.toolGuide.sub': { ja: `やりたいことから、使うツールを探せます。`, en: `Find the right tool based on what you want to do.` },
   'references.toolGuide.list': {
-    ja: `<li>🕯️ <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
-      <li>🪽 <b>翼・光の子（ウィングバフ）を集めたい</b> → <a href="https://taipak5000.github.io/wings/">羽トラッカー</a></li>
-      <li>🗂️ <b>アイテムの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-item/">アイテム所持管理</a></li>
-      <li>🎭 <b>エモートの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-emote/">エモート所持率管理</a></li>
-      <li>✨ <b>精霊と一緒に過ごしたい・精霊友情やシーズンツリーを進めたい</b> → <a href="https://taipak5000.github.io/companion/">精霊同行ツール</a></li>
-      <li>📍 <b>自分のコーデ・創作物を紹介したい</b> → <a href="https://taipak5000.github.io/share/">創作物管理ツール</a></li>
-      <li>🎵 <b>楽譜を演奏・作成したい</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">楽譜づくり</a></li>
-      <li>🔄 <b>別の端末にデータを引き継ぎたい</b> → <a href="https://taipak5000.github.io/tai-transfer/">データ引継ぎ</a></li>
-      <li>⚙️ <b>使い方や共通設定について知りたい</b> → <a href="#settings">設定について</a>タブ</li>
-      <li>👤 <b>制作者について知りたい・リクエストを送りたい</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">作者プロフィール</a></li>`,
-    en: `<li>🕯️ <b>Want to calculate candles</b> (target amount, days until you have enough, etc.) → <a href="https://taipak5000.github.io/tai-nomacan/">Nomacan Calculator</a> / <a href="https://taipak5000.github.io/star-candle/">Star Candle Calculator</a></li>
-      <li>🪽 <b>Want to collect wings</b> (Wing Buff) from Children of Light → <a href="https://taipak5000.github.io/wings/">Wing Tracker</a></li>
-      <li>🗂️ <b>Want to track which items you own</b> → <a href="https://taipak5000.github.io/tai-item/">Item Tracker</a></li>
-      <li>🎭 <b>Want to track which emotes you own</b> → <a href="https://taipak5000.github.io/tai-emote/">Emote Tracker</a></li>
-      <li>✨ <b>Want to hang out with a spirit companion, or progress friendship/season trees</b> → <a href="https://taipak5000.github.io/companion/">Spirit Companion Tool</a></li>
-      <li>📍 <b>Want to showcase your outfits or creations</b> → <a href="https://taipak5000.github.io/share/">Creation Manager</a></li>
-      <li>🎵 <b>Want to play or create sheet music</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">Sheet Music Maker</a></li>
-      <li>🔄 <b>Want to move your data to another device</b> → <a href="https://taipak5000.github.io/tai-transfer/">Data Transfer</a></li>
-      <li>⚙️ <b>Want to learn how things work or find shared settings</b> → the <a href="#settings">About Settings</a> tab</li>
-      <li>👤 <b>Want to learn about the creator or send a request</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">Creator Profile</a></li>`
+    ja: `<li><svg class="inline-icon" width="15" height="15"><use href="#i-candle"/></svg> <b>キャンドルを計算したい</b>（目標本数・あと何日で貯まるか等）→ <a href="https://taipak5000.github.io/tai-nomacan/">ノマキャン計算機</a>・<a href="https://taipak5000.github.io/star-candle/">星のキャンドル計算機</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-wing"/></svg> <b>翼・光の子（ウィングバフ）を集めたい</b> → <a href="https://taipak5000.github.io/wings/">羽トラッカー</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-folder"/></svg> <b>アイテムの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-item/">アイテム所持管理</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-masks"/></svg> <b>エモートの所持状況を管理したい</b> → <a href="https://taipak5000.github.io/tai-emote/">エモート所持率管理</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-sparkle"/></svg> <b>精霊と一緒に過ごしたい・精霊友情やシーズンツリーを進めたい</b> → <a href="https://taipak5000.github.io/companion/">精霊同行ツール</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-pin"/></svg> <b>自分のコーデ・創作物を紹介したい</b> → <a href="https://taipak5000.github.io/share/">創作物管理ツール</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-music-note"/></svg> <b>楽譜を演奏・作成したい</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">楽譜づくり</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-sync"/></svg> <b>別の端末にデータを引き継ぎたい</b> → <a href="https://taipak5000.github.io/tai-transfer/">データ引継ぎ</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-settings"/></svg> <b>使い方や共通設定について知りたい</b> → <a href="#settings">設定について</a>タブ</li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-person"/></svg> <b>制作者について知りたい・リクエストを送りたい</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">作者プロフィール</a></li>`,
+    en: `<li><svg class="inline-icon" width="15" height="15"><use href="#i-candle"/></svg> <b>Want to calculate candles</b> (target amount, days until you have enough, etc.) → <a href="https://taipak5000.github.io/tai-nomacan/">Nomacan Calculator</a> / <a href="https://taipak5000.github.io/star-candle/">Star Candle Calculator</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-wing"/></svg> <b>Want to collect wings</b> (Wing Buff) from Children of Light → <a href="https://taipak5000.github.io/wings/">Wing Tracker</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-folder"/></svg> <b>Want to track which items you own</b> → <a href="https://taipak5000.github.io/tai-item/">Item Tracker</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-masks"/></svg> <b>Want to track which emotes you own</b> → <a href="https://taipak5000.github.io/tai-emote/">Emote Tracker</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-sparkle"/></svg> <b>Want to hang out with a spirit companion, or progress friendship/season trees</b> → <a href="https://taipak5000.github.io/companion/">Spirit Companion Tool</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-pin"/></svg> <b>Want to showcase your outfits or creations</b> → <a href="https://taipak5000.github.io/share/">Creation Manager</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-music-note"/></svg> <b>Want to play or create sheet music</b> → <span class="tool-badge-test">test</span> <a href="https://taipak5000.github.io/tai-score/">Sheet Music Maker</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-sync"/></svg> <b>Want to move your data to another device</b> → <a href="https://taipak5000.github.io/tai-transfer/">Data Transfer</a></li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-settings"/></svg> <b>Want to learn how things work or find shared settings</b> → the <a href="#settings">About Settings</a> tab</li>
+      <li><svg class="inline-icon" width="15" height="15"><use href="#i-person"/></svg> <b>Want to learn about the creator or send a request</b> → <a href="https://taipak5000.github.io/skyzztai-profile/">Creator Profile</a></li>`
   },
 
   'references.compatTable.title': { ja: `サイト別機能対応表`, en: `Feature Compatibility Table` },
   'references.compatTable.sub': { ja: `公開中の姉妹サイト間での、共通機能の対応状況です。`, en: `Shows how shared features compare across the published sister sites.` },
   'references.compatTable.colTool': { ja: `ツール`, en: `Tool` },
-  'references.compatTable.colDark': { ja: `🌙 ダーク`, en: `🌙 Dark` },
-  'references.compatTable.colProfile': { ja: `👤 複数プロフィール`, en: `👤 Multi-Profile` },
-  'references.compatTable.colLang': { ja: `🌐 言語数`, en: `🌐 Languages` },
+  'references.compatTable.colDark': { ja: `<svg class="inline-icon" width="14" height="14"><use href="#i-moon"/></svg> ダーク`, en: `<svg class="inline-icon" width="14" height="14"><use href="#i-moon"/></svg> Dark` },
+  'references.compatTable.colProfile': { ja: `<svg class="inline-icon" width="14" height="14"><use href="#i-person"/></svg> 複数プロフィール`, en: `<svg class="inline-icon" width="14" height="14"><use href="#i-person"/></svg> Multi-Profile` },
+  'references.compatTable.colLang': { ja: `<svg class="inline-icon" width="14" height="14"><use href="#i-globe"/></svg> 言語数`, en: `<svg class="inline-icon" width="14" height="14"><use href="#i-globe"/></svg> Languages` },
   'references.compatTable.colTest': { ja: `注記`, en: `Note` },
   'references.compatTable.footnote': { ja: `※「複数プロフィール」欄が「—」の3サイト（設定・更新情報／楽譜づくり／作者プロフィール）は、所持アイテムなどのセーブデータそのものを扱わないため、姉妹サイト共通のプロフィール切替システムの対象外です。「言語数」は日本語・英語の2言語が基本で、精霊同行ツールのみ日本語・英語・繁體中文・한국어の4言語に対応しています。`, en: `*The three sites showing "—" under "Multi-Profile" (Settings &amp; Updates, Sheet Music Maker, Creator Profile) don't manage any owned-item save data of their own, so they fall outside the shared profile-switching system. "Languages" is 2 (Japanese/English) by default; only Spirit Companion Tool supports 4 (Japanese, English, Traditional Chinese, Korean).` },
 
@@ -1095,7 +1190,7 @@ const I18N = {
   'iconCustom.saveBtn': { ja: `保存して適用`, en: `Save & Apply` },
   'iconCustom.selectImage': { ja: `画像を選択してください`, en: `Please select an image` },
   'iconCustom.saveError': { ja: `保存に失敗しました(容量オーバーの可能性があります)`, en: `Save failed (storage may be full)` },
-  'iconCustom.saveSuccess': { ja: `✅ 保存しました。これでホーム画面に追加すると反映されます`, en: `✅ Saved. This will apply next time you add to your home screen` },
+  'iconCustom.saveSuccess': { ja: `<svg class="inline-icon ok" width="13" height="13"><use href="#i-check"/></svg> 保存しました。これでホーム画面に追加すると反映されます`, en: `<svg class="inline-icon ok" width="13" height="13"><use href="#i-check"/></svg> Saved. This will apply next time you add to your home screen` },
   'iconCustom.resetDone': { ja: `デフォルトのアイコンに戻しました`, en: `Reset to the default icon` },
 
   'dispSettings.title': { ja: `表示設定`, en: `Display Settings` },
@@ -1476,7 +1571,7 @@ function pfIconSave() {
     return;
   }
   pfIconApply(dataUrl);
-  document.getElementById('iconSaveStatus').textContent = t('iconCustom.saveSuccess');
+  document.getElementById('iconSaveStatus').innerHTML = t('iconCustom.saveSuccess');
 }
 
 function pfIconReset() {
@@ -2027,8 +2122,8 @@ const referenceSources = [
     // 🔗 idはディープリンク用の安定したスラッグ（#references:idの形式でこのグループへ
     // 直接ジャンプできる。実際のDOM要素idは "references-" + id。renderReferences参照）。
     id: 'item',
-    group: '🗂️ アイテム所持管理',
-    groupEn: '🗂️ Item Tracker',
+    group: 'アイテム所持管理',
+    groupEn: 'Item Tracker',
     items: [
       { title: 'Outfits | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Outfits', note: 'アウトフィット一覧・入手元データ', noteEn: `Outfit list and acquisition-source data` },
       { title: 'Shoes | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Shoes', note: 'シューズ一覧・入手元データ、コスト表', noteEn: `Shoe list, acquisition-source data, and cost table` },
@@ -2047,8 +2142,8 @@ const referenceSources = [
   },
   {
     id: 'wings',
-    group: '🪽 羽トラッカー',
-    groupEn: '🪽 Wing Tracker',
+    group: '羽トラッカー',
+    groupEn: 'Wing Tracker',
     items: [
       { title: 'Traveling Spirit | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Traveling_Spirit', note: '放浪精霊の初期羽枚数などのデータ', noteEn: `Data such as initial wing counts for Traveling Spirits` },
       { title: 'Regular Spirit | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Regular_Spirit', note: '通常精霊のデータ', noteEn: `Regular spirit data` },
@@ -2057,8 +2152,8 @@ const referenceSources = [
   },
   {
     id: 'companion',
-    group: '✨ 精霊同行ツール',
-    groupEn: '✨ Spirit Companion Tool',
+    group: '精霊同行ツール',
+    groupEn: 'Spirit Companion Tool',
     items: [
       { title: 'Dear Van Gogh | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Dear_Van_Gogh', note: '現行シーズンのツリー・コストデータ', noteEn: `Tree and cost data for the current season` },
       { title: '季節精霊（精霊友情システム） | Sky Wiki 日本語版', url: 'https://sky-children-of-the-light.fandom.com/ja/wiki/%E5%AD%A3%E7%AF%80%E7%B2%BE%E9%9C%8A#%E7%B2%BE%E9%9C%8A%E5%8F%8B%E6%83%85%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0', note: '精霊友情システムの仕様確認', noteEn: `Confirming the specifications of the Spirit Friendship system` },
@@ -2066,16 +2161,16 @@ const referenceSources = [
   },
   {
     id: 'starCandle',
-    group: '🕯️ 星のキャンドル計算機',
-    groupEn: '🕯️ Star Candle Calculator',
+    group: '星のキャンドル計算機',
+    groupEn: 'Star Candle Calculator',
     items: [
       { title: '破片の噴出 | Sky Wiki 日本語版', url: 'https://sky-children-of-the-light.fandom.com/ja/wiki/%E7%A0%B4%E7%89%87%E3%81%AE%E5%99%B4%E5%87%BA', note: '赤闇（星のキャンドル）出現予測のデータ', noteEn: `Data for predicting Red Shard (Star Candle) eruptions` },
     ]
   },
   {
     id: 'emote',
-    group: '🎭 エモート所持率管理',
-    groupEn: '🎭 Emote Tracker',
+    group: 'エモート所持率管理',
+    groupEn: 'Emote Tracker',
     items: [
       { title: 'Expressions | Sky Wiki', url: 'https://sky-children-of-the-light.fandom.com/wiki/Expressions', note: 'エモート一覧・入手元データ', noteEn: `Emote list and acquisition-source data` },
     ]
