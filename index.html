@@ -347,6 +347,9 @@
       animation: none;
       transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
     }
+    @media (min-width: 560px) {
+      .modal-card { max-width: 480px; }
+    }
     /* display:none→flexへの切り替えと同一同期タスク内ではtransitionが発火しないため、
        開いた瞬間だけ@keyframesで確実にスライドインさせる（sidebarのiosSlideInと同じ手法）。
        :where()で特異度を素の.modal-cardと揃えている。 */
