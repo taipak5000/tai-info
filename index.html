@@ -469,7 +469,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">
       <div class="sidebar-section-label" data-i18n="sidebar.relatedTools">関連ツール</div>
-      <button class="sidebar-close-btn" onclick="toggleSidebar()"><svg class="inline-icon" width="14" height="14"><use href="#i-close"/></svg></button>
+      <button class="sidebar-close-btn" onclick="toggleSidebar()"><span class="icon-chip" style="width:22px; height:22px;"><svg width="16" height="16"><use href="#i-close"/></svg></span></button>
     </div>
     <a href="https://taipak5000.github.io/tai-item/" class="sidebar-nav-link" data-i18n="tools.item"><svg class="inline-icon" width="19" height="19"><use href="#i-folder"/></svg> アイテム所持管理</a>
     <a href="https://taipak5000.github.io/tai-emote/" class="sidebar-nav-link" data-i18n="tools.emote"><svg class="inline-icon" width="19" height="19"><use href="#i-masks"/></svg> エモート所持率管理</a>
@@ -725,7 +725,7 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="iconCustomModalTitle" tabindex="-1">
     <div class="modal-header">
       <span class="modal-title" id="iconCustomModalTitle" data-i18n="iconCustom.title">ホーム画面アイコンをカスタマイズ</span>
-      <button class="modal-close" onclick="closeModal('iconCustomModal')"><svg class="inline-icon" width="16" height="16"><use href="#i-close"/></svg></button>
+      <button class="modal-close" onclick="closeModal('iconCustomModal')"><span class="icon-chip" style="width:22px; height:22px;"><svg width="16" height="16"><use href="#i-close"/></svg></span></button>
     </div>
 
     <div class="hint">
@@ -787,7 +787,7 @@
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" tabindex="-1">
     <div class="modal-header">
       <span class="modal-title" id="settingsModalTitle" data-i18n="dispSettings.title">表示設定</span>
-      <button class="modal-close" onclick="closeModal('settingsModal')"><svg class="inline-icon" width="16" height="16"><use href="#i-close"/></svg></button>
+      <button class="modal-close" onclick="closeModal('settingsModal')"><span class="icon-chip" style="width:22px; height:22px;"><svg width="16" height="16"><use href="#i-close"/></svg></span></button>
     </div>
 
     <div class="settings-section">
@@ -849,19 +849,19 @@
 <!-- ▸ サイトドック（クイックアクセスバー。ハンバーガーサイドバーとは並存し、置き換えない） -->
 <nav class="site-dock" data-i18n-aria="dock.ariaLabel" aria-label="クイックメニュー">
   <button type="button" id="dockChangelogBtn" onclick="showTab('changelog')">
-    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-bell"/></svg></span>
+    <span class="site-dock-icon"><span class="icon-chip" style="width:28px; height:28px;"><svg width="22" height="22"><use href="#i-bell"/></svg></span></span>
     <span class="site-dock-label" data-i18n="dock.changelog">更新情報</span>
   </button>
   <button type="button" onclick="showTab('credits')">
-    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-heart"/></svg></span>
+    <span class="site-dock-icon"><span class="icon-chip" style="width:28px; height:28px;"><svg width="22" height="22"><use href="#i-heart"/></svg></span></span>
     <span class="site-dock-label" data-i18n="dock.credits">クレジット</span>
   </button>
   <button type="button" id="dockToolsBtn" onclick="toggleSidebar()">
-    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-menu"/></svg></span>
+    <span class="site-dock-icon"><span class="icon-chip" style="width:28px; height:28px;"><svg width="22" height="22"><use href="#i-menu"/></svg></span></span>
     <span class="site-dock-label" data-i18n="dock.otherTools">他のツール</span>
   </button>
   <button type="button" onclick="settingsOpen()">
-    <span class="site-dock-icon"><svg class="inline-icon" width="20" height="20"><use href="#i-settings"/></svg></span>
+    <span class="site-dock-icon"><span class="icon-chip" style="width:28px; height:28px;"><svg width="22" height="22"><use href="#i-settings"/></svg></span></span>
     <span class="site-dock-label" data-i18n="dock.displaySettings">表示設定</span>
   </button>
 </nav>
@@ -1194,7 +1194,7 @@ const I18N = {
   'iconCustom.resetDone': { ja: `デフォルトのアイコンに戻しました`, en: `Reset to the default icon` },
 
   'dispSettings.title': { ja: `表示設定`, en: `Display Settings` },
-  'dispSettings.displayLabel': { ja: `表示`, en: `Display` },
+  'dispSettings.displayLabel': { ja: `<svg class="inline-icon" width="15" height="15"><use href="#i-monitor"/></svg> 表示`, en: `<svg class="inline-icon" width="15" height="15"><use href="#i-monitor"/></svg> Display` },
   'dispSettings.darkModeLabel': { ja: `ダークモード`, en: `Dark Mode` },
   // ♿ ボタンのラベルは「今の状態」ではなく「押すと何が起きるか（次の動作）」を表す文言にする
   // （light→dark→system→light…の3状態循環）。aria-pressedは二値の属性のため3状態を
@@ -1206,15 +1206,15 @@ const I18N = {
   'dispSettings.themeAria.light': { ja: `テーマ: ライト（次はダークに切り替わります）`, en: `Theme: Light (switches to Dark next)` },
   'dispSettings.themeAria.dark': { ja: `テーマ: ダーク（次はシステムに合わせるに切り替わります）`, en: `Theme: Dark (switches to System next)` },
   'dispSettings.themeAria.system': { ja: `テーマ: システムに合わせる（次はライトに切り替わります）`, en: `Theme: System (switches to Light next)` },
-  'dispSettings.shortcutsLabel': { ja: `キーボードショートカット`, en: `Keyboard Shortcuts` },
+  'dispSettings.shortcutsLabel': { ja: `<svg class="inline-icon" width="15" height="15"><use href="#i-keyboard"/></svg> キーボードショートカット`, en: `<svg class="inline-icon" width="15" height="15"><use href="#i-keyboard"/></svg> Keyboard Shortcuts` },
   'dispSettings.shortcutsEnable': { ja: `ショートカットを有効にする`, en: `Enable keyboard shortcuts` },
   'dispSettings.shortcutOpen': { ja: `この設定を開く`, en: `Open this settings panel` },
   'dispSettings.shortcutTheme': { ja: `テーマ切替（ライト/ダーク/システム）`, en: `Cycle theme (Light/Dark/System)` },
   'dispSettings.shortcutEscape': { ja: `開いているウィンドウを閉じる`, en: `Close the open window` },
-  'dispSettings.customizeLabel': { ja: `表示のカスタマイズ`, en: `Display Customization` },
+  'dispSettings.customizeLabel': { ja: `<svg class="inline-icon" width="15" height="15"><use href="#i-palette"/></svg> 表示のカスタマイズ`, en: `<svg class="inline-icon" width="15" height="15"><use href="#i-palette"/></svg> Display Customization` },
   'dispSettings.customizeIconLabel': { ja: `アイコンをカスタマイズ`, en: `Customize Icon` },
   'dispSettings.customizeOpenBtn': { ja: `開く`, en: `Open` },
-  'dispSettings.langLabel': { ja: `言語 / Language`, en: `Language` },
+  'dispSettings.langLabel': { ja: `<svg class="inline-icon" width="15" height="15"><use href="#i-globe"/></svg> 言語 / Language`, en: `<svg class="inline-icon" width="15" height="15"><use href="#i-globe"/></svg> Language` },
   'dispSettings.closeBtn': { ja: `閉じる`, en: `Close` },
 
   'footer.text': { ja: `このサイトはSky 星を紡ぐ子どもたちの非公式ファンサイトです。thatgamecompanyは一切関与していません。<br>作成・ご意見: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">リクエストフォーム</a>`, en: `This is an unofficial fan site for Sky: Children of the Light. thatgamecompany is not involved in any way.<br>Created by / feedback: <a href="https://x.com/Skyzztai" target="_blank" rel="noopener noreferrer">@Skyzztai</a>　／ <a href="https://odaibako.net/u/Skyzztai" target="_blank" rel="noopener noreferrer">Request form</a>` },
