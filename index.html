@@ -181,7 +181,7 @@
     .log-entry:last-child { border-bottom: none; }
     .log-date { flex-shrink: 0; width: 78px; font-size: 11.5px; font-weight: 700; color: var(--indigo-d); padding-top: 2px; }
     .log-body { flex: 1; min-width: 0; }
-    .log-title { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
+    .log-title { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; line-height: 1.5; }
     .log-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
     .log-tag { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--indigo-d); background: var(--indigo-bg); border-radius: 5px; padding: 1px 6px; margin-right: 6px; }
 
@@ -246,10 +246,17 @@
     .compat-table th, .compat-table td { padding: 7px 10px; text-align: left; border-bottom: 0.5px solid var(--sep); }
     .compat-table th { color: var(--text-2); font-weight: 700; font-size: 11px; }
     .compat-table td:not(:first-child), .compat-table th:not(:first-child) { text-align: center; }
+    /* 🔢 「言語数」列（4列目）だけは数値（2/4等）のセルのため、他列（アイコン中央揃え）とは
+       別に右揃え＋等幅数字にする（読みやすさ改善: 表の金額・数量は右揃え）。 */
+    .compat-table td:nth-child(4), .compat-table th:nth-child(4) { text-align: right; font-variant-numeric: tabular-nums; }
     .compat-table tbody tr:last-child td { border-bottom: none; }
 
-    footer { text-align: center; font-size: 11.5px; color: var(--text-3); padding: 34px 16px 12px; line-height: 1.9; }
-    footer a { color: var(--indigo-d); text-decoration: none; }
+    /* 📖 免責文＋クレジット行は複数文にまたがる本文相当のテキスト（モバイル幅では
+       複数行に折り返す）のため、短い1行ラベルの中央揃えとは別扱いで左揃えにする
+       （長文は左揃え）。 */
+    footer { text-align: left; font-size: 11.5px; color: var(--text-3); padding: 34px 16px 12px; line-height: 1.9; }
+    /* 🔗 footer内のリンクは文中リンクのため、下線をつけて視認性を確保する（.card aと同様の扱い）。 */
+    footer a { color: var(--indigo-d); text-decoration: underline; text-underline-offset: 2px; }
 
     section[data-tab] { display: none; }
     section[data-tab].show { display: block; }
@@ -611,8 +618,8 @@
       <p class="sec-label" data-i18n="privacy.label">プライバシーポリシー</p>
       <div class="card" id="privacy-summary" tabindex="-1" style="background:var(--indigo-bg); box-shadow:none;">
         <h3 data-i18n="privacy.summary.title">ひとことで言うと</h3>
-        <p data-i18n="privacy.summary.body">あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、<b>今お使いのスマホ・
-          パソコンの中だけ</b>に保存されます。インターネットのどこか（サーバーなど）に送られることはなく、
+        <p data-i18n="privacy.summary.body">あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、今お使いのスマホ・
+          パソコンの中だけに保存されます。インターネットのどこか（サーバーなど）に送られることはなく、
           運営者を含めて<b>誰にも見られません</b>。会員登録も不要です。</p>
       </div>
       <div class="card" id="privacy-storage" tabindex="-1">
@@ -1102,7 +1109,7 @@ const I18N = {
 
   'privacy.label': { ja: `プライバシーポリシー`, en: `Privacy Policy` },
   'privacy.summary.title': { ja: `ひとことで言うと`, en: `In Short` },
-  'privacy.summary.body': { ja: `あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、<b>今お使いのスマホ・パソコンの中だけ</b>に保存されます。インターネットのどこか（サーバーなど）に送られることはなく、運営者を含めて<b>誰にも見られません</b>。会員登録も不要です。`, en: `The data you enter (item ownership checks, outfits, currency records, etc.) is stored <b>only on the phone or computer you're currently using</b>. It is never sent anywhere on the internet (such as to a server), and <b>no one — including us, the operators — can see it</b>. No account registration is required.` },
+  'privacy.summary.body': { ja: `あなたが入力したデータ（所持アイテムのチェック、コーデ、通貨の記録など）は、今お使いのスマホ・パソコンの中だけに保存されます。インターネットのどこか（サーバーなど）に送られることはなく、運営者を含めて<b>誰にも見られません</b>。会員登録も不要です。`, en: `The data you enter (item ownership checks, outfits, currency records, etc.) is stored only on the phone or computer you're currently using. It is never sent anywhere on the internet (such as to a server), and <b>no one — including us, the operators — can see it</b>. No account registration is required.` },
 
   'privacy.storage.title': { ja: `データはどこに保存されているの？`, en: `Where is my data stored?` },
   'privacy.storage.p1': { ja: `スマホやパソコンの「ブラウザ」（Safari・Chromeなどのアプリ）には、それぞれのブラウザだけが使える専用の保存スペースがあります（専門用語では「ローカルストレージ」と呼びます）。所持アイテムのチェックやコーデ、通貨の記録は、すべてこの中に書き込まれます。`, en: `Your phone or computer's browser (apps like Safari or Chrome) has a dedicated storage space that only that browser can use — technically called "local storage." Your item ownership checks, outfits, and currency records are all written into this space.` },
