@@ -237,10 +237,8 @@
     .compat-table td:nth-child(4), .compat-table th:nth-child(4) { text-align: right; font-variant-numeric: tabular-nums; }
     .compat-table tbody tr:last-child td { border-bottom: none; }
 
-    /* 📖 免責文＋クレジット行は複数文にまたがる本文相当のテキスト（モバイル幅では
-       複数行に折り返す）のため、短い1行ラベルの中央揃えとは別扱いで左揃えにする
-       （長文は左揃え）。 */
-    footer { text-align: left; font-size: 11.5px; color: var(--text-3); padding: 34px 16px 12px; line-height: 1.9; }
+    /* 📖 免責文＋クレジット行はフッターとして中央揃えにする（姉妹サイト全体で統一）。 */
+    footer { text-align: center; font-size: 11.5px; color: var(--text-3); padding: 34px 16px 12px; line-height: 1.9; }
     /* 🔗 footer内のリンクは文中リンクのため、下線をつけて視認性を確保する（.card aと同様の扱い）。 */
     footer a { color: var(--indigo-d); text-decoration: underline; text-underline-offset: 2px; }
 
