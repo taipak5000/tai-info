@@ -113,11 +113,11 @@
     .sidebar-overlay.show { display: block; }
 
     .app-layout { max-width: 720px; margin: 0 auto; padding: 0 16px; }
-    /* デスクトップ幅（850px以上）でのmax-width。960pxだと、ページ内タブ5個の合計幅
-       （約731px）に対して余裕が足りず、1280pxのウィンドウ幅でも最後の1タブが見切れて
-       横スクロールが必要になるため、1040pxに拡張している（このサイトのみの意図的な
-       例外。2カラムサイドバーレイアウトは撤去済みのため、display:flexは付与しない）。 */
-    @media (min-width: 850px) { .app-layout { max-width: 1040px; } }
+    /* 🖥️ 共有デスクトップ標準：850px以上は960pxまで拡張（他サイトと共通の値。旧コメントは
+       「960pxだとページ内タブ5個が見切れる」としていたが、実測ではタブ5個の合計幅は
+       約630pxで960px幅（パディング込み928px）でも十分収まるため、1040pxの例外を廃止し
+       標準値に統一した）。 */
+    @media (min-width: 850px) { .app-layout { max-width: 960px; } }
 
     .sidebar {
       background: var(--card); border-radius: var(--r); padding: 16px;
@@ -169,7 +169,7 @@
 
     .sec-label { font-size: 15px; font-weight: 700; color: var(--text); padding: 24px 4px 10px; display: flex; align-items: center; gap: 6px; }
     .sec-sub { font-size: 12px; color: var(--text-2); padding: 0 4px 12px; line-height: 1.7; }
-    .card { background: var(--card); border-radius: var(--r); padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+    .card { background: var(--card); border-radius: var(--r); padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 0.5px 1px rgba(0,0,0,0.04); margin-bottom: 14px; }
     .card + .card { margin-top: -2px; }
     .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
     .card p, .card li { font-size: 13px; line-height: 1.8; color: var(--text); }
