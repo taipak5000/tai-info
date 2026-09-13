@@ -338,9 +338,15 @@
       animation: none;
       transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
     }
+    /* 🖥️ デスクトップ幅の共有規約: モーダルカードもページコンテナ(.app-layout)と同じ
+       720px/960pxの2段階に統一する（姉妹サイト間の表記ゆれだった600pxを是正。設定
+       モーダルの360px狭め表示はこのサイト独自の意図的な選択のため対象外・現状維持）。 */
+    .modal-card { max-width: 720px; }
     @media (min-width: 560px) {
-      .modal-card { max-width: 600px; }
       #settingsModal .modal-card { max-width: 360px; }
+    }
+    @media (min-width: 850px) {
+      .modal-card { max-width: 960px; }
     }
     /* display:none→flexへの切り替えと同一同期タスク内ではtransitionが発火しないため、
        開いた瞬間だけ@keyframesで確実にスライドインさせる（sidebarのiosSlideInと同じ手法）。
@@ -861,23 +867,53 @@
 </nav>
 
 <script>
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('sidebar-open');
-  document.getElementById('sidebarOverlay').classList.toggle('show');
+// 表示設定モーダル／アイコンカスタマイズモーダル／サイドバー（「関連ツール」ドロワー）は
+// いずれも下部ドックや「?」ショートカットから独立して開けるため、他のどれかが開いたまま
+// もう1つを開くとオーバーレイ同士が重なってしまう（下部ドックのボタン自体は開いている
+// モーダルのz-index:1000のスクリムに覆われて押せなくなるため実質ブロックされているが、
+// 「?」ショートカットはキー入力なのでこのブロックを素通りしてしまう）。開く前に、
+// 開こうとしているもの以外を閉じておく（各close関数は未オープンなら何もしない安全な関数）。
+function closeOtherTopLevelOverlays(exceptId) {
+  if (exceptId !== 'iconCustomModal' && document.getElementById('iconCustomModal').classList.contains('open')) closeModal('iconCustomModal');
+  if (exceptId !== 'settingsModal' && document.getElementById('settingsModal').classList.contains('open')) closeModal('settingsModal');
+  if (exceptId !== 'sidebar' && document.getElementById('sidebar').classList.contains('sidebar-open')) closeSidebarDrawer();
 }
 
-// sidebar-open / オーバーレイ表示を強制的に後片付けする。サイドバー内の
-// リンクからモーダルを開く際（openModal(...); toggleSidebar();）に
-// モバイル幅では通常ここで既に片付いているが、万一何らかの経路で
-// ドロワー状態が残っていても、モーダルを閉じる時点で必ずクリアする。
+// 開いているモーダル/サイドバーを「開かれた順」で管理するスタック（Escキーで
+// 一番手前のものだけを閉じるために使用。詳細は closeTopmostOpenModal 参照。
+// サイドバーもモーダルと同じフォーカストラップ・Escキー対象にするため、
+// 'sidebar' という擬似IDでこのスタックへ相乗りさせる）。
+let openModalStack = [];
+
+function toggleSidebar() {
+  if (document.getElementById('sidebar').classList.contains('sidebar-open')) closeSidebarDrawer();
+  else openSidebarDrawer();
+}
+
+function openSidebarDrawer() {
+  if (document.getElementById('sidebar').classList.contains('sidebar-open')) return;
+  closeOtherTopLevelOverlays('sidebar');
+  modalTriggerEls['sidebar'] = document.activeElement;
+  document.getElementById('sidebar').classList.add('sidebar-open');
+  document.getElementById('sidebarOverlay').classList.add('show');
+  openModalStack = openModalStack.filter(x => x !== 'sidebar');
+  openModalStack.push('sidebar');
+  focusFirstInModal('sidebar');
+}
+
+// sidebar-open / オーバーレイ表示を後片付けする。サイドバーがフォーカストラップの
+// スタックに積まれていた場合（＝toggleSidebar()等で正規に開かれていた場合）のみ、
+// モーダルと同じ finishOverlayClose() でスタックから外しフォーカスを戻す。
+// closeModal() からの「万一ドロワー状態が残っていても後片付けする」防御的呼び出し時
+// （通常はスタックに積まれていない）は、単にクラスを外すだけの無害なno-opになる。
 function closeSidebarDrawer() {
   document.getElementById('sidebar').classList.remove('sidebar-open');
   document.getElementById('sidebarOverlay').classList.remove('show');
+  if (openModalStack.includes('sidebar')) {
+    openModalStack = openModalStack.filter(x => x !== 'sidebar');
+    finishOverlayClose('sidebar');
+  }
 }
-
-// 開いているモーダルを「開かれた順」で管理するスタック（Escキーで
-// 一番手前のものだけを閉じるために使用。詳細は closeTopmostOpenModal 参照）。
-let openModalStack = [];
 
 // ♿ モーダルのフォーカス管理。
 // - 開く時: モーダル内の最初のフォーカス可能要素（DOM順で常に✕閉じるボタンが先頭）へ
@@ -899,11 +935,13 @@ function getFocusableEls(container) {
 function focusFirstInModal(id) {
   const modalEl = document.getElementById(id);
   const focusables = getFocusableEls(modalEl);
-  if (focusables.length) focusables[0].focus();
-  else modalEl.querySelector('.modal-card').focus();
+  if (focusables.length) { focusables[0].focus(); return; }
+  const card = modalEl.querySelector('.modal-card');
+  if (card) card.focus(); else modalEl.focus();
 }
 
 function openModal(id) {
+  closeOtherTopLevelOverlays(id);
   modalTriggerEls[id] = document.activeElement;
   document.getElementById(id).classList.add('open');
   openModalStack = openModalStack.filter(x => x !== id);
@@ -915,10 +953,17 @@ function closeModal(id) {
   document.getElementById(id).classList.remove('open');
   openModalStack = openModalStack.filter(x => x !== id);
   closeSidebarDrawer();
+  finishOverlayClose(id);
+}
+
+// closeModal()・closeSidebarDrawer() 共通の後始末: スタックにまだ他のモーダル/
+// サイドバーが残っていればそちらへ、無ければ元々フォーカスがあった要素（トリガー）へ
+// フォーカスを戻す。
+function finishOverlayClose(closedId) {
   if (openModalStack.length) {
     focusFirstInModal(openModalStack[openModalStack.length - 1]);
   } else {
-    const trigger = modalTriggerEls[id];
+    const trigger = modalTriggerEls[closedId];
     // ♿ trigger がモバイル幅のサイドバードロワー内のリンク/ボタンだった場合、
     // 直前の closeSidebarDrawer() で .sidebar が display:none に戻り、trigger自体も
     // フォーカス不可能になっている（display:noneの要素へのfocus()は無視され、
@@ -951,7 +996,7 @@ function closeModal(id) {
       }
     }
   }
-  delete modalTriggerEls[id];
+  delete modalTriggerEls[closedId];
 }
 
 // Tab/Shift+Tabを、開いている一番手前（最後に開かれた）モーダルの中だけに閉じ込める。
@@ -1400,7 +1445,11 @@ function settingsOpen() {
 // 開かれた順で一番最後（＝一番手前）のものだけを閉じる。
 function closeTopmostOpenModal() {
   if (openModalStack.length === 0) return;
-  closeModal(openModalStack[openModalStack.length - 1]);
+  const topId = openModalStack[openModalStack.length - 1];
+  // 🩹 サイドバー（「関連ツール」ドロワー）はclass名が'open'ではなく'sidebar-open'の
+  // ため、モーダル用のcloseModal()には乗せられず専用のcloseSidebarDrawer()で閉じる。
+  if (topId === 'sidebar') closeSidebarDrawer();
+  else closeModal(topId);
 }
 
 // ⌨️ 全ツール共通のキーボードショートカット（?＝表示設定を開く／d,D＝ダークモード切替／
