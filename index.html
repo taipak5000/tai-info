@@ -898,8 +898,10 @@ function toggleSidebar() {
 
 function openSidebarDrawer() {
   if (document.getElementById('sidebar').classList.contains('sidebar-open')) return;
+  notePendingTrigger();
   closeOtherTopLevelOverlays('sidebar');
-  modalTriggerEls['sidebar'] = document.activeElement;
+  modalTriggerEls['sidebar'] = pendingTriggerEl;
+  pendingTriggerEl = null;
   document.getElementById('sidebar').classList.add('sidebar-open');
   document.getElementById('sidebarOverlay').classList.add('show');
   openModalStack = openModalStack.filter(x => x !== 'sidebar');
@@ -931,6 +933,21 @@ function closeSidebarDrawer() {
 //   閉じた後もまだ開いているモーダルがあればそちらへフォーカスを渡す。
 const modalTriggerEls = {};
 
+// 🩹 連鎖オーバーレイのフォーカス誤復元対策: 「Aを開いたまま、Bのトリガーをクリック
+// （下部ドックはオーバーレイより前面に固定表示されているため、A表示中でもクリック
+// できる）または「?」キーでBを開く」場合、openModal(B)は中でまずcloseOtherTopLevelOverlays()
+// を呼びAを同期的に閉じるが、その中のfinishOverlayClose()がAのトリガーへ同期的に
+// .focus()する。その"直後"にmodalTriggerEls[B] = document.activeElement を評価すると、
+// 既にAのトリガーへ書き換わった後のdocument.activeElementを拾ってしまい、Bを実際に
+// 開いた要素ではなくAのトリガーがBの「閉じたら戻る先」として記録されてしまう
+// （姉妹サイトspirit-catalogのftNoteTrigger()と同根のバグ）。
+// 対策: closeOtherTopLevelOverlays()を呼ぶ前にnotePendingTrigger()でその瞬間の
+// document.activeElement（＝実際にクリックされた/フォーカスされていたトリガー）を
+// 退避しておき、closeOtherTopLevelOverlays()が終わった後はdocument.activeElementでは
+// なくこの退避値を使う。使ったら即クリアし、後続の無関係な呼び出しへ持ち越さない。
+let pendingTriggerEl = null;
+function notePendingTrigger() { pendingTriggerEl = document.activeElement; }
+
 function getFocusableEls(container) {
   const nodes = container.querySelectorAll(
     'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -947,8 +964,13 @@ function focusFirstInModal(id) {
 }
 
 function openModal(id) {
+  // 既に開いている場合は何もしない（ここでガードしないとトリガー参照がモーダル内の
+  // 要素で上書きされ、閉じたときにフォーカスの戻し先を見失う）
+  if (document.getElementById(id).classList.contains('open')) return;
+  notePendingTrigger();
   closeOtherTopLevelOverlays(id);
-  modalTriggerEls[id] = document.activeElement;
+  modalTriggerEls[id] = pendingTriggerEl;
+  pendingTriggerEl = null;
   document.getElementById(id).classList.add('open');
   openModalStack = openModalStack.filter(x => x !== id);
   openModalStack.push(id);
