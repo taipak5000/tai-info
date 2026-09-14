@@ -828,7 +828,7 @@
       <p class="settings-section-label" data-i18n="dispSettings.customizeLabel">表示のカスタマイズ</p>
       <div class="settings-row">
         <span class="settings-row-text" data-i18n="dispSettings.customizeIconLabel">アイコンをカスタマイズ</span>
-        <button type="button" class="theme-toggle-btn" onclick="closeModal('settingsModal'); openModal('iconCustomModal');" data-i18n="dispSettings.customizeOpenBtn">開く</button>
+        <button type="button" class="theme-toggle-btn" onclick="closeModal('settingsModal'); openModal('iconCustomModal', this);" data-i18n="dispSettings.customizeOpenBtn">開く</button>
       </div>
     </div>
 
@@ -963,11 +963,22 @@ function focusFirstInModal(id) {
   if (card) card.focus(); else modalEl.focus();
 }
 
-function openModal(id) {
+// 🩹 チェーン起動（自分自身の親モーダルをcloseModal()で閉じてからopenModal()で子を
+// 開く、例: 「アイコンをカスタマイズ」行の「開く」ボタン）対策: そのパターンでは
+// closeModal()呼び出しがopenModal()より先に走り、closeModal()内のfinishOverlayClose()が
+// 親の元トリガーへ同期的に.focus()してしまうため、openModal()冒頭のnotePendingTrigger()
+// （＝その時点のdocument.activeElementを読む）では既に書き換わった後の値を拾ってしまい、
+// 実際にクリックされた子モーダルのトリガーを取り違える（closeOtherTopLevelOverlays()経由の
+// 連鎖と違い、notePendingTrigger()が「閉じる」より前に自動で挟まらないため）。
+// explicitTrigger を渡された場合は document.activeElement の再読み取りを一切せず、
+// 呼び出し元が明示的に渡した要素（例: onclick内の this＝実際にクリックされたボタン）を
+// そのままトリガーとして使う。
+function openModal(id, explicitTrigger) {
   // 既に開いている場合は何もしない（ここでガードしないとトリガー参照がモーダル内の
   // 要素で上書きされ、閉じたときにフォーカスの戻し先を見失う）
   if (document.getElementById(id).classList.contains('open')) return;
-  notePendingTrigger();
+  if (explicitTrigger !== undefined) pendingTriggerEl = explicitTrigger;
+  else notePendingTrigger();
   closeOtherTopLevelOverlays(id);
   modalTriggerEls[id] = pendingTriggerEl;
   pendingTriggerEl = null;
