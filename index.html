@@ -254,8 +254,11 @@
     .modal-overlay.open { display: flex; }
     .modal-card {
       width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto;
-      background: var(--card); border-radius: var(--r); padding: 20px;
+      background: var(--card); border-radius: var(--r);
       box-sizing: border-box; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      /* 🩹 .site-dock（画面下部固定、z-index:1001でこのシートより常に手前）に最後の項目が
+         隠れないよう下端だけ底上げ。body{padding-bottom}と同じ「下部クイックアクセスドック分の余白」。 */
+      padding: 20px 20px calc(76px + env(safe-area-inset-bottom));
     }
     .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
     .modal-title { font-size: 17px; font-weight: 700; }
