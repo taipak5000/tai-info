@@ -1,7 +1,7 @@
 {
-  "name": "設定・更新情報・クレジット",
-  "short_name": "設定・更新情報",
-  "description": "taipak5000.github.io系Skyツール群の設定説明・更新情報・クレジット・プライバシーポリシー・参考文献をまとめたページ",
+  "name": "設定・クレジット",
+  "short_name": "設定・クレジット",
+  "description": "taipak5000.github.io系Skyツール群の設定説明・クレジット・プライバシーポリシー・参考文献をまとめたページ",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
