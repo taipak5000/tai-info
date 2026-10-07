@@ -1856,6 +1856,10 @@ siteLinksRefresh().then(changed => { if (changed) renderSiteLinks(); }).catch(()
 // #refCard・各参考文献グループのDOMが用意された後に行う必要がある
 // （scrollToCardAnchor()が要素を探す時点でまだ存在しないと失敗するため）。
 applyHashRoute();
+
+// 廃止した「更新情報」タブの未読管理キー。端末のlocalStorageに残っているだけの古いデータなので片付ける
+// （taipak5000.github.ioは全ツールで同一オリジンのため、tai-hub内蔵版が書いた分もこれで消える）。
+try { localStorage.removeItem('sky_changelog_last_seen__site_tai-info'); } catch (e) {}
 </script>
 
 <script>
